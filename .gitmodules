@@ -4,3 +4,6 @@
 [submodule "CPSC2150"]
 	path = CPSC2150
 	url = https://github.com/mcknight99/CPSC2150
+[submodule "CPSC1070"]
+	path = CPSC1070
+	url = https://github.com/mcknight99/CPSC1070
