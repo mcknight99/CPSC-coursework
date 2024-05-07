@@ -54,7 +54,6 @@ int main()
     // Add cages constraint
     Constraint cagesConstraint;
     cagesConstraint.check = isCagesSafe;
-    // cagesConstraint.data = nullptr; // Replace with actual cages data
     cagesConstraint.data = &cagesData;
     constraints.push_back(cagesConstraint);
 

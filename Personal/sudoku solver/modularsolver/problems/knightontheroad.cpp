@@ -1,6 +1,8 @@
 // https://sudokupad.app/kgp6jzmk37 knight on the road (cages + antiknight) gas
 // "Knight on the Road" by FullDeck and Missing a Few Cards
 // Antiknight, cages; gas
+// This takes 505 seconds to run on my machine, so be patient.
+//I FORGOT TO ADD THE ANTINIGHT CONSTRAINT THE FIRST TIME I RAN THIS SO IT TOOK 40 MINUTES FOR NOTHING
 
 #include <iostream>
 #include "../solvemodularsudoku.h"
@@ -64,6 +66,12 @@ int main()
     // cagesConstraint.data = nullptr; // Replace with actual cages data
     cagesConstraint.data = &cagesData;
     constraints.push_back(cagesConstraint);
+
+    // Add antiknight constraint
+    Constraint antiknightConstraint;
+    antiknightConstraint.check = isAntiknightSafe;
+    antiknightConstraint.data = nullptr;
+    constraints.push_back(antiknightConstraint);
 
     // Solve the Sudoku puzzle
     if (solveModularSudoku(board, constraints))
