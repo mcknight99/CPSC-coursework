@@ -3,5 +3,3 @@
 
 // Boards to test
 
-
-// https://sudokupad.app/s2778hgmzt pretzel logic (cages + antiknight) heartburn
