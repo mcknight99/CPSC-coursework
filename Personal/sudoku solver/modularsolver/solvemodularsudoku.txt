@@ -1,5 +1,43 @@
 .replay files can be used in sudokupad.com to view solutions
 
+// Boards included in the problems folder
+
+// https://app.crackingthecryptic.com/fpuzN4IgzglgXgpiBcBOANCALhNAbO8QEEAjMAeywFc0YACAcXwGURUBDSgCxICcEQAxcliwARGAGMA1tRYA7ACbUAshDCQZAc2nU%2BMAO7UAwiy5ywzEF0EwwMNLwZpZc4wrDk5JCeWqWcYaQAOAVgAngB0ADoyUQAq7DBcALYkibYJ%2FhAyYlwwLDbUAGZcKdSEgoTUaCSVEAFh5upcEHIIANqtwAC%2ByF093b0D%2FUN9ALrIHcODfdNTXWMTM5NLi%2FOzy2uj4xvbS6vr%2BytbBzubCyc7e4tXF2Po8UkpaTzwHSBYmdZtrSAASgCMBj%2B5h%2BACZAcCAMzg1A%2FAAsBhBwIArAjgQA2VEwgDsBghwIAHLjgYgiSMRv03h8zC9vv8DLDgWCGTCoczfvCkciDJyYRieb8cWiCQYhWSKe8ZJ8ab8AVjGQY5SyFcD4fiuWreQYNQKDIgQGLyUA%3D%3D%3D
+//  "Absolute Gas" by FullDeck and Missing a Few Cards
+
+/ https://sudokupad.app/vmwl2wcedr
+// "A Little Cagey" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/90rrvn1ygk
+// "All Around My Hat" by FullDeck and Missing a Few Cards
+
+// https://app.crackingthecryptic.com/68izjadc6y an easy day's knight (antiknight)
+// "An Easy Day's Knight" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/0qqqkdih3s blast off (cages + antiknight) indigestion
+// "Blast Off" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/ek2cvdxj8h
+//  "Cage Practice" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/bptmo1rxpb
+// "First Thermo" by frostbyte (thermometers) gas
+
+// https://sudokupad.app/bh4f01dzrn  (cages + thermometersSI) indigestion
+// "Hashtag Thermometers" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/kgp6jzmk37 knight on the road (cages + antiknight) gas
+// "Knight on the Road" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/6ijzpd1jdd
+// "No Marks" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/s2778hgmzt pretzel logic (cages + antiknight) heartburn
+// "Pretzel Logic" by FullDeck and Missing a Few Cards
+
+// https://sudokupad.app/fbfchhoqe2
+// "Whoa, Oh Oh" by FullDeck and Missing a Few Cards
+
 
 // Boards to test
 
