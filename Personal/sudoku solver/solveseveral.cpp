@@ -81,6 +81,7 @@ bool solveSudoku(vector<vector<int>> &board)
                         {
                             if (!verbose)
                             { //'n'
+                                // return true to pass back the board state as the solved state up the recursion stack
                                 return true;
                             }
                             // Print the solution

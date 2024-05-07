@@ -1,0 +1,8 @@
+.replay files can be used in sudokupad.com to view solutions
+
+
+// Boards to test
+
+
+// https://sudokupad.app/0qqqkdih3s blast off (cages + antiknight) indigestion
+// https://sudokupad.app/s2778hgmzt pretzel logic (cages + antiknight) heartburn
