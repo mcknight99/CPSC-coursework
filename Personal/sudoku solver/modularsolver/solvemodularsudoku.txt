@@ -34,6 +34,10 @@
 // "Hashtag Thermometers" by FullDeck and Missing a Few Cards
 // Killer Cages // Thermometers
 
+// https://sudokupad.app/aevobgfx9o
+// "King's Disease" by Roundout
+// Antiking // Thermometers
+
 // https://sudokupad.app/kgp6jzmk37 
 // "Knight on the Road" by FullDeck and Missing a Few Cards
 // Antiknight // Killer Cages
@@ -46,10 +50,34 @@
 // "Pretzel Logic" by FullDeck and Missing a Few Cards
 // Antiknight // Killer Cages
 
+// https://sudokupad.app/h2huu2ssqk
+// "Tetris King Killer" by Kwame, Falconi, and Adam
+// Antiking // Killer Cages
+
 // https://sudokupad.app/fbfchhoqe2
 // "Whoa, Oh Oh" by FullDeck and Missing a Few Cards
 // Killer Cages // Thermometers
 
 
-// Boards to test
+// Boards to add
 
+// https://sudokupad.app/gq9l9gbu2p
+// "Fever Bends" by FullDeck and Missing a Few Cards
+// Kropki Pairs // Thermometers
+
+// https://sudokupad.app/2n1c374516
+// "Xs and Vs" by bitmask
+// Antiking // XV Sums
+
+// https://sudokupad.app/i8sojnbdyr
+// "Killer Pinwheel" by Adam
+// Killer Cages // Thermometers
+
+
+
+// Future mods to add
+
+// Microsoft irregular shape regions
+
+// Windoku + X-sudoku
+// https://sudokupad.app/endless/startx4square
