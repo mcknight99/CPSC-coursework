@@ -1,14 +1,41 @@
 // https://sudokupad.app/ek2cvdxj8h
 //  "Cage Practice" by FullDeck and Missing a Few Cards
+//  Cages; gas
+// It took 920 seconds on my machine to find the solution
+// I could configure the solver to print all solutions so I could find the one on the website,
+// but this seems more unique, and I don't want to wait around for a second solution
+//  actually i went ahead and did it anyways because it was easy, but now it takes forever to run because of all of the states
+
+// I FOUND A SOLUTION THAT ISNT ACCEPTED BY THE WEBSITE
+/*
+Solution:
+1 3 2 | 4 8 7 | 9 5 6
+6 7 4 | 2 9 5 | 1 8 3
+8 9 5 | 1 6 3 | 2 4 7
+---------------------
+2 4 6 | 8 3 1 | 7 9 5
+9 8 7 | 6 5 4 | 3 2 1
+5 1 3 | 9 7 2 | 4 6 8
+---------------------
+3 6 8 | 7 4 9 | 5 1 2
+7 2 9 | 5 1 6 | 8 3 4
+4 5 1 | 3 2 8 | 6 7 9
+
+(THE REAL SOLUTION IS THE 8 AND 6 SWITCHED IN r8c6-r9c6 and r8c7-r9c7)
+*/
 
 #include <iostream>
-#include "../solvemodularsudoku.h"
+#include "../solveseveralmodular.h"
 #include "../modules/cageModule.h"
+
+#include <chrono>
 
 using namespace std;
 
 int main()
 {
+    auto start = chrono::high_resolution_clock::now();
+
     // Define the Sudoku board
     vector<vector<int>> board = {
         {0,0,0,0,0,0,0,0,0},
@@ -54,21 +81,22 @@ int main()
     // Add cages constraint
     Constraint cagesConstraint;
     cagesConstraint.check = isCagesSafe;
-    // cagesConstraint.data = nullptr; // Replace with actual cages data
     cagesConstraint.data = &cagesData;
     constraints.push_back(cagesConstraint);
 
     // Solve the Sudoku puzzle
-    if (solveModularSudoku(board, constraints))
+    if (!solveModularSudoku(board, constraints))
     {
-        cout << "Solution:\n";
-        // Print the solution
-        printBoard(board);
+        cout<< "Out of solutions\n";
+        //cout << "Solution:\n";
+        //printBoard(board);
     }
     else
     {
-        cout << "No solution exists!\n";
+        cout << "what HUH HOW\n";
     }
 
-    return 0;
+    auto stop = chrono::high_resolution_clock::now();
+    auto duration = chrono::duration_cast<chrono::seconds>(stop - start);
+    cout << "Time taken: " << duration.count() << " seconds" << endl;
 }
