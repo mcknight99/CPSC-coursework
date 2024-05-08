@@ -2,6 +2,10 @@
 
 // Boards included in the problems folder
 
+// https://sudokupad.app/9vlbeverf9
+// "15 with 14 Differences" by FullDeck and Missing a Few Cards
+// Kropki Pairs // Killer Cages
+
 // https://app.crackingthecryptic.com/fpuzN4IgzglgXgpiBcBOANCALhNAbO8QEEAjMAeywFc0YACAcXwGURUBDSgCxICcEQAxcliwARGAGMA1tRYA7ACbUAshDCQZAc2nU%2BMAO7UAwiy5ywzEF0EwwMNLwZpZc4wrDk5JCeWqWcYaQAOAVgAngB0ADoyUQAq7DBcALYkibYJ%2FhAyYlwwLDbUAGZcKdSEgoTUaCSVEAFh5upcEHIIANqtwAC%2ByF093b0D%2FUN9ALrIHcODfdNTXWMTM5NLi%2FOzy2uj4xvbS6vr%2BytbBzubCyc7e4tXF2Po8UkpaTzwHSBYmdZtrSAASgCMBj%2B5h%2BACZAcCAMzg1A%2FAAsBhBwIArAjgQA2VEwgDsBghwIAHLjgYgiSMRv03h8zC9vv8DLDgWCGTCoczfvCkciDJyYRieb8cWiCQYhWSKe8ZJ8ab8AVjGQY5SyFcD4fiuWreQYNQKDIgQGLyUA%3D%3D%3D
 // "Absolute Gas" by FullDeck and Missing a Few Cards
 // Thermometers
@@ -25,6 +29,10 @@
 // https://sudokupad.app/ek2cvdxj8h
 // "Cage Practice" by FullDeck and Missing a Few Cards
 // Killer Cages
+
+// https://sudokupad.app/gq9l9gbu2p
+// "Fever Bends" by FullDeck and Missing a Few Cards
+// Kropki Pairs // Thermometers
 
 // https://sudokupad.app/bptmo1rxpb
 // "First Thermo" by frostbyte 
@@ -50,6 +58,10 @@
 // "Pretzel Logic" by FullDeck and Missing a Few Cards
 // Antiknight // Killer Cages
 
+// https://sudokupad.app/y4lnjzh1g0
+// "Scarlet Fever" by FullDeck and Missing a Few Cards
+// Kropki Pairs // Thermometers
+
 // https://sudokupad.app/h2huu2ssqk
 // "Tetris King Killer" by Kwame, Falconi, and Adam
 // Antiking // Killer Cages
@@ -60,10 +72,6 @@
 
 
 // Boards to add
-
-// https://sudokupad.app/gq9l9gbu2p
-// "Fever Bends" by FullDeck and Missing a Few Cards
-// Kropki Pairs // Thermometers
 
 // https://sudokupad.app/2n1c374516
 // "Xs and Vs" by bitmask
