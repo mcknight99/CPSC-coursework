@@ -81,11 +81,17 @@
 // "Killer Pinwheel" by Adam
 // Killer Cages // Thermometers
 
+// https://sudokupad.app/dvet4fjt9z
+// "Oddball" by Adam
+// Antiknight // Kropki Pairs
+
 
 
 // Future mods to add
 
 // Microsoft irregular shape regions
+
+// Samurai Sudoku
 
 // Windoku + X-sudoku
 // https://sudokupad.app/endless/startx4square

@@ -69,6 +69,7 @@
         "xtr1common": "cpp",
         "xtree": "cpp",
         "xutility": "cpp",
-        "set": "cpp"
+        "set": "cpp",
+        "dataset.h": "c"
     }
 }
