@@ -50,7 +50,7 @@ std::vector<std::string> readWordsFromFile()
     return words;
 }
 
-//Written modularly to allow for easy changes to use better scoring methods 
+// Written modularly to allow for easy changes to use better scoring methods
 int calculateScore(const std::string &word1, const std::string &word2)
 {
     int score = 0;
@@ -62,7 +62,7 @@ int calculateScore(const std::string &word1, const std::string &word2)
     {
         if (word1.find(c) != std::string::npos)
         {
-            // Uses the size of the preferredLetters string to be flexible to set bias to unwanted letters to zero- 
+            // Uses the size of the preferredLetters string to be flexible to set bias to unwanted letters to zero-
             // be wary, this also means they have equal bias when removed (say if we only had the top 10, anything not in the top 10 would have a bias of 0 and q and d would have the same bias which is non-ideal)
             score += preferredLetters.size() - preferredLetters.find(c);
         }
