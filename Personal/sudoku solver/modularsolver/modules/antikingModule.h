@@ -3,7 +3,7 @@
 
 #include <vector>
 
-// Function to check if the "antiking" constraint is satisfied
+// Function to check if the antiking constraint is satisfied
 bool isAntikingSafe(const std::vector<std::vector<int>>& board, int row, int col, int num, void* data) {
     static const std::vector<std::pair<int, int>> kingMoves = {
         {-1, -1}, {-1, 0}, {-1, 1},

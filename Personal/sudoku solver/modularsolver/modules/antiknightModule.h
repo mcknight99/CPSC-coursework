@@ -3,7 +3,7 @@
 
 #include <vector>
 
-// Function to check if the "antiknight" constraint is satisfied
+// Function to check if the antiknight constraint is satisfied
 bool isAntiknightSafe(const std::vector<std::vector<int>>& board, int row, int col, int num, void* data) {
     static const std::vector<std::pair<int, int>> knightMoves = {
         {-2, -1}, {-2, 1}, {-1, -2}, {-1, 2},

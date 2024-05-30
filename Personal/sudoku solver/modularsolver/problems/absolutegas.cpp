@@ -3,6 +3,8 @@
 //  "Absolute Gas" by FullDeck and Missing a Few Cards
 //  Thermos; brassica
 // Takes about 53 seconds on my machine
+// 36 seconds with new thermo
+// 36 seconds with newer thermo; no differences, but I'm not surprised on this puzzle tbh
 
 #include <iostream>
 #include "../solvemodularsudoku.h"

@@ -2,6 +2,7 @@
 // "Fever Bends" by FullDeck and Missing a Few Cards
 // Kropki Pairs // Thermometers
 // Takes about 51 seconds on my machine
+// 44 seconds with newer thermometers
 
 #include <iostream>
 #include "../solvemodularsudoku.h"

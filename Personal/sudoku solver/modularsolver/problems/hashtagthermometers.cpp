@@ -1,7 +1,8 @@
 // https://sudokupad.app/bh4f01dzrn  (cages + thermometersSI) indigestion
 // "Hashtag Thermometers" by FullDeck and Missing a Few Cards
 // Cages, Thermometers; Indigestion
-// This takes 322 seconds to run on my machine, so be patient.
+// This takes ~5.5 min to run on my machine, so be patient.
+// Now only 5 minutes on the dot with newer thermos
 
 #include <iostream>
 #include "../solvemodularsudoku.h"
@@ -71,7 +72,6 @@ int main()
     // Add cages constraint
     Constraint cagesConstraint;
     cagesConstraint.check = isCagesSafe;
-    // cagesConstraint.data = nullptr; // Replace with actual cages data
     cagesConstraint.data = &cagesData;
     constraints.push_back(cagesConstraint);
 

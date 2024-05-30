@@ -14,6 +14,13 @@ bool isSafe(vector<vector<int>>& board, int row, int col, int num) {
     return true;
 }
 
+// This solver is in no way optimized, as it tries all possible numbers at each empty cell rather than using more advanced techniques, 
+// such as taking note of each valid number for each cell and then trying to solve the puzzle by prioritizing cells with fewer valid numbers.
+// However, doing so would make the code more complex and harder to understand or modify. 
+// Additionally, the "advanced" example I use of noting valid numbers may also have the downside of longer runtimes, as testing and failing in a cell effectively does this job already, 
+// and may be faster than constantly checking all valid numbers for each cell. 
+// (Perhaps an update by 3x3, row, and col for each cell with that method that I'm describing would be a solution, but I'm already happy with this solver. Feel free to try it out!)
+
 // Function to solve the Sudoku puzzle
 bool solveSudoku(vector<vector<int>>& board) {
     for (int row = 0; row < 9; ++row) {

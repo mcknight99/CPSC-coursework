@@ -20,16 +20,16 @@ int statement(int i, int j) {
 int main() {
     cout<<"Making vector\n";
     vector<vector<int>> test;
-    for(int i = 0; i<SIZE; i++) {
+    for(int i = 0; i<SIZE; ++i) {
         vector<int> row(SIZE, 0);
         test.push_back(row);
-        for(int j = 0; j<SIZE; j++) {
+        for(int j = 0; j<SIZE; ++j) {
             test[i][j] = statement(i,j);
         }
     }
     cout<<"Printing vector\n";
-    for(int i = 0; i<SIZE; i++) {
-        for(int j = 0; j<SIZE; j++) {
+    for(int i = 0; i<SIZE; ++i) {
+        for(int j = 0; j<SIZE; ++j) {
             if(test[i][j]==1) {
                 cout<<GREEN;
             } else {

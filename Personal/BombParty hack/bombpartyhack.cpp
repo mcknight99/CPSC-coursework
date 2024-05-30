@@ -65,7 +65,7 @@ bool readWordsFromFile(const std::string &filename, std::unordered_set<std::stri
         if (!filteredWord.empty() && !fail)
         {
             wordSet.insert(filteredWord);
-            total++;
+            ++total;
         }
     }
     file.close();
@@ -77,7 +77,7 @@ bool readWordsFromFile(const std::string &filename, std::unordered_set<std::stri
 void printWordWithFormatting(const std::string &word, const std::string &substring, std::list<char> differentLetters)
 {
     std::cout << "Word found (+" << differentLetters.size() << "): " << BACKGROUND_COLOR;
-    for (int i = 0; i < word.length(); i++)
+    for (int i = 0; i < word.length(); ++i)
     {
         // Check if the letter is part of the substring
         if (word.substr(i, substring.length()) == substring)
@@ -111,7 +111,7 @@ int calculateScore(const std::string &word, std::unordered_map<char, bool> usedL
         if (!usedLetters[c])
         {
             usedLetters[c] = true;
-            score++;
+            ++score;
         }
     }
     return score;

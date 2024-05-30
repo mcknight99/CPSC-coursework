@@ -4,11 +4,21 @@
 #include <vector>
 #include <iostream>
 
+#include <stdlib.h>
+// Uncomment out the print board function in solveModularSudoku and system("CLS") in solveModularSudoku() to see magic
+// Warning, this makes the program run SIGNIFICANTLY slower (ex. An Easy Day's Knight ~18ms -> 47s) due to the number of console calls
+// Therefore I would only use this as a fun, miscellaneous feature on quick solves if you are interested in seeing the method of solving the board
+bool print = false;
+// Some good ones to see with this feature:
+// An Easy Day's Knight
+// X's and V's 
+// No Marks
 
 // Structure for modular constraint
-struct Constraint {
-    bool (*check)(const std::vector<std::vector<int>>&, int, int, int, void*);
-    void* data;
+struct Constraint
+{
+    bool (*check)(const std::vector<std::vector<int>> &, int, int, int, void *);
+    void *data;
 };
 
 // Function to print the Sudoku board
@@ -37,6 +47,12 @@ void printBoard(const std::vector<std::vector<int>> &board)
 // Once a solution is found, the function returns true and the solved board is passed up the call stack
 bool solveModularSudoku(std::vector<std::vector<int>> &board, const std::vector<Constraint> &constraints)
 {
+    if (print)
+    {
+        // Clear the console
+        system("CLS");
+        printBoard(board);
+    }
     for (int row = 0; row < 9; ++row)
     {
         for (int col = 0; col < 9; ++col)

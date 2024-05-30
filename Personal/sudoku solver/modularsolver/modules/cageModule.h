@@ -22,7 +22,7 @@ bool isCagesSafe(const std::vector<std::vector<int>> &board, int row, int col, i
     for (const auto &cage : *cagesData)
     {
         int sum = 0;
-        std::set<int> usedDigits; // Set to track unique digits within the cage
+        std::set<int> usedDigits; // Set to track unique digits within the cage //Might need to make a second method for isCages and isKillerCages, because KillerCages is no repeats but Cages is(?)
         bool filled = true;  // Flag to track if all cells in the cage are filled
         for (const auto &cell : cage.first)
         {

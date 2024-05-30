@@ -1,6 +1,36 @@
-.replay files can be used in sudokupad.com to view solutions
+// Future mods/solvers to add
 
+// Microsoft irregular shape regions
+
+// Samurai Sudoku
+
+// Windoku + X-sudoku
+// https://sudokupad.app/endless/startx4square
+
+// Add logic and streamlined solving as described in solvesudoku.cpp:
+"" This solver is in no way optimized, as it tries all possible numbers at each empty cell rather than using more advanced techniques, 
+"" such as taking note of each valid number for each cell and then trying to solve the puzzle by prioritizing cells with fewer valid numbers.
+"" However, doing so would make the code more complex and harder to understand or modify. 
+"" Additionally, the "advanced" example I use of noting valid numbers may also have the downside of longer runtimes, as testing and failing in a cell effectively does this job already, 
+"" and may be faster than constantly checking all valid numbers for each cell. 
+"" (Perhaps an update by 3x3, row, and col for each cell with that method that I'm describing would be a solution, but I'm already happy with this solver. Feel free to try it out!)
+// I could do this, but right now I am more than happy with making new solvers and modules.
+// However the current downsides: 
+// Long solve time for blank boards (or close to blank)
+// Longer solve times for boards with higher numbers for starters
+// Long solve times for Cages, Palindromes, Thermometers
+    // Palindromes could be solved by placing the tested number on the other side of the palindrome instead of waiting to get there, this is especially important for longer, vertical Palindromes
+    // Cages could be solved by finding the remaining sum that needs to be placed within the cage, and determining if there is only one solution to the rest of the cage. If so, fill in the rest of the cage with the only solution
+    // Thermometers (SI) could be solved by determining if there is space left in the thermometer to fill the rest of the thermometer (ex. a 9 gets placed in a bulb and has to wait until the next place in the thermometer to find out that that isn't a possible move) 
+// The less restrictions there are, the longer it actually takes. Having less possibilities to check for each cell vastly shortens time, even if it's just antiknight or antiking (good example is quadriplex vs quadriplexing- plex is easier in difficulty but has less restrictions. plexing is harder in difficulty but has more restrictions and runs SIGNIFICANTLY faster)
+
+// Inputting data is also quite tedious, so perhaps some UI with the module options that generates the data as you re-enter it onto a board? Also helps limit entry errors
+
+
+// ----------------------------------------------------------------
 // Boards included in the problems folder
+// .replay files can be used in sudokupad.com to view solutions
+
 
 // https://sudokupad.app/9vlbeverf9
 // "15 with 14 Differences" by FullDeck and Missing a Few Cards
@@ -30,6 +60,10 @@
 // "Cage Practice" by FullDeck and Missing a Few Cards
 // Killer Cages
 
+// https://sudokupad.app/zennhfif3c
+// "CarabinerenibaraC" by FullDeck and Missing a Few Cards
+// Killer Cages // Palindromes 
+
 // https://sudokupad.app/gq9l9gbu2p
 // "Fever Bends" by FullDeck and Missing a Few Cards
 // Kropki Pairs // Thermometers
@@ -42,6 +76,10 @@
 // "Hashtag Thermometers" by FullDeck and Missing a Few Cards
 // Killer Cages // Thermometers
 
+// https://sudokupad.app/i8sojnbdyr
+// "Killer Pinwheel" by Adam
+// Killer Cages // Thermometers
+
 // https://sudokupad.app/aevobgfx9o
 // "King's Disease" by Roundout
 // Antiking // Thermometers
@@ -50,13 +88,29 @@
 // "Knight on the Road" by FullDeck and Missing a Few Cards
 // Antiknight // Killer Cages
 
+// https://app.crackingthecryptic.com/9x6y1zswz3
+// "Nice Hot Cuppa" by FullDeck and Missing a Few Cards
+// Palindromes // Quadruples
+
 // https://sudokupad.app/6ijzpd1jdd
 // "No Marks" by FullDeck and Missing a Few Cards
 // Killer Cages
 
+// https://sudokupad.app/dvet4fjt9z
+// "Oddball" by Adam
+// Antiking // Antiknight // Kropki Pairs
+
 // https://sudokupad.app/s2778hgmzt 
 // "Pretzel Logic" by FullDeck and Missing a Few Cards
 // Antiknight // Killer Cages
+
+// https://sudokupad.app/qd8sics5tx
+// "Quadriplexing" by FullDeck and Missing a Few Cards
+// Antiknight // Quadruples
+
+// https://sudokupad.app/hl1h0btfae
+// "Quadriplex" by FullDeck and Missing a Few Cards
+// Quadruples
 
 // https://sudokupad.app/y4lnjzh1g0
 // "Scarlet Fever" by FullDeck and Missing a Few Cards
@@ -66,32 +120,33 @@
 // "Tetris King Killer" by Kwame, Falconi, and Adam
 // Antiking // Killer Cages
 
-// https://sudokupad.app/fbfchhoqe2
-// "Whoa, Oh Oh" by FullDeck and Missing a Few Cards
-// Killer Cages // Thermometers
-
-
-// Boards to add
+// https://sudokupad.app/8brbv8xf8p
+// "Thermo Dat" by FullDeck and Missing a Few Cards
+// Disjoint Groups // Thermometers
 
 // https://sudokupad.app/2n1c374516
 // "Xs and Vs" by bitmask
 // Antiking // XV Sums
 
-// https://sudokupad.app/i8sojnbdyr
-// "Killer Pinwheel" by Adam
+// https://sudokupad.app/fbfchhoqe2
+// "Whoa, Oh Oh" by FullDeck and Missing a Few Cards
 // Killer Cages // Thermometers
 
-// https://sudokupad.app/dvet4fjt9z
-// "Oddball" by Adam
-// Antiknight // Kropki Pairs
+// ----------------------------------------------------------------
+// Boards to add
+
+// https://sudokupad.app/kiym0h0l87
+// "Knight in the Hot Seat" by FullDeck and Missing a Few Cards
+// Antiknight // Thermometers
+
+// https://sudokupad.app/i2yg8yesd3
+// "Tardigrades" by FullDeck and Missing a Few Cards
+// Thermometers
+
+// https://sudokupad.app/ealf9hvq0r
+// "Beaker on a Slow Burner" by FullDeck and Missing a Few Cards
+// Thermometers 
 
 
 
-// Future mods to add
 
-// Microsoft irregular shape regions
-
-// Samurai Sudoku
-
-// Windoku + X-sudoku
-// https://sudokupad.app/endless/startx4square

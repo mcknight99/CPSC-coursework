@@ -44,6 +44,7 @@ int main()
     thermometerConstraint.data = &thermometerData;
     constraints.push_back(thermometerConstraint);
 
+    // Solve the Sudoku puzzle
     if (solveModularSudoku(board, constraints))
     {
         cout << "Solution:\n";

@@ -2,6 +2,9 @@
 // "Whoa, Oh Oh" by FullDeck and Missing a Few Cards
 // Cages, Slow Thermos; heartburn
 // Takes 87 seconds to run on my machine, so give it a minute (and 27 seconds)
+// With the new thermos, takes 105 seconds. Only ran it once, so not sure if it is due to new thermos or just a fluke
+// Hrm nope, reran at 130 seconds. Perhaps was a game of chance where the old/unsafe implementation avoided needing to back-check
+// I'm so good at this game- 60 seconds with newer thermos
 
 #include <iostream>
 #include "../solvemodularsudoku.h"

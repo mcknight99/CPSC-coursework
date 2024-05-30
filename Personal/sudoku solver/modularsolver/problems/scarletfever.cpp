@@ -1,6 +1,8 @@
 // https://sudokupad.app/y4lnjzh1g0
 // "Scarlet Fever" by FullDeck and Missing a Few Cards
 // Kropki Pairs // Thermometers
+// Takes about 80 seconds to run on my machine
+// 49 seconds with newer thermos
 
 #include <iostream>
 #include "../solvemodularsudoku.h"

@@ -1,21 +1,21 @@
-#ifndef KROPKI_MODULE_H
-#define KROPKI_MODULE_H
+#ifndef XVSUM_MODULE_H
+#define XVSUM_MODULE_H
 
 #include <vector>
 #include <tuple>
 
 #include <iostream>
 
-// Function to check if the kropki constraint is satisfied
-bool isKropkiSafe(const std::vector<std::vector<int>> &board, int row, int col, int num, void *data)
+// Function to check if the XV Sum constraint is satisfied
+bool isXVSafe(const std::vector<std::vector<int>> &board, int row, int col, int num, void *data)
 {
     // Cast the data pointer to the appropriate type
-    std::vector<std::tuple<int, int, int, int, char>> *kropkiData = static_cast<std::vector<std::tuple<int, int, int, int, char>> *>(data);
+    std::vector<std::tuple<int, int, int, int, char>> *XVSumData = static_cast<std::vector<std::tuple<int, int, int, int, char>> *>(data);
 
     // std::cout << "Checking kropki safety for " << row << " " << col << " " << num << std::endl;
 
     // Check each kropki pair for safety
-    for (const auto &pair : *kropkiData)
+    for (const auto &pair : *XVSumData)
     {
         int row1 = std::get<0>(pair);
         int col1 = std::get<1>(pair);
@@ -33,10 +33,10 @@ bool isKropkiSafe(const std::vector<std::vector<int>> &board, int row, int col, 
             // Is also "satisfied" if the other cell is 0
             if (otherCellValue != 0)
             {
-                if ((type == 'W' && abs(num - otherCellValue) == 1) ||
-                    (type == 'B' && ((num * 2 == otherCellValue) || (otherCellValue * 2 == num))))
+                if ((type == 'X' && num + otherCellValue == 10) ||
+                    (type == 'V' && num + otherCellValue == 5))
                 {
-                    return true; // Kropki constraint satisfied
+                    return true; // XV Sum constraint satisfied
                 }
                 else
                 {
@@ -45,7 +45,7 @@ bool isKropkiSafe(const std::vector<std::vector<int>> &board, int row, int col, 
             }
         }
     }
-    return true; // Kropki constraint satisfied if both cells are 0
+    return true; // XV Sum constraint satisfied if both cells are 0
 }
 
 #endif /* KROPKI_H */

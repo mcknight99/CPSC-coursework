@@ -96,7 +96,7 @@ int main() {
         } else {
             //system("CLS");
             cout << iterations <<endl;
-            iterations++;
+            ++iterations;
         }
     }
 

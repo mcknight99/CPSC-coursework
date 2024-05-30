@@ -1,0 +1,11 @@
+Thinking back on these modules, I could have probably typedefed/structed a lot of the weird data types to make them way easier to understand.
+
+Or even something as simple as 
+typedef std::tuple<int, int, int, int, char> XVdata;
+to avoid having to type 
+vector<tuple<int, int, int, int, char>> XVSumData;
+but instead
+vector<XVdata> XVSumData;
+in the puzzle mains as well
+
+A potential overhaul/change for the future?

@@ -80,9 +80,9 @@ std::vector<std::tuple<std::string, std::string, int>> findTopScoringPairs(const
     std::vector<std::tuple<std::string, std::string, int>> topPairs;
     std::vector<int> scores;
 
-    for (size_t i = 0; i < words.size(); i++)
+    for (size_t i = 0; i < words.size(); ++i)
     {
-        for (size_t j = i + 1; j < words.size(); j++)
+        for (size_t j = i + 1; j < words.size(); ++j)
         {
             if (!isValidPair(words[i], words[j]))
             {

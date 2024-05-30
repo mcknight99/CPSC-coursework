@@ -70,6 +70,16 @@
         "xtree": "cpp",
         "xutility": "cpp",
         "set": "cpp",
-        "dataset.h": "c"
+        "dataset.h": "c",
+        "*.tcc": "cpp",
+        "cwctype": "cpp",
+        "functional": "cpp",
+        "memory_resource": "cpp",
+        "numeric": "cpp",
+        "random": "cpp",
+        "string_view": "cpp",
+        "numbers": "cpp",
+        "span": "cpp",
+        "variant": "cpp"
     }
 }
