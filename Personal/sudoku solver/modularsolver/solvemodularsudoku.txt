@@ -84,6 +84,10 @@
 // "King's Disease" by Roundout
 // Antiking // Thermometers
 
+// https://sudokupad.app/kiym0h0l87
+// "Knight in the Hot Seat" by FullDeck and Missing a Few Cards
+// Antiknight // Thermometers
+
 // https://sudokupad.app/kgp6jzmk37 
 // "Knight on the Road" by FullDeck and Missing a Few Cards
 // Antiknight // Killer Cages
@@ -116,6 +120,10 @@
 // "Scarlet Fever" by FullDeck and Missing a Few Cards
 // Kropki Pairs // Thermometers
 
+// https://sudokupad.app/i2yg8yesd3
+// "Tardigrades" by FullDeck and Missing a Few Cards
+// Thermometers
+
 // https://sudokupad.app/h2huu2ssqk
 // "Tetris King Killer" by Kwame, Falconi, and Adam
 // Antiking // Killer Cages
@@ -135,18 +143,20 @@
 // ----------------------------------------------------------------
 // Boards to add
 
-// https://sudokupad.app/kiym0h0l87
-// "Knight in the Hot Seat" by FullDeck and Missing a Few Cards
-// Antiknight // Thermometers
-
-// https://sudokupad.app/i2yg8yesd3
-// "Tardigrades" by FullDeck and Missing a Few Cards
-// Thermometers
-
 // https://sudokupad.app/ealf9hvq0r
 // "Beaker on a Slow Burner" by FullDeck and Missing a Few Cards
 // Thermometers 
 
+// https://cracking-the-cryptic.web.app/sudoku/tjN9LtrrTL https://www.youtube.com/watch?v=yKf9aUIxdb4 
+// "The Miracle" by Mitchell Lee
+// Antiking // Antiknight // Nonconsecutive Orthogonals (steep step? )
 
+// https://cracking-the-cryptic.web.app/sudoku/RPRGmTqNtM https://www.youtube.com/watch?v=LwkNChSO2yE
+// "The Miracle Sudoku 2" by Ri Sa
+// Antiknight // Thermometers
+
+// https://cracking-the-cryptic.web.app/sudoku/897LqtfTQD https://www.youtube.com/watch?v=Tv-48b-KuxI
+// "The New Miracle" by Aad van de Wetering
+// Antiking // Antiknight // Nonconsecutive Orthogonals
 
 
