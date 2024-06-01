@@ -81,9 +81,9 @@ int main()
     auto start = chrono::high_resolution_clock::now();
 
     // Given
-    vector<int> required = {2340, 1880};
+    vector<int> required = {1880};
     vector<int> supplementary = {2414, 1474, 893, 740, 1261, 1403, 3005};
-    int modulus = 3;
+    int modulus = 25;
     int modulo = 0;
 
     std::vector<int> lowestCombination = findLowestCombination(required, supplementary, modulo, modulus);

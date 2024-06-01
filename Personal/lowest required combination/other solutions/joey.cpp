@@ -28,7 +28,7 @@ int main()
 
     // Given
     vector<int> required = {1880};
-    vector<int> supplementary = {740, 893, 1261, 1403, 1474, 2414, 3005};
+    vector<int> supplementary = {2414, 1474, 893, 740, 1261, 1403, 3005};
     int modulus = 25;
     int modulo = 0;
 
