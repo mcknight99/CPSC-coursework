@@ -24,4 +24,17 @@ bool isAntiknightSafe(const std::vector<std::vector<int>>& board, int row, int c
     }
     return true; // Antiknight constraint satisfied
 }
+
+std::vector<int> getAntiknightLogicalNums(const std::vector<std::vector<int>>& board, int row, int col, void* data) {
+    std::vector<int> logicalNums;
+    
+    for(int i = 1; i<=9; i++) {
+        if(isAntiknightSafe(board, row, col, i, data)) {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif /* ANTIKNIGHT_H */

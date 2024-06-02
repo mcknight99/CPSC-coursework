@@ -26,4 +26,16 @@ bool isAntikingSafe(const std::vector<std::vector<int>>& board, int row, int col
     return true; // Antiking constraint satisfied
 }
 
+std::vector<int> getAntikingLogicalNums(const std::vector<std::vector<int>>& board, int row, int col, void* data) {
+    std::vector<int> logicalNums;
+    
+    for(int i = 1; i<=9; i++) {
+        if(isAntikingSafe(board, row, col, i, data)) {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif /* ANTIKING_H */

@@ -9,3 +9,15 @@ vector<XVdata> XVSumData;
 in the puzzle mains as well
 
 A potential overhaul/change for the future?
+
+
+
+
+Logical solver idea:
+Each module has a logicCheck function for (board, row, col, data)
+This function returns a vector of logical ints to be placed in that (row,col)
+Ex. if the standard solver had a logicCheck, it would check the pos at (row,col) and see which nums 1-9 can be placed there depending on the nums in the 3x3 and the row and col, returning the values that can be placed there
+
+For more advanced modules, like thermometers, a logicCheck would determine logical nums based on leading and trailing thermo values as well as leading and trailing cell spaces
+
+In a logical solver that combines these logic checks, it would take the ANDS of every logical num and only keep a list of the logical values that were shared across each logic check

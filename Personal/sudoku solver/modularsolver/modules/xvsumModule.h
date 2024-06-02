@@ -48,4 +48,19 @@ bool isXVSafe(const std::vector<std::vector<int>> &board, int row, int col, int 
     return true; // XV Sum constraint satisfied if both cells are 0
 }
 
+std::vector<int> getXVLogicalNums(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isXVSafe(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif /* KROPKI_H */

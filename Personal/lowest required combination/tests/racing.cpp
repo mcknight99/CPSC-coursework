@@ -7,14 +7,14 @@
 using namespace std;
 
 int overallMax = 500000;
-int requiredIntsMaxSize = 3;
+int requiredIntsMaxSize = 1;
 int requiredIntsMinSize = 1;
-int supplementaryIntsMaxSize = 25;
-int supplementaryIntsMinSize = 1;
-int maxInt = 500000;
-int minInt = 1;
-int maxModulus = 1000;
-int minModulus = 2;
+int supplementaryIntsMaxSize = 9;//flpmc can only take max 30 supplementaries because of int limit
+int supplementaryIntsMinSize = 6; 
+int maxInt = 3005;
+int minInt = 482;
+int maxModulus = 25;
+int minModulus = 25;
 // Max modulus must be greater than max desired modulo
 
 // Notes: when it has an actual answer, flpmc is faster than joey-redux. With no answer, joey-redux is faster.
@@ -34,88 +34,112 @@ int gen_rand_int(int min, int max)
 
 int main()
 {
-    vector<int> answer;
-    vector<int> requiredInts;
-    vector<int> supplementaryInts;
-    int desiredModulo;
-    int modulus;
+    std::cout<<INT_MAX<<std::endl;
+    int maxRuns = 1;
+    int run = 0;
+    int joeyWins = 0;
+    int flpmcWins = 0;
 
     do
     {
-        // Generate the inputs
-        int requiredIntsSize = gen_rand_int(requiredIntsMinSize, requiredIntsMaxSize);
-        int supplementaryIntsSize = gen_rand_int(supplementaryIntsMinSize, supplementaryIntsMaxSize);
-        requiredInts.resize(requiredIntsSize);
-        supplementaryInts.resize(supplementaryIntsSize);
-        for (int i = 0; i < requiredIntsSize; i++)
+
+        vector<int> answer;
+        vector<int> requiredInts;
+        vector<int> supplementaryInts;
+        int desiredModulo;
+        int modulus;
+
+        do
         {
-            requiredInts[i] = gen_rand_int(minInt, maxInt);
-        }
-        for (int i = 0; i < supplementaryIntsSize; i++)
+            // Generate the inputs
+            int requiredIntsSize = gen_rand_int(requiredIntsMinSize, requiredIntsMaxSize);
+            int supplementaryIntsSize = gen_rand_int(supplementaryIntsMinSize, supplementaryIntsMaxSize);
+            requiredInts.resize(requiredIntsSize);
+            supplementaryInts.resize(supplementaryIntsSize);
+            for (int i = 0; i < requiredIntsSize; i++)
+            {
+                requiredInts[i] = gen_rand_int(minInt, maxInt);
+            }
+            for (int i = 0; i < supplementaryIntsSize; i++)
+            {
+                supplementaryInts[i] = gen_rand_int(minInt, maxInt);
+            }
+            modulus = gen_rand_int(minModulus, maxModulus);
+            desiredModulo = gen_rand_int(0, modulus - 1);
+
+            // Start the races
+
+            auto start = chrono::high_resolution_clock::now();
+            auto end = chrono::high_resolution_clock::now();
+
+            // Measure the runtime of joey_redux
+            start = chrono::high_resolution_clock::now();
+            vector<int> test = findLowestCombination_JR(requiredInts, supplementaryInts, desiredModulo, modulus);
+            end = chrono::high_resolution_clock::now();
+            auto joey_redux_runtime = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+            auto joey_rr_seconds = joey_redux_runtime / 1e9;
+            if (test.size() == 0)
+            {
+                // Joey-redux is faster when there is no answer, so skip the flpmc test to save time
+                // std::cout << "joey-redux did not find an answer, skipping this random gen" << std::endl;
+                continue;
+            }
+
+            std::cout << "----------------\nconfirmed answer, racing now..." << std::endl;
+            std::cout << "\tRun: " << run+1 << "/" << maxRuns << std::endl;
+
+            // Measure the runtime of flpmc
+            start = chrono::high_resolution_clock::now();
+            findLowestCombination_FLPMC(requiredInts, supplementaryInts, desiredModulo, modulus);
+            end = chrono::high_resolution_clock::now();
+            auto flpmc_runtime = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
+            auto flpmc_seconds = flpmc_runtime / 1e9;
+
+            answer = (flpmc_runtime > joey_redux_runtime) ? findLowestCombination_JR(requiredInts, supplementaryInts, desiredModulo, modulus) : findLowestCombination_FLPMC(requiredInts, supplementaryInts, desiredModulo, modulus);
+            std::cout << "winner: " << ((flpmc_runtime > joey_redux_runtime) ? "joey-redux" : "flpmc") << std::endl;
+            // Print the runtimes
+            std::cout << "flpmc runtime: \t\t" << flpmc_runtime << " nanoseconds \t(" << flpmc_seconds << "s)" << endl;
+            std::cout << "joey-redux runtime: \t" << joey_redux_runtime << " nanoseconds \t(" << joey_rr_seconds << "s)" << endl;
+
+            if (flpmc_runtime > joey_redux_runtime)
+            {
+                joeyWins++;
+            }
+            else
+            {
+                flpmcWins++;
+            }
+
+        } while (answer.size() == 0);
+
+        std::cout << "\nSolved problem details\n";
+        std::cout << "Required Ints: ";
+        for (int i : requiredInts)
         {
-            supplementaryInts[i] = gen_rand_int(minInt, maxInt);
+            std::cout << i << " ";
         }
-        modulus = gen_rand_int(minModulus, maxModulus);
-        desiredModulo = gen_rand_int(0, modulus - 1);
-
-        // Start the races
-
-        auto start = chrono::high_resolution_clock::now();
-        auto end = chrono::high_resolution_clock::now();
-
-        // Measure the runtime of joey_redux
-        start = chrono::high_resolution_clock::now();
-        vector<int> test = findLowestCombination_JR(requiredInts, supplementaryInts, desiredModulo, modulus);
-        end = chrono::high_resolution_clock::now();
-        auto joey_redux_runtime = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-        auto joey_rr_seconds = joey_redux_runtime / 1e9;
-        if(test.size() == 0)
+        std::cout << std::endl;
+        std::cout << "Supplementary Ints: ";
+        for (int i : supplementaryInts)
         {
-            // Joey-redux is faster when there is no answer, so skip the flpmc test to save time
-            //std::cout << "joey-redux did not find an answer, skipping this random gen" << std::endl;
-            continue;
+            std::cout << i << " ";
         }
+        std::cout << std::endl;
+        std::cout << "Desired Modulo: " << desiredModulo << std::endl;
+        std::cout << "Modulus: " << modulus << std::endl;
+        std::cout << "Lowest Sum: ";
+        for (int i : answer)
+        {
+            std::cout << i << " ";
+        }
+        std::cout << std::endl;
+        std::cout << "Sum: " << accumulate(answer.begin(), answer.end(), 0) << std::endl;
+        std::cout << "Modulus check: " << accumulate(answer.begin(), answer.end(), 0) << "%" << modulus << " = " << accumulate(answer.begin(), answer.end(), 0) % modulus << " (desired modulo: " << desiredModulo << ")" << std::endl;
+        run++;
+    } while (run < maxRuns);
 
-        std::cout<<"confirmed answer, racing now..."<<std::endl;
-
-        // Measure the runtime of flpmc
-        start = chrono::high_resolution_clock::now();
-        findLowestCombination_FLPMC(requiredInts, supplementaryInts, desiredModulo, modulus);
-        end = chrono::high_resolution_clock::now();
-        auto flpmc_runtime = chrono::duration_cast<chrono::nanoseconds>(end - start).count();
-        auto flpmc_seconds = flpmc_runtime / 1e9;
-
-        answer = (flpmc_runtime > joey_redux_runtime) ? findLowestCombination_JR(requiredInts, supplementaryInts, desiredModulo, modulus) : findLowestCombination_FLPMC(requiredInts, supplementaryInts, desiredModulo, modulus);
-
-        // Print the runtimes
-        std::cout << "flpmc runtime: \t\t" << flpmc_runtime << " nanoseconds \t(" << flpmc_seconds << "s)" << endl;
-        std::cout << "joey-redux runtime: \t" << joey_redux_runtime << " nanoseconds \t(" << joey_rr_seconds << "s)" << endl;
-
-    } while (answer.size() == 0);
-
-    std::cout << "Solved problem details" << std::endl;
-    std::cout << "Required Ints: ";
-    for (int i : requiredInts)
-    {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "Supplementary Ints: ";
-    for (int i : supplementaryInts)
-    {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "Desired Modulo: " << desiredModulo << std::endl;
-    std::cout << "Modulus: " << modulus << std::endl;
-    std::cout << "Lowest Sum: ";
-    for (int i : answer)
-    {
-        std::cout << i << " ";
-    }
-    std::cout << std::endl;
-    std::cout << "Sum: " << accumulate(answer.begin(), answer.end(), 0) << std::endl;
-    std::cout << "Modulus check: " << accumulate(answer.begin(), answer.end(), 0) << "%" << modulus << " = " << accumulate(answer.begin(), answer.end(), 0) % modulus << " (desired modulo: " << desiredModulo << ")" << std::endl;
+    std::cout << "joey-redux wins: " << joeyWins << std::endl;
+    std::cout << "flpmc wins: " << flpmcWins << std::endl;
 
     return 0;
 }

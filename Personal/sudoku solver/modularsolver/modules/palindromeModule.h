@@ -32,4 +32,20 @@ bool isPalindromeSafe(const std::vector<std::vector<int>> &board, int row, int c
     return true; // All palindromes are safe
 }
 
+std::vector<int> getPalindromeLogicalNums(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+    std::vector<std::vector<std::pair<int, int>>> *palindromeData = static_cast<std::vector<std::vector<std::pair<int, int>>> *>(data);
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isPalindromeSafe(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif // PALINDROME_MODULE_H

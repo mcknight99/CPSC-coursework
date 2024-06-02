@@ -98,4 +98,20 @@ bool isSafe(const std::vector<std::vector<int>> &board, int row, int col, int nu
     return true;
 }
 
+// Function to get the logical numbers for a given position
+std::vector<int> getLogicalNums(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isSafe(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif // SOLVEMODULARSUDOKU_H

@@ -175,4 +175,36 @@ bool isThermometersSafe_Nondecreasing(const std::vector<std::vector<int>> &board
     return true; // All thermometers are safe (nondecreasing)
 }
 
+std::vector<int> getThermometersLogicalNums_StrictlyIncreasing(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+    std::vector<std::vector<std::pair<int, int>>> *thermometerData = static_cast<std::vector<std::vector<std::pair<int, int>>> *>(data);
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isThermometersSafe_StrictlyIncreasing(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
+std::vector<int> getThermometersLogicalNums_Nondecreasing(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+    std::vector<std::vector<std::pair<int, int>>> *thermometerData = static_cast<std::vector<std::vector<std::pair<int, int>>> *>(data);
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isThermometersSafe_Nondecreasing(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif // THERMOMETER_MODULE_H

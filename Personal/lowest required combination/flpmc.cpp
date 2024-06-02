@@ -5,7 +5,7 @@
 
 #include <chrono> 
 
-bool verbose = false;
+bool verbose = true;
 
 // Goal: find the lowest combination of supplementary ints that when added to the required ints,
 // results in a sum that is a multiple of a given modulus
@@ -33,10 +33,32 @@ bool bit(int x, int i) { return (x >> i) & 1; }
 // Found that sorting the supplementary ints in descending order before iterating through them made the program run slower.
 // Could run faster if sorted in ascending order at vastly larger sizes?
 // At what point does the sort time outweigh the time saved by iterating through the supplementary ints in a more efficient order?
+// Further thought: sorting it doesn't really give an advantage when I don't know the real minimum sum, so that sorting doesn't make it faster when it is going to iterate everything anyways
 
 // A sort of random ints effectively will not work as a sort
 // But if we sort by their modulos and create a map of modulos to their ints, we can find modulos that we need to get closer to the desired modulo -> perhaps future iteration -> flpmc-redux?
 // ^funny bc this is how i solved it first by head/on paper; this should significantly reduce the time complexity of the program (? at least if done well. I'm curious to see Caroline's implementation)
+
+// final notes:
+// how to guarantee most efficient modulo combo to value combo?
+// my current fastest runtime is with the best answers @ the start of the list & worst runtime is with best answers @ of the list
+// what are the best answers and how can i get them to the start/get the worst to the end?
+// any modulo added to the reqSum that takes it over the modulo gets moved to end?
+
+// sort by modulo, find difference to desired modulo,
+//re-call findLowestPossibleSum on the modulo sorted ints and the difference to the desired modulo
+// still wouldn't guarantee lowest possible, just the simplest solution (least nums required to get to the desired modulo) 
+
+// breaking down the problem:
+// %2 only has to find the lowest value that changes the mod to the desired mod
+// %3 only has to find the lowest value that changes the mod to the desired mod. if no single works out that way, then the lowest combination of 2 that works
+// %4 only has to find the lowest value that changes the mod to the desired mod. if no single works out that way, then the lowest combination of 2 that works, then 3
+// etc...
+// rerun fLC with the ints with the modulos that are closest to the desired modulo 
+// if unsatisfied, rerun with the next closest modulos
+// alternatively, look for a perfect mod to sum to. if no perfect mod, then sort by nums ascnd; find the first two that sum to the desired mod, then the first three, etc.
+
+//can only take max 30 supplementary ints because of the 2^31-1 int limit
 std::vector<int> findLowestCombination(const std::vector<int> &requiredInts, const std::vector<int> &supplementaryInts, int desiredModulo, int modulus)
 {
     std::vector<int> lowestCombination;
@@ -81,8 +103,8 @@ int main()
     auto start = std::chrono::high_resolution_clock::now();
 
     // Example usage
-    std::vector<int> requiredInts = {25603};
-    std::vector<int> supplementaryInts = {31892, 41486, 21731, 32129, 47905, 14806, 30720, 29367, 209, 31623, 26695, 4294, 45121, 35513, 17829, 15267, 412, 38022, 34499, 37021, 22538, 13989, 44480, 48542};
+    std::vector<int> requiredInts = {1880};
+    std::vector<int> supplementaryInts = {2414, 1474, 893, 740, 1261, 1403, 3005};
     int desiredModulo = 0;
     int modulus = 25;
 

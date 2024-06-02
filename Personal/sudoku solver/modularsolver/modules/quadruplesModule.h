@@ -77,4 +77,20 @@ bool isQuadruplesSafe(const std::vector<std::vector<int>> &board, int row, int c
     return true;
 }
 
+std::vector<int> getQuadruplesLogicalNums(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+    std::vector<std::pair<std::vector<std::pair<int, int>>, std::vector<int>>> *quadruplesData = static_cast<std::vector<std::pair<std::vector<std::pair<int, int>>, std::vector<int>>> *>(data);
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isQuadruplesSafe(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif // QUADRUPLES_MODULE_H

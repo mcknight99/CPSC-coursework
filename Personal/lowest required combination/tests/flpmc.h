@@ -37,20 +37,18 @@ bool bit(int x, int i) { return (x >> i) & 1; }
 // At what point does the sort time outweigh the time saved by iterating through the supplementary ints in a more efficient order?
 std::vector<int> findLowestCombination_FLPMC(const std::vector<int> &requiredInts, const std::vector<int> &supplementaryInts, int desiredModulo, int modulus)
 {
-    std::vector<int> sortedSupplementaryInts = supplementaryInts;
-    std::sort(sortedSupplementaryInts.begin(), sortedSupplementaryInts.end());
     std::vector<int> lowestCombination;
     int lowestCombinationSum = INT_MAX;
-    for (int i = 0; i < pow(2, sortedSupplementaryInts.size()); ++i)
+    for (int i = 0; i < pow(2, supplementaryInts.size()); ++i)
     {
         std::vector<int> utilizedInts = {requiredInts};
         int sum = accumulate(requiredInts.begin(), requiredInts.end(), 0);
-        for (int j = 0; j < sortedSupplementaryInts.size(); ++j)
+        for (int j = 0; j < supplementaryInts.size(); ++j)
         {
             if (bit(i, j) == 1)
             {
-                utilizedInts.push_back(sortedSupplementaryInts[j]);
-                sum += sortedSupplementaryInts[j];
+                utilizedInts.push_back(supplementaryInts[j]);
+                sum += supplementaryInts[j];
             }
         }
 

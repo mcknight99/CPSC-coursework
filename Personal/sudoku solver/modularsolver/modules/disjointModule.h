@@ -17,4 +17,19 @@ bool isDisjointSafe(const std::vector<std::vector<int>> &board, int row, int col
     return true;
 }
 
+std::vector<int> getDisjointLogicalNums(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isDisjointSafe(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif /* DISJOINT_H */

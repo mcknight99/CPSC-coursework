@@ -53,4 +53,20 @@ bool isCagesSafe(const std::vector<std::vector<int>> &board, int row, int col, i
     return true; // All cages are safe
 }
 
+std::vector<int> getCagesLogicalNums(const std::vector<std::vector<int>> &board, int row, int col, void *data)
+{
+    std::vector<int> logicalNums;
+    std::vector<std::pair<std::vector<std::pair<int, int>>, int>> *cagesData = static_cast<std::vector<std::pair<std::vector<std::pair<int, int>>, int>> *>(data);
+
+    for (int i = 1; i <= 9; i++)
+    {
+        if (isCagesSafe(board, row, col, i, data))
+        {
+            logicalNums.push_back(i);
+        }
+    }
+
+    return logicalNums;
+}
+
 #endif
