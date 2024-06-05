@@ -188,6 +188,14 @@ std::vector<int> getThermometersLogicalNums_StrictlyIncreasing(const std::vector
         }
     }
 
+    // better logical thermos:
+    // test if the row and col is in a thermo
+    // if it is, test the safe numbers of every cell in the thermo
+    // determine if only one thermo is possible using those values (?) 
+
+    // SI nums cant be greater than the next value minus the distance to the next valued cell
+    // SI nums cant be less than the previous value plus the distance to the previous valued cell
+
     return logicalNums;
 }
 
@@ -203,6 +211,8 @@ std::vector<int> getThermometersLogicalNums_Nondecreasing(const std::vector<std:
             logicalNums.push_back(i);
         }
     }
+
+
 
     return logicalNums;
 }
