@@ -4,6 +4,9 @@
 #include <vector>
 #include <fstream>
 
+// Would be funny to find the opposite- the worst possible pairs 
+// By biasing the least common letters and using as many shared letters as possible between the least common letters
+
 bool isValidPair(const std::string &word1, const std::string &word2)
 {
     // Check if either word ends with 's'
