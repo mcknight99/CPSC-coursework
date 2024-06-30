@@ -1,0 +1,5 @@
+requirements: Docker (experimental = true), QEMU
+
+docker build -t lunk_alarm .
+
+docker run --privileged --name traffic_light_sim -it --rm traffic_light_control
