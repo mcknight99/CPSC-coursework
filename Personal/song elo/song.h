@@ -24,12 +24,11 @@ public:
 
     static void rescore(Song &a, float Sa, Song &b, float Sb, float K = 100)
     {
+        float oldEloA = a.elo;
+        float oldEloB = b.elo;
         // dividing by 480 according to Jeff Sonas
-        std::cout << "Old elo of " << a.name << "=" << a.elo << " and " << b.name << "=" << b.elo << std::endl;
         float Ea = 1 / (1 + pow(10, (b.elo - a.elo) / 480));
         float Eb = 1 / (1 + pow(10, (a.elo - b.elo) / 480));
-
-        std::cout << "Estimated probability of " << a.name << " winning=" << Ea << " and " << b.name << " winning=" << Eb << std::endl;
 
         a.elo = a.elo + K * (Sa - Ea);
         b.elo = b.elo + K * (Sb - Eb);
@@ -45,7 +44,9 @@ public:
             b.elo = 0;
         }
 
-        std::cout << "New elo of " << a.name << "=" << a.elo << " and " << b.name << "=" << b.elo << std::endl;
+        std::cout << a.name << " elo = " << oldEloA << "->" << a.elo << " and " << b.name << " elo = " << oldEloB << "->" << b.elo << std::endl;
+        std::cout << a.name << " chance = " << Ea*100 << "% and " << b.name << " chance = " << Eb*100 << "%" << std::endl;
+
     }
 
     // friend function to overload the << operator ease of csv output
@@ -59,6 +60,13 @@ public:
     {
         return name + " by " + artist + ". Link: https://youtu.be/" + link + "/";
     }
+
+    friend bool operator==(const Song &a, const Song &b)
+    {
+        return a.name == b.name && a.artist == b.artist && a.link == b.link;
+    }
 };
+
+
 
 #endif // SONG_H

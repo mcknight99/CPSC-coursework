@@ -1,0 +1,63 @@
+This project was designed around a "game" where the user is given two of their liked songs
+and they have to choose which one they prefer between the two. The two songs are then rated
+according to the player's choice, and stored back 
+
+Instructions:
+    requirements versions used: Python 3.11.4, pip 24.11.1, g++ 13.1.0
+    commands that start with > assume that you are using a terminal in the same folder as this README
+
+    enter
+        > pip install ytmusicapi
+
+    when that finishes, enter either
+        > ytmusicapi oauth
+    OR
+        > ytmusicapi browswer
+    oauth is generally the easier method, though it times out much sooner.
+    the browser method doesn't time out for about two years, but that's overkill for a one-time use import
+
+    make a songs.csv in this folder, or select the pre-existing songs.csv
+    WARNING: the py script will overwrite any pre-existing data in the songs.csv
+    
+    once you have a songs.csv and your oauth.json or browser.json, enter
+        > make import
+    and follow the instructions. make sure to copy both file locations as absolute paths
+
+    when that finishes, run
+        > make run
+
+    enter either '1' or '2' depending on which song you prefer. 
+    enter -1 to quit the program. this will also trigger a write to the top 100 csv
+
+    to continue scoring again, simply re-enter
+        > make run
+
+
+Update Instructions:
+    > make import
+        use the same authentication method as before
+        make a new csv called "new_songs.csv", and insert that instead of songs.csv into the py import
+
+    > make updateCSV
+        Done!
+
+This deletes your new_songs.csv once it is finished updating into songs.csv
+This will also output a same_songs.csv warning you about duplicates that were left in because they had mismatching links
+
+-----------------------------------------------------------------------------------------------------------------------
+
+
+Known bugs:
+
+
+Fixed bugs:
+- Losing ratings if elo_testing.cpp executable closed prematurely (ex. Ctrl+C)
+- User misinputs cause cin loops, causing fake cin statements, throwing off numerous ratings.
+- Commas in song titles or author names getting ruined by csv parsing
+
+
+Desired changes:
+- Replace the comma as the separator in the csv with another character to allow commas in titles and authors
+- An "update" import, where the import py script doesn't overwrite old songs and their ratings while adding new songs with default ratings
+    + this can either be done by importing to an "update.csv" and sending it to a c++ script to only add non-duplicates between update.csv and 
+    songs.csv, or have some line(s) in the py import script to check if the given songs.csv already has content and only writes non duplicate songs
