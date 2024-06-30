@@ -26,17 +26,18 @@ int main()
     {
 
         std::vector<Song> songs = readFile("songs.csv");
+        std::vector<Song> randomSongs;
         for (int i = 0; i < 5; i++)
         {
             int rand = gen_rand_int(0, songs.size() - 1);
-            songs.push_back(songs[rand]);
+            randomSongs.push_back(songs[rand]);
         }
 
-        std::sort(songs.begin(), songs.end(), [](Song a, Song b)
+        std::sort(randomSongs.begin(), randomSongs.end(), [](Song a, Song b)
                   { return a.pulls < b.pulls; });
-
-        Song a = songs[0];
-        Song b = songs[1];
+        
+        Song a = randomSongs[0];
+        Song b = randomSongs[1];
 
         std::cout << "\nWhich song do you like more?\tOr -1 to quit" << std::endl;
         std::cout << "1. " << a.toString() << std::endl;
