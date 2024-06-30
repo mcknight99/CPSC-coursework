@@ -12,12 +12,14 @@ public:
     std::string artist;
     float elo;
     int pulls; // implemented to eventually pull songs with less pulls more often
-    Song(std::string name = "UNNAMED", std::string artist = "UNSPECIFIED", float elo = 100, int pulls = 0)
+    std::string link;
+    Song(std::string name = "UNNAMED", std::string artist = "UNSPECIFIED", float elo = 100, int pulls = 0, std::string link = "UNSPECIFIED")
     {
         this->name = name;
         this->artist = artist;
         this->elo = elo;
         this->pulls = pulls;
+        this->link = link;
     }
 
     static void rescore(Song &a, float Sa, Song &b, float Sb, float K = 100)
@@ -44,6 +46,18 @@ public:
         }
 
         std::cout << "New elo of " << a.name << "=" << a.elo << " and " << b.name << "=" << b.elo << std::endl;
+    }
+
+    // friend function to overload the << operator ease of csv output
+    friend std::ostream &operator<<(std::ostream &out, const Song &s)
+    {
+        out << s.name << "," << s.artist << "," << s.elo << "," << s.pulls << "," << s.link;
+        return out;
+    }
+
+    std::string toString()
+    {
+        return name + " by " + artist + ". Link: https://youtu.be/" + link + "/";
     }
 };
 

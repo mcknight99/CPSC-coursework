@@ -6,71 +6,115 @@
 #include <random>
 #include <chrono>
 #include <algorithm>
+#include <sstream>
+
+// this program picks two random songs from songs.csv and has the user pick which one they like more
+// the program randomly picks 5 songs and chooses the two lowest draw counts to compare to ensure that more songs are compared equally
+// the program then uses the elo system to update the elo of the two songs
+// the program rewrites the songs.csv file with the updated elo ratings to ensure that the elo ratings are saved every iteration
+// the program will continue to run until the user decides to stop
+// the program will also write out the top 100 songs to a file called top_songs.csv after every iteration
 
 int gen_rand_int(int min, int max); // forward declaration
+std::vector<Song> readFile(std::string filename);
+void writeFile(std::vector<Song> songs, std::string filename);
 
 int main()
 {
-    //rewrite this to not use memory, but to re-reference the file each time and update the file each time
-    //this also saves the results in case the program crashes
+    bool quit = false;
+    while (!quit)
+    {
+
+        std::vector<Song> songs = readFile("songs.csv");
+        for (int i = 0; i < 5; i++)
+        {
+            int rand = gen_rand_int(0, songs.size() - 1);
+            songs.push_back(songs[rand]);
+        }
+
+        std::sort(songs.begin(), songs.end(), [](Song a, Song b)
+                  { return a.pulls < b.pulls; });
+
+        Song a = songs[0];
+        Song b = songs[1];
+
+        std::cout << "\nWhich song do you like more?\tOr -1 to quit" << std::endl;
+        std::cout << "1. " << a.toString() << std::endl;
+        std::cout << "2. " << b.toString() << std::endl;
+
+        int choice;
+        std::cin >> choice;
+        // ensure that the user picks a valid choice
+        while (choice != 1 && choice != 2 && choice != -1)
+        {
+            std::cout << "Invalid choice. Please pick 1 or 2 or -1 to quit" << std::endl;
+            std::cin.clear();
+            std::cin.ignore(10000, '\n');
+            std::cin >> choice;
+        }
+
+        if (choice == -1)
+        {
+            quit = true;
+            break;
+        }
+        // Rescore
+        Song::rescore(a, choice == 1, b, choice == 2);
+
+        // rather than using find for a vector, I just iterate through the vector and replace the song with the updated song
+        // sometimes duplicates exist and this helps weed them out, as if they trickle up to the top 100, they take up two spots
+        for (size_t i = 0; i < songs.size(); i++)
+        {
+            if (songs[i].name == a.name)
+            {
+                songs[i] = a;
+            }
+            if (songs[i].name == b.name)
+            {
+                songs[i] = b;
+            }
+        }
+
+        writeFile(songs, "songs.csv");
+
+        std::sort(songs.begin(), songs.end(), [](Song a, Song b)
+                  { return a.elo > b.elo; });
+
+        writeFile(songs, "top_100.csv");
+    }
+}
+
+std::vector<Song> readFile(std::string filename)
+{
     std::vector<Song> songs;
     std::ifstream file("songs.csv");
     std::string line;
     while (std::getline(file, line))
     {
-        std::string name = line.substr(0, line.find(","));
-        line = line.substr(line.find(",") + 1);
-        std::string artist = line.substr(0, line.find(","));
-        line = line.substr(line.find(",") + 1);
-        float elo = std::stof(line);
-        line = line.substr(line.find(",") + 1);
-        int pulls = std::stoi(line);
-        songs.push_back(Song(name, artist, elo, pulls));
+        std::string name, artist, link;
+        float elo;
+        int pulls;
+        std::stringstream ss(line);
+        std::getline(ss, name, ',');
+        std::getline(ss, artist, ',');
+        ss >> elo;
+        ss.ignore();
+        ss >> pulls;
+        ss.ignore();
+        std::getline(ss, link, ',');
+        songs.push_back(Song(name, artist, elo, pulls, link));
     }
+    file.close();
+    return songs;
+}
 
-    float result = 0;
-    do
+void writeFile(std::vector<Song> songs, std::string filename)
+{
+    std::ofstream out(filename);
+    for (size_t i = 0; i < songs.size(); i++)
     {
-        int rand1 = gen_rand_int(0, songs.size() - 1);
-        Song *thissong = &songs[rand1];
-        int rand2;
-        Song *randomsong;
-        do
-        {
-            rand2 = gen_rand_int(0, songs.size() - 1);
-            randomsong = &songs[rand2];
-        } while (thissong == randomsong);
-
-        std::cout << "Song " << thissong->name << " vs " << randomsong->name;
-        std::cout << "\t(or -1 to quit)" << std::endl;
-        std::cout << "Enter 1 if " << thissong->name << " wins, 0 if " << randomsong->name << " wins: ";
-        float result;
-        std::cin >> result;
-        if (result == -1)
-        {
-            break;
-        }
-        Song::rescore(*thissong, result, *randomsong, 1 - result, 50);
-        std::cout << std::endl;
-    } while (result != -1);
-
-
-    // print the order of the songs by elo
-    std::sort(songs.begin(), songs.end(), [](Song a, Song b) { return a.elo > b.elo; });
-    for (int i = 0; i < songs.size(); i++)
-    {
-        std::cout << songs[i].name << " by " << songs[i].artist << " with elo " << songs[i].elo << std::endl;
+        out << songs[i] << std::endl;
     }
-
-    // write the songs back to the file
-    std::ofstream output("songs.csv", std::ios::trunc);
-    for (int i = 0; i < songs.size(); i++)
-    {
-        output << songs[i].name << "," << songs[i].artist << "," << songs[i].elo << "," << songs[i].pulls << std::endl;
-    }
-    output.close();
-    
-    return 0;
 }
 
 int gen_rand_int(int min, int max)
