@@ -30,12 +30,19 @@ int main()
         for (int i = 0; i < 5; i++)
         {
             int rand = gen_rand_int(0, songs.size() - 1);
-            randomSongs.push_back(songs[rand]);
+            if (std::find(randomSongs.begin(), randomSongs.end(), songs[rand]) == randomSongs.end())
+            {
+                randomSongs.push_back(songs[rand]);
+            }
+            else
+            {
+                i--; // if a duplicate is found, decrement i to ensure that 5 unique songs are picked
+            }
         }
 
         std::sort(randomSongs.begin(), randomSongs.end(), [](Song a, Song b)
                   { return a.pulls < b.pulls; });
-        
+
         Song a = randomSongs[0];
         Song b = randomSongs[1];
 
