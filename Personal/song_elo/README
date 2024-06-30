@@ -3,8 +3,9 @@ and they have to choose which one they prefer between the two. The two songs are
 according to the player's choice, and stored back 
 
 Instructions:
-    requirements versions used: Python 3.11.4, pip 24.11.1, g++ 13.1.0
-    commands that start with > assume that you are using a terminal in the same folder as this README
+    requirements versions used: Python 3.11.4, pip 24.11.1, g++ 13.1.0, (optional) GNU Make 4.4.1
+    commands starting with > assume that you are using a terminal in the same folder as this README
+    if you aren't using GNU Make, open the makefile and enter the commands when you see > make {label}
 
     enter
         > pip install ytmusicapi
