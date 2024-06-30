@@ -12,7 +12,7 @@ Instructions:
     when that finishes, enter either
         > ytmusicapi oauth
     OR
-        > ytmusicapi browswer
+        > ytmusicapi browser
     oauth is generally the easier method, though it times out much sooner.
     the browser method doesn't time out for about two years, but that's overkill for a one-time use import
 

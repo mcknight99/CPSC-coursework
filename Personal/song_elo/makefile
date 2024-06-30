@@ -1,6 +1,6 @@
 # Command to run the elo program using elo_testing.cpp
 run:
-	g++ -o elo_testing.e elo_testing.cpp -Wall -Werror -Wpedantic
+	g++ -o elo_testing.stp elo_testing.cpp -Wall -Werror -Wpedantic 
 	./elo_testing.e
 
 # Command to import songs from ytmusicapi to songs.csv using importsongs.py
