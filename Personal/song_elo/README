@@ -28,7 +28,7 @@ Instructions:
         > make run
 
     enter either '1' or '2' depending on which song you prefer. 
-    enter -1 to quit the program. this will also trigger a write to the top 100 csv
+    enter -1 to quit the program. this will also sort the songs by rating and write to sorted_ratings.csv
 
     to continue scoring again, simply re-enter
         > make run

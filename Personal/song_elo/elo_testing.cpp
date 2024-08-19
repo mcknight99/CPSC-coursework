@@ -80,7 +80,7 @@ int main()
     std::sort(songs.begin(), songs.end(), [](Song a, Song b)
               { return a.elo > b.elo; });
 
-    writeFile(songs, "top_100.csv");
+    writeFile(songs, "sorted_ratings.csv");
 }
 
 int gen_rand_int(int min, int max)
