@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Traffic Light Control</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+
+        .button {
+            display: inline-block;
+            padding: 15px 25px;
+            font-size: 24px;
+            cursor: pointer;
+            text-align: center;
+            text-decoration: none;
+            outline: none;
+            color: #fff;
+            background-color: #555;
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0 9px #999;
+            margin: 10px;
+        }
+
+        .button:active {
+            background-color: #333;
+            box-shadow: 0 5px #666;
+            transform: translateY(4px);
+        }
+
+        .red {
+            background-color: red;
+        }
+
+        .yellow {
+            background-color: yellow;
+            color: black;
+        }
+
+        .green {
+            background-color: green;
+        }
+
+        .on,
+        .off,
+        .alarm {
+            background-color: gray;
+        }
+    </style>
+</head>
+
+<body>
+
+    <h1>Traffic Light Control</h1>
+
+    <button class="button red" onclick="controlLight('red')">Red</button>
+    <button class="button yellow" onclick="controlLight('yellow')">Yellow</button>
+    <button class="button green" onclick="controlLight('green')">Green</button>
+    <br>
+    <button class="button off" onclick="controlLight('off')">Off</button>
+    <button class="button alarm" onclick="controlLight('alarm')">Alarm</button>
+
+    <script>
+        function controlLight(color) {
+            // Send a request to the ESP32 server
+            fetch('/' + color)
+                .then(response => response.text())
+                .then(data => console.log(data))
+                .catch(error => console.error('Error:', error));
+        }
+
+        setInterval(() => {
+            fetch(`/keep_alive`)
+                .then(response => response.text())
+                .then(data => console.log('Keep-alive:', data))
+                .catch(error => console.error('Keep-alive error:', error));
+        }, 30000); // 30 seconds interval
+    </script>
+
+</body>
+
+</html>

@@ -1,0 +1,9 @@
+cmd.exe
+    pio run -t uploadfs
+
+be wary of not exceeding available flash memory size in the custom partition table
+
+
+TODO:
+- password override lock/unlock
+- "print" function that serial's AND sends to the server and displays on the html (allows for)
