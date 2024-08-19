@@ -1,0 +1,12 @@
+i want to be able to input a list of pieces as a list of pair of coordinates, as well as a 2d array that stores month, day, day of the week, or null for each square. 
+then the user inputs the month, day, and day of the week and it should return a solved board where the pieces are placed such that the only three non-covered spots by the pieces are 
+the inputs from the user. pieces should be able to be rotated and mirrored to check all valid piece positions. each piece may only be used once. 
+the board must be strings to check validity of pieces not being placed on users' inputs or if the cell is a wall cell (no piece can go there and has no associated data). 
+the board doesn't necessarily have to be a square, so it also needs separate row and column dimensions
+
+Doing some research, looks like these are what can be used to improve the solve speed:
+https://en.wikipedia.org/wiki/Knuth%27s_Algorithm_X
+https://en.wikipedia.org/wiki/Exact_cover
+https://en.wikipedia.org/wiki/Dancing_Links
+
+Maybe someday I wrap back around to this, but today I am unfortunately far too busy to do a learning deep dive that I love to usually do
