@@ -1,0 +1,6 @@
+this is how the game works:
+1. each player rolls one die (range 1 to R) and the pip count gets added to each player's pip count
+2. each player then bets (separately, not a pot) based on confidence of winning from the pips 1 to R
+3. then the players roll a second time and adds that roll to their pip count. 
+4. steps 2 and 3 must repeat and add to the running pips and bets if there is a pip tie in the winners, the bets do not need to be raised in this case. steps 2 and 3 may repeat if the players choose to continue betting, but the bets must raise if the players choose to continue
+5. once the game is over with one defined player with the most pips, each loser must forfeit an amount equal to (winner's bets/loser's bets)*(winner's pips/loser's pips)
