@@ -1,0 +1,36 @@
+Hashi is a game where each island must have the amount of bridges that the island specifies.
+Bridges can only travel on cardinal directions and can have 1 or 2 bridges. 
+Bridges cannot cross existing bridges
+
+Initial plans:
+char 2d array to store the Hashi board
+each island will be the number 1-8
+a single bridge will be ' or -
+a double bridge will be " or = 
+
+When printing, it will keep the original 1-8 number in the island place
+it will replace ' and " with | and 
+
+ 4=======3
+  4  5 3 -
+  =      2
+  =3 6 5 -
+ 4=      -
+  =2 3 3 -
+  =      -
+  3------2
+ 3 2 3  2
+        
+
+Plans: start with the board, pass into the solving function
+the function starts by doing guaranteed moves and ignoring impossible moves (root 1-- root 1, diminished 1's are fine)
+    N required bridges and N available connections to be made (ex. an 8, a 6 with 3 islands, a 4 with 2 islands, a 2 with one island, a 1 with 1 island)
+    N required bridges and floor(N-1) bridges can be made (ex. a 3 with 2 islands that can each handle 2 makes one bridge to each, making the 3 a 1)
+keep making guaranteed moves until there are no more guaranteed moves, then call a recursive solver to make guess moves
+is a square problem a guaranteed move? -> with square problems with 2s and 1s, the 2s can fulfill the 1s. all 2s would get stuck in a loop, same with all 1s. this would get solved by the recursive solver 
+
+recursive solver:
+given a board, make a guessing move. do all guaranteed moves. If no guaranteed moves, recurse. 
+
+
+I'm thinking that the solver can work by determining the "remaining" value of a island/island by subtracting existing bridges from the required count. Possible bridges can also be determined by next islands in each direction and existing bridges
