@@ -3,10 +3,16 @@
 #include <WebServer.h>
 #include <LittleFS.h> // for not having to have the raw html in the main
 #include "servointerface.h"
-#include <ESPmDNS.h>  // Include the mDNS library to maintain a local hostname making it accessible via domain name rather than IP address
+#include <ESPmDNS.h> // Include the mDNS library to maintain a local hostname making it accessible via domain name rather than IP address
+#include <Adafruit_NeoPixel.h>
 
-const char *ssid = "easywifiname";
-const char *password = "easywifipassword";
+// Can I make it its own WAP?
+// WiFi.softAP(ssid, password);
+
+// TODO: REPLACE THE CONSTS WITH DEFINES
+
+const char *ssid = "The boys";
+const char *password = "607AFA!!";
 const String hostname = "lightcontrol"; // The hostname to use for mDNS, will be accessible via lightcontrol.local on the network above
 
 // Create a web server on port 80
@@ -16,13 +22,22 @@ WebServer server(80);
 ServoInterface ms24;
 
 // Define GPIO pins
-const int redPin = 17;
-const int yellowPin = 18;
-const int greenPin = 14;
-const int amberPin = 12;
-const int alarmPin = 6;
+const int redPin = 4;
+const int yellowPin = 5;
+const int greenPin = 6;
+const int alarmPin = 7;
 
-const int servoPin = 38;
+
+const int servoPin = 19;
+
+//const int digitalLEDPin = 8; // digital rgb pin 8 or 11???
+// Define the NeoPixel strip
+#define PIN 8
+#define NUMPIXELS 1
+
+Adafruit_NeoPixel rgb_strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+
+
 
 // put function declarations here:
 void handleRoot();
@@ -35,10 +50,13 @@ void handleKeepAlive();
 void listDir(fs::FS &fs, const char *dirname, uint8_t levels);
 void setupWifi(const char *ssid, const char *password, int timeout);
 void setupMDNS(String domainName, int timeout);
+String getLocalIPAddress();
+void handleIpRequest();
+
 
 void setup()
 {
-  //delay(10000);
+  // delay(10000);
 
   Serial.begin(115200);
 
@@ -47,14 +65,29 @@ void setup()
   pinMode(redPin, OUTPUT);
   pinMode(yellowPin, OUTPUT);
   pinMode(greenPin, OUTPUT);
-  pinMode(amberPin, OUTPUT);
   pinMode(alarmPin, OUTPUT);
+  pinMode(alarmPin, OUTPUT);
+  rgb_strip.begin();
 
-  digitalWrite(redPin, HIGH);
-  digitalWrite(yellowPin, HIGH);
-  digitalWrite(greenPin, HIGH);
-  digitalWrite(amberPin, HIGH);
-  digitalWrite(alarmPin, HIGH);
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(alarmPin, LOW);
+  digitalWrite(alarmPin, LOW);
+  rgb_strip.setPixelColor(0, rgb_strip.Color(0, 0, 0));
+  delay(500);
+  rgb_strip.setPixelColor(0, rgb_strip.Color(10, 0, 0));
+  rgb_strip.show();
+  delay(500);
+  rgb_strip.setPixelColor(0, rgb_strip.Color(0, 10, 0));
+  rgb_strip.show();
+  delay(500);
+  rgb_strip.setPixelColor(0, rgb_strip.Color(0, 0, 10));
+  rgb_strip.show();
+  delay(500);
+  rgb_strip.setPixelColor(0, rgb_strip.Color(0, 0, 0));
+  rgb_strip.show();
+  delay(500);
 
   // Mount LittleFS
   while (!LittleFS.begin())
@@ -88,6 +121,7 @@ void setup()
   server.on("/off", handleOff);
   server.on("/alarm", handleAlarm);
   server.on("/keep_alive", handleKeepAlive);
+  server.on("/ip", handleIpRequest);
 
   server.begin();
 
@@ -98,9 +132,25 @@ void setup()
   WiFi.setAutoConnect(true);
   WiFi.setAutoReconnect(true);
   WiFi.setSleep(false);
-  Serial.println("get autoconnect"+WiFi.getAutoConnect());
-  Serial.println("get autoreconnect"+WiFi.getAutoReconnect());
-  Serial.println("get sleep"+WiFi.getSleep());
+
+  Serial.println("Setup complete");
+
+ // Bootup communication sequence
+  digitalWrite(redPin, HIGH);
+  delay(500);
+  digitalWrite(redPin, LOW);
+  delay(500);
+  digitalWrite(yellowPin, HIGH);
+  delay(500);
+  digitalWrite(yellowPin, LOW);
+  delay(500);
+  digitalWrite(greenPin, HIGH);
+  delay(500);
+  digitalWrite(greenPin, LOW);
+  delay(500);
+  digitalWrite(alarmPin, HIGH);
+  delay(500);
+  digitalWrite(alarmPin, LOW);
 }
 
 void loop()
@@ -108,13 +158,13 @@ void loop()
   server.handleClient();
 
   // reconnect if connection is lost from wifi
-  //if (WiFi.status() != WL_CONNECTED)
-  //{
-  //  setupWifi(ssid, password, 10);
-  //}
-  
+  if (WiFi.status() != WL_CONNECTED)
+  {
+    setupWifi(ssid, password, 10);
+  }
+
   // reconnect if connection is lost from mDNS
-  //if(!MDNS.begin(hostname)) {
+  // if(!MDNS.begin(hostname)) {
   //  setupMDNS(hostname, 10);
   //}
 }
@@ -135,9 +185,10 @@ void handleRoot()
 // Function to turn on the red light
 void handleRed()
 {
-  digitalWrite(redPin, LOW);
-  digitalWrite(yellowPin, HIGH);
-  digitalWrite(greenPin, HIGH);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(alarmPin, LOW);
+  digitalWrite(redPin, HIGH);
   server.send(200, "text/plain", "Red Light ON");
   ms24.setAngle(0);
   Serial.println("Red Button Pressed");
@@ -146,9 +197,10 @@ void handleRed()
 // Function to turn on the yellow light
 void handleYellow()
 {
-  digitalWrite(redPin, HIGH);
-  digitalWrite(yellowPin, LOW);
-  digitalWrite(greenPin, HIGH);
+  digitalWrite(redPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(alarmPin, LOW);
+  digitalWrite(yellowPin, HIGH);
   server.send(200, "text/plain", "Yellow Light ON");
   ms24.setAngle(90);
   Serial.println("Yellow Button Pressed");
@@ -157,9 +209,10 @@ void handleYellow()
 // Function to turn on the green light
 void handleGreen()
 {
-  digitalWrite(redPin, HIGH);
-  digitalWrite(yellowPin, HIGH);
-  digitalWrite(greenPin, LOW);
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(alarmPin, LOW);
+  digitalWrite(greenPin, HIGH);
   server.send(200, "text/plain", "Green Light ON");
   ms24.setAngle(180);
   Serial.println("Green Button Pressed");
@@ -168,9 +221,10 @@ void handleGreen()
 // Function to turn off the lights
 void handleOff()
 {
-  digitalWrite(redPin, HIGH);
-  digitalWrite(yellowPin, HIGH);
-  digitalWrite(greenPin, HIGH);
+  digitalWrite(redPin, LOW);
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(alarmPin, LOW);
   server.send(200, "text/plain", "Lights Turned OFF");
   Serial.println("Off Button Pressed");
 }
@@ -178,11 +232,13 @@ void handleOff()
 // Function to handle alarm
 void handleAlarm()
 {
-  digitalWrite(alarmPin, LOW); // Activate the alarm speaker
-  digitalWrite(amberPin, LOW); // Activate the amber light
-  digitalWrite(redPin, HIGH);  
-  digitalWrite(yellowPin, HIGH); 
-  digitalWrite(greenPin, HIGH); 
+  digitalWrite(yellowPin, LOW);
+  digitalWrite(greenPin, LOW);
+  digitalWrite(alarmPin, HIGH); // Activate the alarm speaker
+  digitalWrite(redPin, HIGH); // Activate the red light
+  delay(1000);
+  digitalWrite(alarmPin, LOW); // Deactivate the alarm speaker
+  digitalWrite(redPin, LOW); // Deactivate the red light
   server.send(200, "text/plain", "Alarm Activated");
   Serial.println("Alarm Button Pressed");
 }
@@ -239,6 +295,7 @@ void listDir(fs::FS &fs, const char *dirname, uint8_t levels)
 // @param timeout: time in seconds to wait for connection
 void setupWifi(const char *ssid, const char *password, int timeout)
 {
+  rgb_strip.setPixelColor(0, rgb_strip.Color(0, 0, 0));
   WiFi.begin(ssid, password);
   int i = 0;
   while (WiFi.status() != WL_CONNECTED)
@@ -256,6 +313,8 @@ void setupWifi(const char *ssid, const char *password, int timeout)
   {
     Serial.println("Connected to WiFi");
     Serial.println(WiFi.localIP());
+    rgb_strip.setPixelColor(0, rgb_strip.Color(0, 10, 0));
+    rgb_strip.show();
   }
 }
 
@@ -279,6 +338,18 @@ void setupMDNS(String domainName, int timeout)
   if (MDNS.begin(domainName))
   {
     Serial.println("mDNS responder started");
-    //Serial.println(MDNS.port()); //?
+    // Serial.println(MDNS.port()); //?
   }
+}
+
+// Function to get the local IP address
+String getLocalIpAddress()
+{
+  return WiFi.localIP().toString();
+}
+
+// Function to handle IP request
+void handleIpRequest()
+{
+  server.send(200, "text/plain", getLocalIpAddress());
 }

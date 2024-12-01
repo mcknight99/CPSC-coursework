@@ -52,12 +52,20 @@
         .alarm {
             background-color: gray;
         }
+
+        .ip-address {
+            font-size: 14px;
+            color: gray;
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 
 <body>
 
     <h1>Traffic Light Control</h1>
+
+    <div id="ip-address" class="ip-address">Fetching IP address...</div>
 
     <button class="button red" onclick="controlLight('red')">Red</button>
     <button class="button yellow" onclick="controlLight('yellow')">Yellow</button>
@@ -68,12 +76,27 @@
 
     <script>
         function controlLight(color) {
-            // Send a request to the ESP32 server
+            // Send a request to the server
             fetch('/' + color)
                 .then(response => response.text())
                 .then(data => console.log(data))
                 .catch(error => console.error('Error:', error));
         }
+
+        function fetchIpAddress() {
+            fetch('/ip')
+                .then(response => response.text())
+                .then(ip => {
+                    document.getElementById('ip-address').textContent = `Local IP: ${ip}`;
+                })
+                .catch(error => {
+                    document.getElementById('ip-address').textContent = `Failed to fetch IP address`;
+                    console.error('Error fetching IP:', error);
+                });
+        }
+
+        // Fetch the IP address when the page loads
+        window.onload = fetchIpAddress;
 
         setInterval(() => {
             fetch(`/keep_alive`)

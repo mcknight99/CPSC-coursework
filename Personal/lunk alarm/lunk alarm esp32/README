@@ -1,7 +1,7 @@
-cmd.exe
+cmd.exe in the platformio project directory (has /data) with upload COM open
     pio run -t uploadfs
 
-be wary of not exceeding available flash memory size in the custom partition table
+be wary of not exceeding available flash memory size - do in the custom partition table
 
 
 TODO:

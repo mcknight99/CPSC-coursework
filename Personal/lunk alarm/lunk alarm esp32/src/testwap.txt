@@ -1,0 +1,57 @@
+#include <WiFi.h>
+#include <WebServer.h>
+
+// SSID and password for the Access Point
+const char* ssid = "Feathers3_AP";
+const char* password = "password123";  // Optional: Set a password for the AP
+
+// Create an instance of the web server
+WebServer server(80);
+
+void setup() {
+  // Start Serial Monitor
+  Serial.begin(115200);
+
+  // Set up the ESP32 as an Access Point
+  WiFi.softAP(ssid, password);
+  
+  // Get the IP address of the Access Point
+  IPAddress IP = WiFi.softAPIP();
+  Serial.print("AP IP address: ");
+  Serial.println(IP);
+
+  // Set up the web server routes
+  server.on("/", handleRoot);
+  server.on("/reset", handleReset);
+  server.begin();  // Start the web server
+
+  Serial.println("Web server started. Connect to the network and go to the IP address shown above.");
+}
+
+void loop() {
+  // Handle incoming client requests
+  server.handleClient();
+}
+
+// Function to handle requests to the root URL
+void handleRoot() {
+  server.send(200, "text/html", "<h1>Welcome to Feathers3 AP</h1><p>Use /reset to reboot the board.</p>");
+}
+
+// Function to handle the reset request
+void handleReset() {
+  String responseHtml = "<html><body>";
+  responseHtml += "<p>Rebooting...</p>";
+  responseHtml += "<script>";
+  responseHtml += "setTimeout(function(){ window.location.href = '/'; }, 1000);";
+  responseHtml += "</script>";
+  responseHtml += "</body></html>";
+
+  server.send(200, "text/html", responseHtml);
+
+  // Reset logic (same as before)
+  digitalWrite(RESET_TRIGGER_PIN, LOW);
+  delay(100);
+  digitalWrite(RESET_TRIGGER_PIN, HIGH);
+  delay(1000);  // Allow time for the response to be sent before reset
+}
