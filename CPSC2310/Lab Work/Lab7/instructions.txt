@@ -1,0 +1,19 @@
+Submission Information: 
+You should submit the following files.
+	driver.c
+	functions.c
+	functions.h
+	You should have a header in each of your files that contains the following information. If you neglect to place a header in a file, you will receive a 5-point deduction for each missing header. 
+/**************************/
+ *Your name                                 *
+ *CPSC 2310 Fall 24		  *
+ *UserName:                                *
+ *Instructor:  Dr. Yvon Feaster  *
+/*************************/
+	Your code should be well documented.
+	!!!!!**********There should be no line of code longer than 80 characters.**********!!!!!
+	You must use proper and consistent indention. 
+	Your code should not contain “magic numbers”. For Example: for(int I = 0; i<89; i++){} 89 is a magic number; we do not know what it represents. Use a global variable, local variable, or a #define for any magic number in your program.
+Failure to do any of the above items may result in a deduction of points for each offense.
+
+Zip your files and submit them to Canvas. 

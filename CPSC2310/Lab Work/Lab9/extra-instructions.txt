@@ -1,0 +1,30 @@
+Makefile: 
+
+ 
+
+You are expected to provide a makefile that has a make run. 
+We should be able to type make run and your program compile and run. 
+The file that has the circle information defined, MUST be named input.txt the output file  be output.ppm. 
+I will develop and provide to the TA’s multiple input files to test your program. 
+Do not change the information order of the input file. We will create our own input file to test with. 
+
+Your program should compile with no warnings and no errors.  
+If your program does not compile the highest grade you can get for the assignment will be 20.  
+If your program compiles but has warnings, there could be a deduction up to 20 points.    
+
+Your code should be well documented. (comments)  
+
+You must have comments in the header files (.h) See instructions below 
+
+There should be no lines of code longer than 80 characters.   
+
+You should use proper and consistent indention.  
+
+Here are some guide lines for documenting the code in your assignment. 
+Before each function you are required to have a detailed description of what the overall function does. 
+You should explain what each parameter is and what it is used for.  
+/* Parameters: FILE - file pointer to the input file
+               node_t - double pointer to the head of the list
+ * Return:     node_t - pointer to the head of the list
+ * This function starts the process of creating the list.
+ */

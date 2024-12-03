@@ -1,0 +1,14 @@
+gdb <file>
+
+list <function>
+info <> (breakpoint/b)
+run <CLIs> OR r (will use previous CLIs if you just type run)
+b <L> (adds breakpoint at line L)
+d <L> (deletes breakpoint at line L)
+step OR s (step line by line)
+next OR n (skip a function call by running it all at once)
+p <variable name> 
+diassemble <function> (turns into assembly code)
+where
+
+Ctrl+x, Ctrl+a -> TUI mode
