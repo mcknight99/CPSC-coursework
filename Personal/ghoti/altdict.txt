@@ -1,0 +1,70 @@
+AA0 = aw a or oor ore oar our augh ar ough au o
+AA1 @ AA0
+AA2 @ AA0
+AE0 = a ai
+AE1 @ AE0
+AE2 @ AE0
+AH0 = u o oo ou a e i
+AH1 @ AH0
+AH2 @ AH0
+AO0 = o a ho
+AO1 @ AO0
+AO2 @ AO0
+AW0 = ow ou ough au
+AW1 @ AW0
+AW2 @ AW0
+AY0 = i y igh ie uy ye ai is eigh i-e y-e ei
+AY1 @ AY0
+AY2 @ AY0
+B = b bb
+CH = ch tch tu ti te c
+D = d dd ed
+DH = th the 
+EH0 = e ea u ie ai a eo ei ae ay
+EH1 @ EH0 
+EH2 @ EH0
+ER0 = er ar our or i e u ur re eur
+ER1 @ ER0
+ER2 @ ER0
+EY0 = ai a eigh aigh ay et ei au a-e ea ey
+EY1 @ EY0
+EY2 @ EY0
+F = f ff ph gh lf ft
+G = g gg gh gu gue
+HH = h wh
+IH0 = i e o u ui y ie a
+IH1 @ IH0
+IH2 @ IH0
+IY0 = ee e ea y ey oe ie i ei eo ay e-e
+IY1 @ IY0
+IY2 @ IY0
+JH = j ge g dge di gg
+K = k c ch cc lk qu ck
+L = l ll
+M = m mm mb mn lm
+N = n nn kn gn pn
+NG = ng n ngue
+OW0 = oa -oe o oe ow ough eau oo ew o-e
+OW1 @ OW0
+OW2 @ OW0
+OY0 = oi oy uoy
+OY1 @ OY0
+OY2 @ OY0
+P = p pp
+R = r rr wr rh
+S = s ss c sc ps st ce se
+SH = sh ce s ci si ch sci ti
+T = t tt th ed
+TH = th
+UH0 = oo u ou o
+UH1 @ UH0
+UH2 @ UH0
+UW0 = oo ew ue u-e oe ough ui o oeu ou
+UW1 @ UW0
+UW2 @ UW0
+V = v f ph ve w
+W = w wh u o
+Y = y i j
+YUW0 = u you ew iew yu eue eau ieu eu
+Z = z zz s ss x ze se
+ZH = s si z g

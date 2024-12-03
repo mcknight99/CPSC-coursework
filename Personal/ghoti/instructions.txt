@@ -1,0 +1,20 @@
+i want to be able to turn words into poorly constructed homonyms, such as the internet famous "fish = ghoti" 
+gh, pronounced /f/ as in enough /ɪˈnʌf/ or tough /tʌf/;
+o, pronounced /ɪ/ as in women /ˈwɪmɪn/;
+ti, pronounced /ʃ/ as in nation /ˈneɪʃən/ or motion /ˈmoʊʃən/.
+
+i want a program to automatically find alternate spellings by getting as dissimilar to the original input pronounciation as possible
+
+the dictionary cmudict.txt consists of 135167 rows that are in the format of "word [array of pronounciation instructions] # comments if included"
+
+i want to take an input word and find its pronounciation, then find new spellings for the input word by taking words with shared pronounciations and returning a list of words that can be used to re-spell the input word
+
+
+
+alternate solution options:
+-list of all spellings for each sound and list of all sounds for each 1-3 letter combo to intertrade
+    this also gives the benefit of not having to search for everything but having everything ready and just finding a suitable replacement
+    but this has the downside of not having words to cite the sound from, and would have to find a word where the spelling is different but sound is the same
+    
+    ^ i think this might be the better approach than the current approach 
+    we can just reference the cmudict for words with those spellings and pronounciations
