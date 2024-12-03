@@ -27,17 +27,12 @@ const int yellowPin = 5;
 const int greenPin = 6;
 const int alarmPin = 7;
 
-
-const int servoPin = 19;
-
 //const int digitalLEDPin = 8; // digital rgb pin 8 or 11???
 // Define the NeoPixel strip
 #define PIN 8
 #define NUMPIXELS 1
 
 Adafruit_NeoPixel rgb_strip = Adafruit_NeoPixel(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
-
-
 
 // put function declarations here:
 void handleRoot();
@@ -125,8 +120,6 @@ void setup()
 
   server.begin();
 
-  ms24.setup(servoPin, 270, 500, 2500);
-
   listDir(LittleFS, "/", 1);
 
   WiFi.setAutoConnect(true);
@@ -190,7 +183,6 @@ void handleRed()
   digitalWrite(alarmPin, LOW);
   digitalWrite(redPin, HIGH);
   server.send(200, "text/plain", "Red Light ON");
-  ms24.setAngle(0);
   Serial.println("Red Button Pressed");
 }
 
@@ -202,7 +194,6 @@ void handleYellow()
   digitalWrite(alarmPin, LOW);
   digitalWrite(yellowPin, HIGH);
   server.send(200, "text/plain", "Yellow Light ON");
-  ms24.setAngle(90);
   Serial.println("Yellow Button Pressed");
 }
 
@@ -214,7 +205,6 @@ void handleGreen()
   digitalWrite(alarmPin, LOW);
   digitalWrite(greenPin, HIGH);
   server.send(200, "text/plain", "Green Light ON");
-  ms24.setAngle(180);
   Serial.println("Green Button Pressed");
 }
 
