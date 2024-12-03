@@ -1,3 +1,6 @@
+// this one is named after JD's homework which i completed before he did hours after he started
+// this was to help with his homework and to show him how to do it
+// all we had to do was check if a square was magic, not make one
 #include <iostream>
 #include <vector>
 #include <cstdlib>
