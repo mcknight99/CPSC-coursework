@@ -20,6 +20,14 @@ class RecommendationSystem {
     public:
         RecommendationSystem(std::string &f) {
             loadData(f);
+            std::cout<<"all students data:"<<std::endl;
+            for(const auto &pair : students) {
+                std::cout<<pair.first<<std::endl;
+                for(const auto &c : pair.second.getTakenCourses()) {
+                    std::cout<<c<<std::endl;
+                }
+            }
+
             for (const auto &pair : students) {
                 generateRecommendationsForStudent(pair.first);
             }

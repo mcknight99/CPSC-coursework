@@ -30,6 +30,7 @@ void RecommendationSystem::loadData(const std::string &filename) {
 
 std::vector<std::string> RecommendationSystem::generateRecommendationsForStudent(const std::string &studentName) const {
     // FOR ALL COURSES
+    std::cout<< "Generating recommendations for " << studentName << std::endl;
     Student st = students.at(studentName);
     std::vector<std::string> st_courses = st.getTakenCourses();
 
