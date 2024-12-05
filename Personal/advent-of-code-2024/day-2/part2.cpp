@@ -2,9 +2,6 @@
 // Date: 2 December 2024
 // Advent of Code 2024 Day 2 Part 1
 
-// 670 too low (answer to first problem)
-// 685 too high
-
 #include <iostream>
 #include <fstream>
 #include <vector>
