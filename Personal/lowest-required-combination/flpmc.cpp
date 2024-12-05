@@ -58,6 +58,27 @@ bool bit(int x, int i) { return (x >> i) & 1; }
 // if unsatisfied, rerun with the next closest modulos
 // alternatively, look for a perfect mod to sum to. if no perfect mod, then sort by nums ascnd; find the first two that sum to the desired mod, then the first three, etc.
 
+void printIntToBinary(int x, int maxX)
+{
+    // only print required amount of bits to store x
+    int numBits = 0;
+    for (int i = 31; i >= 0; --i)
+    {
+        if ((maxX >> i) % 2 == 1)
+        {
+            numBits = i + 1;
+            break;
+        }
+    }
+    numBits--;
+    
+    for (int i = numBits - 1; i >= 0; --i)
+    {
+        std::cout << (x >> i) % 2;
+    }
+    std::cout << std::endl;
+}
+
 //can only take max 30 supplementary ints because of the 2^31-1 int limit
 std::vector<int> findLowestCombination(const std::vector<int> &requiredInts, const std::vector<int> &supplementaryInts, int desiredModulo, int modulus)
 {
@@ -65,6 +86,7 @@ std::vector<int> findLowestCombination(const std::vector<int> &requiredInts, con
     int lowestCombinationSum = INT_MAX;
     for (int i = 0; i < pow(2, supplementaryInts.size()); ++i)
     {
+        printIntToBinary(i, pow(2, supplementaryInts.size()));
         std::vector<int> utilizedInts = {requiredInts};
         int sum = accumulate(requiredInts.begin(), requiredInts.end(), 0);
         for (int j = 0; j < supplementaryInts.size(); ++j)
@@ -76,7 +98,7 @@ std::vector<int> findLowestCombination(const std::vector<int> &requiredInts, con
             }
         }
 
-        if (sum % modulus == desiredModulo)
+        if (sum % modulus == desiredModulo && sum != 0) //sum != 0 to avoid the case where required ints is empty 
         {
             if (sum < lowestCombinationSum)
             {
@@ -103,8 +125,8 @@ int main()
     auto start = std::chrono::high_resolution_clock::now();
 
     // Example usage
-    std::vector<int> requiredInts = {1880};
-    std::vector<int> supplementaryInts = {2414, 1474, 893, 740, 1261, 1403, 3005};
+    std::vector<int> requiredInts = {408};
+    std::vector<int> supplementaryInts = {1527, 1938, 587, 595, 2379, 639, 5895};
     int desiredModulo = 0;
     int modulus = 25;
 
