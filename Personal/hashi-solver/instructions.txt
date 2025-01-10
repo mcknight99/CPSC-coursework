@@ -34,3 +34,25 @@ given a board, make a guessing move. do all guaranteed moves. If no guaranteed m
 
 
 I'm thinking that the solver can work by determining the "remaining" value of a island/island by subtracting existing bridges from the required count. Possible bridges can also be determined by next islands in each direction and existing bridges
+
+// I want to try two implementations: a 2d vector that represents the board using enums for tiles (islands, bridges, empty space) = array implementation
+// and a map that stores all of the islands as objects that hold information such as the row, column, value, and bridges = memory implementation
+
+
+island values:
+- total required bridges
+- available bridge connections
+- bridges connected
+- remaining required bridges (=total required bridges - bridges connected)
+
+guaranteed moves: 
+if total remaining required = available bridge connections, fill every available direction
+if total remaining required = available bridge connections + 1, make one bridge in every available direction
+
+solving first passes:
+odds (3s missing two islands, 5s missing one island, 7s. fill all with 1 bridges). repeat until no more 
+equals (total remaining bridges = total available bridges; will probably mostly consist of evens and ones)
+repeat these steps until there are no steps to be made (have each function have the board passed by reference and return a boolean if the board was modified)
+
+
+to fix the double issue, i might need to convert the .h implementation file to .hpp or split it to .cpp and .h and handle it like a normal linker :(
