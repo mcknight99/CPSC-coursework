@@ -86,7 +86,7 @@ std::vector<int> findLowestCombination(const std::vector<int> &requiredInts, con
     int lowestCombinationSum = INT_MAX;
     for (int i = 0; i < pow(2, supplementaryInts.size()); ++i)
     {
-        printIntToBinary(i, pow(2, supplementaryInts.size()));
+        //printIntToBinary(i, pow(2, supplementaryInts.size()));
         std::vector<int> utilizedInts = {requiredInts};
         int sum = accumulate(requiredInts.begin(), requiredInts.end(), 0);
         for (int j = 0; j < supplementaryInts.size(); ++j)
@@ -125,10 +125,19 @@ int main()
     auto start = std::chrono::high_resolution_clock::now();
 
     // Example usage
-    std::vector<int> requiredInts = {408};
-    std::vector<int> supplementaryInts = {1527, 1938, 587, 595, 2379, 639, 5895};
+    std::vector<int> requiredInts = {}; 
+    std::vector<int> supplementaryInts = {906, 3018, 944, 1190, 1059, 1420};
     int desiredModulo = 0;
     int modulus = 25;
+
+    // the complimentary int is an optional int that, when nonzero, creates an output that matches the desired modulo when subtracting instead of adding
+    // basically: (((sum of lowest combination) - (modulus-(complimentary%modulus))) - complimentary) % modulus = desiredModulo
+    int complimentary = 2313; 
+
+    if(complimentary != 0) {
+        // take (modulus-(complimentary%modulus)) and add it to required ints
+        requiredInts.push_back(modulus - (complimentary % modulus));
+    }
 
     if (verbose)
     {
@@ -158,7 +167,7 @@ int main()
     {
         std::cout << i << " ";
     }
-    // std::cout << "sum: " << std::accumulate(utilizedInts.begin(), utilizedInts.end(), 0);
+    std::cout << "sum: " << std::accumulate(utilizedInts.begin(), utilizedInts.end(), 0);
     std::cout << std::endl;
 
     return 0;
