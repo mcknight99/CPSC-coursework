@@ -14,7 +14,7 @@ Board::Board(const std::vector<std::vector<char>>& board) : originalBoard(board)
 }
 
 void Board::addPlayer(const std::string& name, const std::string& color) {
-    Player p = Player(name, color, originalBoard);
+    Player* p = new Player(name, color, originalBoard);
     playersByName[name] = p;
     playersByColor[color] = p;
 }
@@ -27,9 +27,9 @@ void Board::doHint(const std::string& playerInfo, char islandLetter, int radius,
     if (islandPositions.find(islandLetter) != islandPositions.end()) {
         Position islandPos = islandPositions[islandLetter];
         if (playersByName.find(playerInfo) != playersByName.end()) {
-            playersByName[playerInfo].setGuess(islandPos, radius, answer);
+            playersByName[playerInfo]->setGuess(islandPos, radius, answer);
         } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
-            playersByColor[playerInfo].setGuess(islandPos, radius, answer);
+            playersByColor[playerInfo]->setGuess(islandPos, radius, answer);
         } else {
             std::cerr << "Player " << playerInfo << " not found." << std::endl;
         }
@@ -46,9 +46,9 @@ void Board::doDig(const std::string& playerInfo, char islandLetter) {
     if (islandPositions.find(islandLetter) != islandPositions.end()) {
         Position islandPos = islandPositions[islandLetter];
         if (playersByName.find(playerInfo) != playersByName.end()) {
-            playersByName[playerInfo].setDig(islandPos);
+            playersByName[playerInfo]->setDig(islandPos);
         } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
-            playersByColor[playerInfo].setDig(islandPos);
+            playersByColor[playerInfo]->setDig(islandPos);
         } else {
             std::cerr << "Player " << playerInfo << " not found." << std::endl;
         }
@@ -59,9 +59,9 @@ void Board::doDig(const std::string& playerInfo, char islandLetter) {
 
 void Board::printPlayerBoard(const std::string& playerInfo) const {
     if (playersByName.find(playerInfo) != playersByName.end()) {
-        playersByName.at(playerInfo).printBoard();
+        playersByName.at(playerInfo)->printBoard();
     } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
-        playersByColor.at(playerInfo).printBoard();
+        playersByColor.at(playerInfo)->printBoard();
     } else {
         std::cerr << "Player " << playerInfo << " not found." << std::endl;
     }
@@ -79,9 +79,9 @@ void Board::printBoard() const {
 
 void Board::printPlayer(const std::string& playerInfo) const {
     if (playersByName.find(playerInfo) != playersByName.end()) {
-        playersByName.at(playerInfo).printPlayer();
+        playersByName.at(playerInfo)->printPlayer();
     } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
-        playersByColor.at(playerInfo).printPlayer();
+        playersByColor.at(playerInfo)->printPlayer();
     } else {
         std::cerr << "Player " << playerInfo << " not found." << std::endl;
     }

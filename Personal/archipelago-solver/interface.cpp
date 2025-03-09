@@ -53,7 +53,7 @@ bool Interface::loadGame()
     {
         if (line.empty())
             continue;
-        if (line == "PLAYERS")
+        if (line == "#PLAYERS")
         {
             if(boardData.empty()) {
                 std::cerr << "Error: Board data not found.\n";
@@ -66,7 +66,7 @@ bool Interface::loadGame()
             gameBoard->printBoard();
             continue;
         }
-        if (line == "CLUES")
+        if (line == "#CLUES")
         {
             if(players.empty()) {
                 std::cerr << "Error: Players not found.\n";
@@ -137,12 +137,12 @@ void Interface::newGame()
             logFile << cell;
         logFile << '\n';
     }
-    logFile << "PLAYERS\n";
+    logFile << "#PLAYERS\n";
     for (const auto &p : gameBoard->playersByName)
     {
-        logFile << p.first << " " << p.second.color << '\n';
+        logFile << p.first << " " << p.second->color << '\n';
     }
-    logFile << "CLUES\n";
+    logFile << "#CLUES\n";
     logFile.close();
 
     gameLoop();
@@ -218,6 +218,7 @@ void Interface::logMove(const std::string &move)
 }
 
 void Interface::processCommand(const std::string &command) {
+    std::cout<<"Processing command: "<<command<<std::endl;
 
     std::istringstream stream(command);
     std::string cmd, player, island, result;

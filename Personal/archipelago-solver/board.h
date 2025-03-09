@@ -8,8 +8,8 @@ class Board {
 public:
     std::vector<std::vector<char>> originalBoard;
     std::unordered_map<char, Position> islandPositions; // Map from IslandID to Position
-    std::unordered_map<std::string, Player> playersByName;
-    std::unordered_map<std::string, Player> playersByColor;
+    std::unordered_map<std::string, Player*> playersByName;
+    std::unordered_map<std::string, Player*> playersByColor;
 
     Board(const std::vector<std::vector<char>>& board);
     
