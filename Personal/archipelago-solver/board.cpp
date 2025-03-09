@@ -14,8 +14,9 @@ Board::Board(const std::vector<std::vector<char>>& board) : originalBoard(board)
 }
 
 void Board::addPlayer(const std::string& name, const std::string& color) {
-    playersByName[name] = Player(name, color, originalBoard);
-    playersByColor[color] = playersByName[name];
+    Player p = Player(name, color, originalBoard);
+    playersByName[name] = p;
+    playersByColor[color] = p;
 }
 
 void Board::doHint(const std::string& playerInfo, char islandLetter, int radius, bool answer) {
