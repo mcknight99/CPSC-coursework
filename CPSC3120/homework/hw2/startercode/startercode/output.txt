@@ -1,0 +1,3 @@
+rotateRight after, on value: 38
+   38
+ 36  54
