@@ -24,6 +24,7 @@ int main()
     };
 
     // Convert the board to Tiles
+<<<<<<< Updated upstream
     vector<vector<Tile>> boardTiles;
     for (auto row : board)
     {
@@ -34,6 +35,9 @@ int main()
         }
         boardTiles.push_back(rowTiles);
     }
+=======
+    vector<vector<Tile>> boardTiles = TileHelper::convertBoardToTiles(board);
+>>>>>>> Stashed changes
 
     HashiMemImplementation *board1 = new HashiMemImplementation(boardTiles);
     // HashiBoard* board2 = new HashiArrayImplementation(10, 10);

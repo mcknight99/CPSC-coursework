@@ -1,8 +1,13 @@
 #ifndef TILE_H
 #define TILE_H
 
+<<<<<<< Updated upstream
 #include <map>
 #include <iostream>
+=======
+#include <vector>
+#include <unordered_map>
+>>>>>>> Stashed changes
 
 enum class Tile
 {
@@ -22,9 +27,10 @@ enum class Tile
     V_DOUBLE_BRIDGE=12
 };
 
-class TileHelper
+const class TileHelper
 {
     public:
+<<<<<<< Updated upstream
     static const char tileToChar(Tile in) {
         switch(in) {
             case Tile::EMPTY: return ' ';
@@ -61,6 +67,42 @@ class TileHelper
             case '8': return Tile::EIGHT;
             default: return Tile::ERROR;
         }
+=======
+    std::unordered_map<Tile, char> tileToChar = {
+        {Tile::EMPTY, ' '},
+        {Tile::V_BRIDGE, '\''},
+        {Tile::V_DOUBLE_BRIDGE, '"'},
+        {Tile::H_BRIDGE, '-'},
+        {Tile::H_DOUBLE_BRIDGE, '='},
+        {Tile::ONE, '1'},
+        {Tile::TWO, '2'},
+        {Tile::THREE, '3'},
+        {Tile::FOUR, '4'},
+        {Tile::FIVE, '5'},
+        {Tile::SIX, '6'},
+        {Tile::SEVEN, '7'},
+        {Tile::EIGHT, '8'}};
+
+    std::unordered_map<char, Tile> charToTile = {
+        {' ', Tile::EMPTY},
+        {'\'', Tile::V_BRIDGE},
+        {'"', Tile::V_DOUBLE_BRIDGE},
+        {'-', Tile::H_BRIDGE},
+        {'=', Tile::H_DOUBLE_BRIDGE},
+        {'1', Tile::ONE},
+        {'2', Tile::TWO},
+        {'3', Tile::THREE},
+        {'4', Tile::FOUR},
+        {'5', Tile::FIVE},
+        {'6', Tile::SIX},
+        {'7', Tile::SEVEN},
+        {'8', Tile::EIGHT}};
+
+    // function to get the char representation of a tile
+    const char getTileChar(Tile tile)
+    {
+        return tileToChar[tile];
+>>>>>>> Stashed changes
     }
 
     // function to determine if the tile is an island (1-8)
@@ -83,6 +125,7 @@ class TileHelper
         return isBridge(charToTile(tile));
     }
 
+<<<<<<< Updated upstream
     // friend function to print the island
     friend std::ostream &operator<<(std::ostream &os, const Tile &tile) {
         os << tileToChar(tile);
@@ -90,6 +133,34 @@ class TileHelper
     }
 
     
+=======
+    const std::vector<std::vector<Tile>> convertBoardToTiles(std::vector<std::vector<char>> board)
+    {
+        // I did something weird with statics and consts and whatnot with this helper class and i cant figure it out
+        // this should be identical to charToTile
+        
+        std::vector<std::vector<Tile>> boardTiles;
+        for (auto row : board)
+        {
+            std::vector<Tile> rowTiles;
+            for (auto tile : row)
+            {
+                rowTiles.push_back(charToTile[tile]);
+            }
+            boardTiles.push_back(rowTiles);
+        }
+        return boardTiles;
+    }
+
+    // friend function to cout a tile
+    // or nevermind because it was throwing a lot of errors?
+    // std::ostream &operator<<(std::ostream &os, const Tile &tile)
+    // {
+    //     char tileChar = getTileChar(tile);
+    //     os << tileChar;
+    //     return os;
+    // }
+>>>>>>> Stashed changes
 };
 
 #endif // TILE_H
