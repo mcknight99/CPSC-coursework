@@ -61,6 +61,8 @@ std::vector<std::pair<CellID, std::string>> idColors = {
 // Function to print board
 void printBoard(const Board &board)
 {
+    // clear terminal
+    system("cls");
     for (const auto &row : board)
     {
         for (const auto &cell : row)
@@ -232,16 +234,16 @@ int main()
         {CellID::wall, CellID::wall, CellID::wall, CellID::wall, CellID::Thu, CellID::Fri, CellID::Sat}};
 
     vector<Piece> pieces = {
+        {{0, 0}, {1, 0}, {1, 1}, {1, 2}, {0, 2}}, // P6 // U piece
+        {{0, 0}, {0, 1}, {1, 1}, {2, 1}, {2, 2}}, // P10 // Uppercase Z/S piece
+        {{0, 0}, {1, 0}, {1, 1}, {2, 1}, {3, 1}}, // P9 // Lightning piece
+        {{0, 0}, {1, 0}, {2, 0}, {1, 1}, {1, 2}}, // P7 // T piece
+        {{0, 0}, {1, 0}, {1, 1}, {2, 1}},         // P8 // Lowercase Z/S piece
+        {{0, 0}, {1, 0}, {2, 0}, {0, 1}, {0, 2}}, // P4 // Equal L piece
         {{0, 0}, {1, 0}, {2, 0}, {3, 0}},         // P1 // Line piece
         {{0, 0}, {1, 0}, {2, 0}, {3, 0}, {0, 1}}, // P2 // Tall L piece
         {{0, 0}, {1, 0}, {2, 0}, {0, 1}},         // P3 // Short L piece
-        {{0, 0}, {1, 0}, {2, 0}, {0, 1}, {0, 2}}, // P4 // Equal L piece
         {{0, 0}, {1, 0}, {2, 0}, {1, 1}, {2, 1}}, // P5 // Thumb piece
-        {{0, 0}, {1, 0}, {1, 1}, {1, 2}, {0, 2}}, // P6 // U piece
-        {{0, 0}, {1, 0}, {2, 0}, {1, 1}, {1, 2}}, // P7 // T piece
-        {{0, 0}, {1, 0}, {1, 1}, {2, 1}},         // P8 // Lowercase Z/S piece
-        {{0, 0}, {1, 0}, {1, 1}, {2, 1}, {3, 1}}, // P9 // Lightning piece
-        {{0, 0}, {0, 1}, {1, 1}, {2, 1}, {2, 2}}, // P10 // Uppercase Z/S piece
     };
 
     CellID month = CellID::Jan;
