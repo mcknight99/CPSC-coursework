@@ -257,7 +257,7 @@ void Interface::processCommand(const std::string &command) {
     } 
     else if (cmd == "print" || cmd == "p") {
         if (stream >> player) {
-            if(player == "board" || player == "b") {
+            if(player == "board") {
                 gameBoard->printBoard();
             } else {
                 gameBoard->printPlayerBoard(player);
