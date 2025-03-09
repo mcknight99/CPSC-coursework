@@ -1,0 +1,10 @@
+
+EQHST
+UD$CN
+FAMJV
+PKRI$
+OL$GB
+PLAYERS
+bob black
+alice yellow
+HINT alice B 2 false
