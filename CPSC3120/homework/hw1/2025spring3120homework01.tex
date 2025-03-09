@@ -1,0 +1,131 @@
+\documentclass[addpoints,letter,11pt]{exam}
+
+% \noaddpoints % if you don't want to count the points
+% Specifies the way question are displayed:
+\qformat{\textbf{Question~\thequestion}\quad(\thepoints)\hfill}
+\usepackage{color} % defines a new color
+\definecolor{SolutionColor}{rgb}{0.8,0.9,1} % light blue
+\shadedsolutions % defines the style of the solution environment
+% \framedsolutions % defines the style of the solution environment
+% Defines the title of the solution environment:
+\renewcommand{\solutiontitle}{\noindent\textbf{Solution:}\par\noindent}
+
+\usepackage{algpseudocode}
+\usepackage{algorithm}
+\definecolor{orange}{RGB}{245,102,0}
+\usepackage[colorlinks=true,allcolors=orange]{hyperref}
+
+\title{Homework $01$ (Due: Wednesday, February $5, 2025, 11:59:00$PM (Eastern Time))}
+\author{CPSC $3120$}
+\date{}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath}
+\begin{document}
+\maketitle
+
+\section*{Instructions}
+This assignment consists of $6$ analytical problems and $2$ programming problems. Your solutions to the analytical problems must be submitted, as one PDF \textbf{without spaces, tabs, parentheses, pound signs, or percent signs in the filename}, via Canvas. While handwritten (then scanned) solutions to the analytical problems are acceptable, you are strongly encouraged to typeset your solutions in \LaTeX{} or a word processor with an equation editor. The legibility of your solutions is of great importance.
+
+\subsection*{Programming Assignment}
+Your methods will be tested on \verb+newton.computing.clemson.edu+, using\\
+\verb!gcc version 9.4.0 (Ubuntu 9.4.0-1ubuntu1~20.04.2)! and be compiled for C++ 2017. To ensure proper execution, you should review the reports that will be sent back to you on \href{https://clemson.instructure.com/courses/201107/grades}{Canvas}
+
+You will submit \verb+cpsc3120homework01part01.h+, \verb+cpsc3120homework01part02.h+, \verb+cpsc3120homework01part01.cpp+,  and \verb+cpsc3120homework01part02.cpp+, along with your PDF, via Canvas.
+
+\subsubsection*{\texttt{maxSubSlow}, \texttt{maxSubFaster}, and \texttt{maxSubFastest}}
+\texttt{maxSubSlow}, \texttt{maxSubFaster}, and \texttt{maxSubFastest} are functions that should take a vector of integers and return an integer. The value returned is the maximum sum of consecutive integers ($a_i+a_{i+1}+\dots+a_{j-1}+a_j$) in the vector. The functions should be corresponding implementations of Algorithms $1.14$, $1.15$, and $1.16$ in \emph{Algorithm Design and Applications}.
+
+\subsubsection*{\texttt{removeConsonants}}
+\verb+removeConsonants+ is a function that should take a reference to a \texttt{string} as input and remove the consonants from it. The remaining letters should be arranged in the same order that they were (relative to each other) originally. For our purposes, \texttt{Y} and \texttt{y} are not vowels.
+
+\subsubsection*{General Guidelines}
+Sample header, source, and testing files have been provided. You may modify the \verb+.h+ and \verb+.cpp+ files as needed, but you will only be turning in the four files mentioned above. The grading system will be compiling the code with the command\\ \verb|g++ -std=c++17 -o /path/to/executable.out /path/to/source/files/*.cpp| for each part. 
+
+\subsection*{Written Assignment}
+\begin{questions}
+  \question[10]
+  Question $\text{R-}1.7$ in \emph{Algorithm Design and Applications}
+
+  \question[10]
+  Question $\text{R-}1.8$ in \emph{Algorithm Design and Applications}
+\begin{table}[h]
+\begin{tabular}{|*{5}{c|}}
+\hline
+\hline
+& 1 Second & 1 Hour & 1 Month & 1 Century\\
+\hline
+$\log n$ & $\approx 10^{300000}$ & & &\\
+\hline
+$\sqrt{n}$ & & & &\\
+\hline
+$n$ & & & &\\
+\hline
+$n\log n$ & & & &\\
+\hline
+$n^2$ & & & &\\
+\hline
+$n^3$ & & & &\\
+\hline
+$2^n$ & & & &\\
+\hline
+$n!$ & & $12$ & &\\
+\hline
+\hline
+\end{tabular}
+\end{table}
+
+  \question[10]
+  Question $\text{C-}1.1$ in \emph{Algorithm Design and Applications}
+
+  \question[10]
+  Question $\text{C-}1.2$ in \emph{Algorithm Design and Applications}
+
+  \question[10]
+  Question $\text{C-}1.3$ in \emph{Algorithm Design and Applications}
+
+  \question[10]
+  Question $\text{C-}1.8$ in \emph{Algorithm Design and Applications}
+  \end{questions}
+
+\section*{Automated Report Notes}
+Reports will be generated every $3$ minutes. Your programs should terminate within $60$ seconds.
+
+\section*{Point Allocation}
+\begin{table}[H]
+  \center
+  \begin{tabular}{|l|r|}
+    \hline
+    Question & Points\\
+    \hline
+    \hline
+    Question $1$ & $10\%$\\
+    Question $2$ & $10\%$\\
+    Question $3$ & $10\%$\\
+    Question $4$ & $10\%$\\
+    Question $5$ & $10\%$\\
+    Question $6$ & $10\%$\\
+    \hline
+	\verb+cpsc3120homework01part01+ Compilation & $6\%$\\
+    \verb+maxSubSlow+ & \\
+    Test Cases & $7\times 1\%$\\
+    \verb+maxSubFaster+ & \\
+    Test Cases & $7\times 1\%$\\
+    \verb+maxSubFastest+ & \\
+    Test Cases & $7\times 1\%$\\
+\hline
+\verb+cpsc3120homework01part01+ Total & $27\%$\\
+\hline
+	\verb+cpsc3120homework01part02+ Compilation & $6\%$\\
+    \verb+removeConsonants+ & \\
+    Test Cases & $7\times 1\%$\\
+    \hline
+\verb+cpsc3120homework01part02+ Total & $13\%$\\
+\hline
+    \hline
+    Total & $100\%$\\
+    \hline
+  \end{tabular}
+\end{table}
+
+\end{document}
+
