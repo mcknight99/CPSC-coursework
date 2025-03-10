@@ -31,10 +31,10 @@ void Board::doHint(const std::string& playerInfo, char islandLetter, int radius,
         } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
             playersByColor[playerInfo]->setGuess(islandPos, radius, answer);
         } else {
-            std::cerr << "Player " << playerInfo << " not found." << std::endl;
+            std::cerr << "Player \"" << playerInfo << "\" not found." << std::endl;
         }
     } else {
-        std::cerr << "Island " << islandLetter << " not found." << std::endl;
+        std::cerr << "Island \"" << islandLetter << "\" not found." << std::endl;
     }
 }
 
@@ -50,10 +50,10 @@ void Board::doDig(const std::string& playerInfo, char islandLetter) {
         } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
             playersByColor[playerInfo]->setDig(islandPos);
         } else {
-            std::cerr << "Player " << playerInfo << " not found." << std::endl;
+            std::cerr << "Player \"" << playerInfo << "\" not found." << std::endl;
         }
     } else {
-        std::cerr << "Island " << islandLetter << " not found." << std::endl;
+        std::cerr << "Island \"" << islandLetter << "\" not found." << std::endl;
     }
 }
 
@@ -63,7 +63,7 @@ void Board::printPlayerBoard(const std::string& playerInfo) const {
     } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
         playersByColor.at(playerInfo)->printBoard();
     } else {
-        std::cerr << "Player " << playerInfo << " not found." << std::endl;
+        std::cerr << "Player \"" << playerInfo << "\" not found." << std::endl;
     }
 }
 
@@ -83,6 +83,6 @@ void Board::printPlayer(const std::string& playerInfo) const {
     } else if (playersByColor.find(playerInfo) != playersByColor.end()) {
         playersByColor.at(playerInfo)->printPlayer();
     } else {
-        std::cerr << "Player " << playerInfo << " not found." << std::endl;
+        std::cerr << "Player \"" << playerInfo << "\" not found." << std::endl;
     }
 }

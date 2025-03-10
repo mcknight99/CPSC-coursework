@@ -55,20 +55,22 @@ bool Interface::loadGame()
             continue;
         if (line == "#PLAYERS")
         {
-            if(boardData.empty()) {
+            if (boardData.empty())
+            {
                 std::cerr << "Error: Board data not found.\n";
                 return false;
             }
             gameBoard = new Board(boardData);
             readingBoard = false;
             readingPlayers = true;
-            std::cerr<<"Successfully read board data\n";
+            std::cerr << "Successfully read board data\n";
             gameBoard->printBoard();
             continue;
         }
         if (line == "#CLUES")
         {
-            if(players.empty()) {
+            if (players.empty())
+            {
                 std::cerr << "Error: Players not found.\n";
                 return false;
             }
@@ -78,8 +80,9 @@ bool Interface::loadGame()
             }
             readingPlayers = false;
             readingClues = true;
-            std::cerr<<"Successfully read players\n";
-            for(const auto &p : players) {
+            std::cerr << "Successfully read players\n";
+            for (const auto &p : players)
+            {
                 gameBoard->printPlayer(p.first);
             }
             continue;
@@ -101,7 +104,7 @@ bool Interface::loadGame()
         }
         else if (readingClues)
         {
-            std::cout<<"Processing logged command: "<<line<<std::endl;
+            std::cout << "Processing logged command: " << line << std::endl;
             processCommand(line);
         }
     }
@@ -192,13 +195,14 @@ void Interface::gameLoop()
         std::cout << "Options: \n";
         std::cout << "hint <player> <island> <radius> <yes/no>\n";
         std::cout << "dig <player> <island>\n";
+        std::cout << "remove <island>\n";
         std::cout << "print <player/default: board>\n";
         std::cout << "list\n";
         std::cout << "exit\n";
         std::cout << "> ";
 
-        std::getline(std::cin >> std::ws, command);  // Trim leading whitespace and read full line
-        
+        std::getline(std::cin >> std::ws, command); // Trim leading whitespace and read full line
+
         if (command == "exit" || command == "e")
         {
             exit = true;
@@ -217,8 +221,8 @@ void Interface::logMove(const std::string &move)
     }
 }
 
-void Interface::processCommand(const std::string &command) {
-    std::cout<<"Processing command: "<<command<<std::endl;
+void Interface::processCommand(const std::string &command)
+{
 
     std::istringstream stream(command);
     std::string cmd, player, island, result;
@@ -226,53 +230,77 @@ void Interface::processCommand(const std::string &command) {
 
     stream >> cmd; // Read the main command
 
-    if(cmd == "exit" || cmd == "e") {
-        std::cout<<"Thank you for using Archipelago solver, have a good day!\n";
-        std::cout<<"Exiting...\n";
+    if (cmd == "exit" || cmd == "e")
+    {
+        std::cout << "Thank you for using Archipelago solver, have a good day!\n";
+        std::cout << "Exiting...\n";
         return;
     }
 
-    if (cmd == "hint" || cmd == "h") {
-        if (stream >> player >> island >> radius >> result) {
-            bool success = (result == "true" || result == "t" || result == "1" || result == "yes" || result == "y"); 
-            if (result == "false" || result == "f" || result == "0" || result == "no" || result == "n") {
-                success = false;
-            } else {
-                std::cerr << "Invalid hint command format.\n";
-            }
-            gameBoard->doHint(player, island[0], radius, success);
-            logMove(cmd + " " + player + " " + island + " " + std::to_string(radius) + " " + result);
-            gameBoard->printPlayerBoard(player);
-        } else {
+    if (cmd == "hint" || cmd == "h")
+    {
+        stream >> player >> island >> radius >> result;
+        bool success = (result == "true" || result == "t" || result == "1" || result == "yes" || result == "y");
+        if (result == "false" || result == "f" || result == "0" || result == "no" || result == "n")
+        {
+            success = false;
+        }
+        else if (!success)
+        {
             std::cerr << "Invalid hint command format.\n";
+            return;
         }
-    } 
-    else if (cmd == "dig" || cmd == "d") {
-        if (stream >> player >> island) {
-            gameBoard->doDig(player, island[0]);
-            logMove(cmd + " " + player + " " + island);
-            gameBoard->printPlayerBoard(player);
-        } else {
-            std::cerr << "Invalid dig command format.\n";
-        }
-    } 
-    else if (cmd == "print" || cmd == "p") {
-        if (stream >> player) {
-            if(player == "board") {
+        gameBoard->doHint(player, island[0], radius, success);
+        logMove(cmd + " " + player + " " + island + " " + std::to_string(radius) + " " + result);
+        gameBoard->printPlayerBoard(player);
+    }
+    else if (cmd == "dig" || cmd == "d")
+    {
+        stream >> player >> island;
+        gameBoard->doDig(player, island[0]);
+        logMove(cmd + " " + player + " " + island);
+        gameBoard->printPlayerBoard(player);
+    }
+    else if (cmd == "print" || cmd == "p")
+    {
+        if (stream >> player)
+        {
+            if (player == "board")
+            {
                 gameBoard->printBoard();
-            } else {
+            }
+            else
+            {
                 gameBoard->printPlayerBoard(player);
             }
-        } else {
+        }
+        else
+        {
             gameBoard->printBoard();
         }
-    } else if (cmd == "list" || cmd == "l") {
+    }
+    else if (cmd == "list" || cmd == "l")
+    {
         // print all players
-        for (const auto &p : gameBoard->playersByName) {
+        for (const auto &p : gameBoard->playersByName)
+        {
             gameBoard->printPlayer(p.first);
         }
     }
-    else {
+    else if (cmd == "remove" || cmd == "r")
+    {
+        // dig island on all player's boards
+        stream >> island;
+
+        for (const auto &p : gameBoard->playersByName)
+        {
+            gameBoard->doDig(p.first, island[0]);
+        }
+
+        logMove(cmd + " " + island);
+    }
+    else
+    {
         std::cerr << "Unknown command: " << cmd << '\n';
     }
 }
