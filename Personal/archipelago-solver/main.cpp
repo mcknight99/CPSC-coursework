@@ -2,15 +2,36 @@
 
 using namespace std;
 
-// log your own treasures as not possible for others to have
-// or just a command to dig an island away from everyone
+// desired additions:
 
-// log definitive places
+// fix the executable still running when closed
 
-// fix command by color and player being separate boards??
+// we can track the "venn diagrams" i was talking about by keeping track of the hints for each player:
+// if a player says yes to a hint, we can log all of the potential loot islands to a hint map
+    // ex. h p A 1 yes would save all of the islands on the 1 radius around A to the hint map
+// if a player says no to a hint, we can remove all of the islands on that radius from all hints in their hint map
+    // ex. h p C 1 no would remove the islands that are overlapping with the h p a 1 yes clue and any other clues with overlapping islands
+// if a hint only has one remaining island, we can mark that island as a guaranteed treasure
 
-// future implementation desires:
-// if someone says true to a ring, mark the ring green as potential islands to get eliminated as options that could be loot islands
+// debatable utility:
+// enter valid loot island digs to remember them as already dug, perhaps a gray color when printing and exclude it from potential loot islands
+
+
+// implement best guess recommendation based on known information and what we need to know to maximize knowledge
+
+// program name ideas or keywords:
+// ultra rich text editor
+// plunder
+// map
+// archipelago
+// PLAN. Plundering Logic for Archipelago Navigation 
+// SCUTTLE. Smart Captains Use Tricky Tactics for Looting Effectively
+// ARR. Archipelago Rum-soaked Reasoning
+// ART. Archipelago Reasoning Toolkit
+// MAP. Marauders' Archipelago Plotter
+// PLANK. Plundering Logic for Archipelago Navigation and Knowledge 
+// OUTSMARTED. Overcomplicated and Underpowered Tactic by Sam for Manipulating the Archipelago as a Rich Text EDitor
+
 
 int main() {
     Interface game;

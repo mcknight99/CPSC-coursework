@@ -3,6 +3,7 @@
 #include <fstream>
 #include <filesystem>
 #include <ctime>
+#include <algorithm>
 
 namespace fs = std::filesystem;
 
@@ -10,7 +11,8 @@ Interface::Interface() : gameBoard(nullptr) {}
 
 void Interface::start()
 {
-    std::cout << "Load previous game or start new game? (load/new): ";
+    std::cout << "Load previous game or start new game? (load/new): \n";
+    std::cout<<"> ";
     std::string choice;
     std::cin >> choice;
 
@@ -31,6 +33,7 @@ void Interface::start()
 bool Interface::loadGame()
 {
     std::cout << "Enter log file name to load: ";
+    std::cout<<"> ";
     std::string filename;
     std::cin >> filename;
 
@@ -104,8 +107,7 @@ bool Interface::loadGame()
         }
         else if (readingClues)
         {
-            std::cout << "Processing logged command: " << line << std::endl;
-            processCommand(line);
+            processCommand(line, false);
         }
     }
 
@@ -131,7 +133,7 @@ void Interface::newGame()
     auto now = std::time(nullptr);
     char buf[20];
     std::strftime(buf, sizeof(buf), "%Y%m%d_%H%M%S", std::localtime(&now));
-    logFileName = "logs/" + std::string(buf) + ".txt";
+    logFileName = "logs/" + std::string(buf) + ".log";
 
     std::ofstream logFile(logFileName);
     for (const auto &row : gameBoard->originalBoard)
@@ -154,27 +156,88 @@ void Interface::newGame()
 void Interface::enterBoardLayout()
 {
     std::vector<std::vector<char>> boardData;
-    std::cout << "Enter board layout row by row ('done' to finish):\n";
+    std::cout << "Enter board layout row by row ('#done' to finish):\n";
     std::string row;
+    std::cin.ignore();
     while (true)
     {
+        std::cout<<"> ";
         std::getline(std::cin, row);
-        if (row == "done")
+        if (row == "#done")
             break;
+        // turn each letter into uppercase
+        for (char &c : row)
+        {
+            if (c >= 'a' && c <= 'z')
+            {
+                c = c - 'a' + 'A';
+            }
+        }
         boardData.push_back(std::vector<char>(row.begin(), row.end()));
     }
+    // normalize board size to a rectangle
+    size_t maxCols = 0;
+    for (const auto &row : boardData)
+    {
+        maxCols = std::max(maxCols, row.size());
+    }
+    for (auto &row : boardData)
+    {
+        row.resize(maxCols, ' ');
+    }
+    // remove empty rows at top or bottom
+    while (!boardData.empty() && std::all_of(boardData.front().begin(), boardData.front().end(), [](char c) { return c == ' '; }))
+    {
+        boardData.erase(boardData.begin());
+    }
+    while (!boardData.empty() && std::all_of(boardData.back().begin(), boardData.back().end(), [](char c) { return c == ' '; }))
+    {
+        boardData.pop_back();
+    }
+    // remove empty columns at left or right
+    while (!boardData.empty() && std::all_of(boardData.begin(), boardData.end(), [](const std::vector<char> &row) { return row.front() == ' '; }))
+    {
+        for (auto &row : boardData)
+        {
+            row.erase(row.begin());
+        }
+    }
+    while (!boardData.empty() && std::all_of(boardData.begin(), boardData.end(), [](const std::vector<char> &row) { return row.back() == ' '; }))
+    {
+        for (auto &row : boardData)
+        {
+            row.pop_back();
+        }
+    }
+    // replace anything that isn't of the following with a space
+    // A-Z, $
+    for (auto &row : boardData)
+    {
+        for (char &c : row)
+        {
+            if (!(c >= 'A' && c <= 'Z') && c != '$')
+            {
+                c = ' ';
+            }
+        }
+    }
+    // not having any of these caused a very odd bug where only new games were instanced incorrectly 
+    // but loaded games were fine due to how i stored and loaded boards
+    // without this input validation, the player's personal boards would have an extra row at the start
+    // so to fix two bugs with one stone, i added this input validation to make everything pretty
     gameBoard = new Board(boardData);
 }
 
 void Interface::addPlayers()
 {
     std::ofstream logFile(logFileName, std::ios::app);
-    std::cout << "Enter players (name color), 'done' to finish:\n";
+    std::cout << "Enter players (name color), '#done' to finish:\n";
     std::string name, color;
     while (true)
     {
+        std::cout<<"> ";
         std::cin >> name;
-        if (name == "done")
+        if (name == "#done")
             break;
         std::cin >> color;
         gameBoard->addPlayer(name, color);
@@ -201,7 +264,12 @@ void Interface::gameLoop()
         std::cout << "exit\n";
         std::cout << "> ";
 
-        std::getline(std::cin >> std::ws, command); // Trim leading whitespace and read full line
+        if (!std::getline(std::cin >> std::ws, command))
+        {
+            std::cerr << "\n[ERROR] Input stream closed. Exiting program.\n";
+            exit = true;
+            command = "exit";
+        }
 
         if (command == "exit" || command == "e")
         {
@@ -218,11 +286,15 @@ void Interface::logMove(const std::string &move)
     if (logFile)
     {
         logFile << move << '\n';
+    } else {
+        std::cerr << "Failed to log move: " << move << '\n';
     }
+    logFile.close();
 }
 
-void Interface::processCommand(const std::string &command)
+void Interface::processCommand(const std::string &command, bool log)
 {
+    std::cout<< "Processing command: " << command << std::endl;
 
     std::istringstream stream(command);
     std::string cmd, player, island, result;
@@ -232,7 +304,7 @@ void Interface::processCommand(const std::string &command)
 
     if (cmd == "exit" || cmd == "e")
     {
-        std::cout << "Thank you for using Archipelago solver, have a good day!\n";
+        std::cout << "Thank you for using Archipelago Ultra Rich Text Editor, have a good day!\n"; 
         std::cout << "Exiting...\n";
         return;
     }
@@ -251,14 +323,14 @@ void Interface::processCommand(const std::string &command)
             return;
         }
         gameBoard->doHint(player, island[0], radius, success);
-        logMove(cmd + " " + player + " " + island + " " + std::to_string(radius) + " " + result);
+        if (log) logMove(cmd + " " + player + " " + island + " " + std::to_string(radius) + " " + result);
         gameBoard->printPlayerBoard(player);
     }
     else if (cmd == "dig" || cmd == "d")
     {
         stream >> player >> island;
         gameBoard->doDig(player, island[0]);
-        logMove(cmd + " " + player + " " + island);
+        if (log) logMove(cmd + " " + player + " " + island);
         gameBoard->printPlayerBoard(player);
     }
     else if (cmd == "print" || cmd == "p")
@@ -297,7 +369,7 @@ void Interface::processCommand(const std::string &command)
             gameBoard->doDig(p.first, island[0]);
         }
 
-        logMove(cmd + " " + island);
+        if (log) logMove(cmd + " " + island);
     }
     else
     {

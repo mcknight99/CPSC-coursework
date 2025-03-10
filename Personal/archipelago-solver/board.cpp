@@ -68,7 +68,7 @@ void Board::printPlayerBoard(const std::string& playerInfo) const {
 }
 
 void Board::printBoard() const {
-    std::cout << "Original board:\n";
+    std::cout << "Game board:\n";
     for (const auto& row : originalBoard) {
         for (char cell : row) {
             std::cout << cell << " ";

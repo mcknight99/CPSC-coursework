@@ -1,0 +1,20 @@
+UMIHV
+RO$LB
+QCTF$
+DAJSP
+EG$KN
+#PLAYERS
+Bob red
+Alice yellow
+#CLUES
+remove L
+remove Q
+remove N
+hint Bob H 2 yes
+hint Alice D 1 no
+hint Bob P 2 no
+hint Alice S 1 yes
+dig Alice C
+dig Bob C
+remove F
+remove R

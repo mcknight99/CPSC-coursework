@@ -12,11 +12,14 @@ void Player::setGuess(Position center, int radius, bool answer)
     int islandCol = center.second;
 
     // Ensure center is in bounds
-    if (islandRow < 0 || islandRow >= rows || islandCol < 0 || islandCol >= cols)
+    if (islandRow < 0 || islandRow >= rows || islandCol < 0 || islandCol >= cols) {
+        std::cerr << "Island " << center.first << " " << center.second << " is out of bounds.\n";
         return;
+    }
 
-    // for all cells on the radius ring, set their entry in the potentialLootIslands map to existing value AND answer. if the cell doesn't exist in the map, set it to answer
-    // for answers = false, set the cell to 'X'
+    // for all cells on the radius ring, set their entry in the potentialLootIslands map to existing value AND answer. 
+    // if the cell doesn't exist in the map, set it to answer
+    // for answers = false, set the cell to '!'
     for (int r = islandRow - radius; r <= islandRow + radius; ++r)
     {
         for (int c = islandCol - radius; c <= islandCol + radius; ++c)
@@ -31,7 +34,9 @@ void Player::setGuess(Position center, int radius, bool answer)
                 {
                     potentialLootIslands[personalBoard[r][c]] = answer;
                 }
-                personalBoard[r][c] = answer ? personalBoard[r][c] : 'X';
+                // set the cell to '!' if the answer is false and the cell is not already '!' or '$'
+                // maintain the cell if the answer is true or the cell is '!' or '$'
+                personalBoard[r][c] = answer || personalBoard[r][c]==' ' ? personalBoard[r][c] : '!';
             }
         }
     }
@@ -44,7 +49,7 @@ void Player::setDig(Position island)
 
     if (row >= 0 && row < personalBoard.size() && col >= 0 && col < personalBoard[0].size())
     {
-        personalBoard[row][col] = 'X'; // Mark as invalid
+        personalBoard[row][col] = '!'; // Mark as invalid
     }
 }
 
@@ -55,8 +60,8 @@ void Player::printBoard() const
     {
         for (char cell : row)
         {
-            if (cell == 'X' || cell == '$')
-            { // if the cell is X or $ print a red highlight space and then an unformatted space
+            if (cell == '!' || cell == '$')
+            { // if the cell is ! or $ print a red highlight space and then an unformatted space
                 std::cout << "\033[1;41m \033[0m ";
             }
             else if (potentialLootIslands.find(cell) != potentialLootIslands.end() && potentialLootIslands.at(cell))

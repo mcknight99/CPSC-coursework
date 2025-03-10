@@ -10,4 +10,4 @@ run:
 	./main
 
 clean:
-	del -f *.o main
+	del -f *.o main.exe

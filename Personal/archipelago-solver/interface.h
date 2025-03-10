@@ -21,7 +21,7 @@ private:
     void addPlayers();
     void gameLoop();
     void logMove(const std::string& move);
-    void processCommand(const std::string& command);
+    void processCommand(const std::string& command, bool log = true);
 };
 
 #endif
