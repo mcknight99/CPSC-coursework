@@ -278,7 +278,8 @@ void revealLowestCards()
     logEvent(lowest[i].first + " reveals " +
              String(lowest[i].second));
   }
-
+  
+  shurikens--;
   broadcastGameState();
   Serial.println("Shuriken processed.");
 }
@@ -337,7 +338,7 @@ void handlePlay(uint32_t id)
       logEvent("Game reset");
       dealHands();
       broadcastGameState();
-      
+
       return;
     }
     else
@@ -467,7 +468,6 @@ void setupWebSocket()
         shurikenVotes.insert(id);
         broadcastGameState();
         if (shurikenVotes.size() == players.size() && shurikens>0) {
-          shurikens--;
           revealLowestCards();
           shurikenVotes.clear();
           broadcastGameState();
