@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- Make layout responsive on mobile -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>The Mind Multiplayer</title>
+  <style>
+    /* Base font sizing */
+    html {
+      font-size: 16px;
+    }
+
+    body {
+      font-family: sans-serif;
+      margin: 1rem;
+      line-height: 1.4;
+      color: #222;
+    }
+
+    /* Sections hidden/shown */
+    #game {
+      display: none;
+    }
+
+    /* Headings in rems */
+    h2 {
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    h3 {
+      font-size: 1.25rem;
+      margin-top: 1.5rem;
+      margin-bottom: 0.5rem;
+    }
+
+    /* Paragraph and list text */
+    p,
+    li {
+      font-size: 1rem;
+    }
+
+    ul {
+      list-style: disc inside;
+      margin: 0.5rem 0 1rem 0;
+      padding: 0;
+    }
+
+    /* Inputs and buttons */
+    input[type="text"] {
+      font-size: 1rem;
+      padding: 0.5rem;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 0.5rem;
+    }
+
+    button {
+      font-size: 1rem;
+      padding: 0.5rem 1rem;
+      margin: 0.5rem 0;
+      display: inline-block;
+    }
+
+    /* Status message */
+    #status {
+      font-size: 0.875rem;
+      color: #c00;
+      margin-top: 0.25rem;
+    }
+
+    /* Horizontal rule */
+    hr {
+      border: none;
+      border-top: 1px solid #ccc;
+      margin: 1rem 0;
+    }
+
+    /* Game info line */
+    #game p {
+      font-size: 1rem;
+      margin: 0.5rem 0 1rem 0;
+    }
+
+    /* Lists within game */
+    #hand,
+    #log,
+    #unfocusedList {
+      list-style: none;
+      padding: 0;
+      margin: 0.5rem 0;
+    }
+
+    #hand li,
+    #log li,
+    #unfocusedList li {
+      padding: 0.25rem 0;
+      border-bottom: 1px solid #eee;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Login Screen -->
+  <div id="login">
+    <h2>Join “The Mind”</h2>
+    <input type="text" id="nameInput" maxlength="31" placeholder="Your name..." autofocus>
+    <button id="joinBtn">Join Game</button>
+    <div id="status"></div>
+
+    <hr>
+
+    <h3>How to Play “The Mind”</h3>
+    <p><strong>Objective:</strong> Play your numbered cards in ascending order — without communicating!</p>
+    <ul>
+      <li>Each round, every player is dealt a number of cards equal to the round number.</li>
+      <li>Cards are numbered 1–100, and no duplicates exist.</li>
+      <li>You cannot speak, signal, or indicate <i>the value</i> of the cards you have.</li>
+      <li>When you believe you have the lowest card among all players, press “Play Lowest Card”.</li>
+      <li>If correct, the game continues. If incorrect (someone has a lower card), the team loses a life.</li>
+      <li>You start with a set number shurikens, and one life per player.</li>
+      <li>Players can vote to use a shuriken to discard their lowest card.</li>
+      <li>(Shuriken may only be played when no player has exactly one card in hand.)</li>
+      <li>Complete all 12 rounds to win the game cooperatively!</li>
+    </ul>
+  </div>
+
+  <!-- Game Screen -->
+  <div id="game">
+    <h2>The Mind</h2>
+    <p>
+      Round: <span id="round">0</span> |
+      Lives: <span id="lives">0</span> |
+      Shurikens: <span id="shurikens">0</span>
+    </p>
+
+    <h3 id="unfocusedHeader">Unfocused Players (<span id="unfocusedCount">0</span>)</h3>
+    <button id="focusBtn">Focus</button>
+    <ul id="unfocusedList"></ul>
+
+    <h3 id="yourHandHeader">Your Hand</h3>
+    <button id="playBtn">Play Lowest Card</button>
+    <ul id="hand"></ul>
+
+    <h3>Play Log</h3>
+    <ul id="log"></ul>
+
+    <h3>Shuriken Vote (<span id="shurikenVotes">0</span>)</h3>
+    <button id="svoteBtn">Vote Shuriken</button>
+  </div>
+
+  <script>
+    (function () {
+      let ws, name = "";
+      const statusDiv = document.getElementById("status");
+      const loginDiv = document.getElementById("login");
+      const gameDiv = document.getElementById("game");
+
+      function isBlank(s) {
+        return !s || /^\s*$/.test(s);
+      }
+
+      function send(cmd) {
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(cmd);
+        }
+      }
+
+      document.getElementById("joinBtn").onclick = function () {
+        const inp = document.getElementById("nameInput");
+        const nm = inp.value.trim();
+        if (isBlank(nm)) {
+          statusDiv.textContent = "Name cannot be blank";
+          inp.focus();
+          return;
+        }
+        name = nm;
+        send("#NAME:" + name + "#");
+      };
+
+      document.getElementById("focusBtn").onclick = function () {
+        send("#FOCUS#");
+      };
+      document.getElementById("playBtn").onclick = function () {
+        send("#PLAY#");
+      };
+      document.getElementById("svoteBtn").onclick = function () {
+        send("#VOTE_SHURIKEN#");
+      };
+
+      window.onload = function () {
+        ws = new WebSocket("ws://" + location.host + "/ws");
+
+        ws.onopen = () => console.log("WebSocket open");
+
+        ws.onmessage = function (e) {
+          try {
+            const d = JSON.parse(e.data);
+            console.log("Received:", d);
+            // if (d.error) {
+            //   statusDiv.textContent = d.error;
+            // }
+
+            // Auto-reload on reset trigger
+            if (Array.isArray(d.log)) {
+              for (var i = 0; i < d.log.length; i++) {
+                if (typeof d.log[i] === "string" && d.log[i].toLowerCase() === "player reset joined") {
+                  console.log("Reset player joined. Reloading page...");
+                  location.reload(true);
+                  return;
+                }
+              }
+            }
+
+            // Handle initial join acknowledgment
+            if (d.status === "joined") {
+              statusDiv.textContent = "";
+              loginDiv.style.display = "none";
+              gameDiv.style.display = "block";
+              return;
+            }
+
+            // Handle full game state update
+            if (typeof d.round !== "undefined") {
+              document.getElementById("round").textContent = d.round;
+              document.getElementById("lives").textContent = d.lives;
+              document.getElementById("shurikens").textContent = d.shurikens;
+              document.getElementById("shurikenVotes").textContent = d.shurikenVotes;
+
+              // Update hand
+              const handUL = document.getElementById("hand");
+              handUL.innerHTML = "";
+              if (Array.isArray(d.hand)) {
+                d.hand.forEach(c => {
+                  const li = document.createElement("li");
+                  li.textContent = c;
+                  handUL.appendChild(li);
+                });
+              }
+              // Show/hide play button based on if the player has cards in hand
+              const playBtn = document.getElementById("playBtn");
+              const handHeader = document.getElementById("yourHandHeader");
+
+              if (Array.isArray(d.hand) && d.hand.length === 0) {
+                playBtn.style.display = "none"; // Hide the button if no cards
+                handHeader.style.display = "none"; // Hide the header if no cards
+              } else {
+                playBtn.style.display = "inline-block"; // Show the button if cards exist
+                handHeader.style.display = "block"; // Show the header if cards exist
+              }
+
+
+              // Update log
+              const logUL = document.getElementById("log");
+              logUL.innerHTML = "";
+              if (Array.isArray(d.log)) {
+                d.log.forEach(entry => {
+                  const li = document.createElement("li");
+                  li.textContent = entry;
+                  logUL.appendChild(li);
+                });
+              }
+
+              // Update unfocused list
+              const unfocusedList = document.getElementById("unfocusedList");
+              document.getElementById("unfocusedCount").textContent = d.unfocused.length;
+              unfocusedList.innerHTML = "";
+              d.unfocused.forEach(nm => {
+                const li = document.createElement("li");
+                li.textContent = nm;
+                unfocusedList.appendChild(li);
+              });
+              // get list of players
+              //const players = document.getElementById("players");
+              // Show/hide focus button based on if the player's name is in the unfocused list and there are more than one players in the game
+              const focusBtn = document.getElementById('focusBtn');
+              if (d.unfocused.includes(name) && Object.keys(d.players).length > 1) {
+                focusBtn.style.display = "block";
+              } else {
+                focusBtn.style.display = "none";
+              }
+              // show/hide unfocused header based on if there are any unfocused players
+              const unfocusedHeader = document.getElementById("unfocusedHeader");
+              if (d.unfocused.length > 0) {
+                unfocusedHeader.style.display = "block"; // Show the header if there are unfocused players
+                // hide the play button if there are unfocused players
+                playBtn.style.display = "none"; // Hide the button if there are unfocused players
+              } else {
+                unfocusedHeader.style.display = "none"; // Hide the header if there are no unfocused players
+                // show the play button if there are no unfocused players
+                if(d.hand.length > 0) {
+                  playBtn.style.display = "inline-block"; // Show the button if there are no unfocused players and cards in hand
+                } else {
+                  playBtn.style.display = "none"; // Hide the button if there are no unfocused players and no cards in hand
+                }
+              }
+
+              // If still on login screen and this user is in the player list, enter the game
+              if (loginDiv.style.display !== "none") {
+                for (let id in d.players) {
+                  if (d.players[id].name === name) {
+                    loginDiv.style.display = "none";
+                    gameDiv.style.display = "block";
+                    break;
+                  }
+                }
+              }
+            }
+          } catch (err) {
+            console.error("Invalid JSON from server:", e.data);
+          }
+        };
+
+        ws.onclose = function () {
+          console.log("WebSocket closed. Reloading...");
+          location.reload();
+        };
+
+        ws.onerror = function (err) {
+          console.error("WebSocket error:", err);
+        };
+      };
+    })();
+  </script>
+
+</body>
+
+</html>

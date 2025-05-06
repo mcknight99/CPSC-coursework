@@ -1,0 +1,2 @@
+run this command in the platformio project directory (has /data) with upload COM open
+    pio run -t uploadfs
