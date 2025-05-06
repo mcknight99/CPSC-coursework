@@ -257,7 +257,10 @@ void revealLowestCards()
     if (it->second.hand.size() == 1)
     {
       logEvent(it->second.name + " does not have enough cards to play shuriken");
+      Serial.println(it->second.name + " does not have enough cards to play shuriken");
       return;
+    } else {
+      Serial.println(it->second.name + " has " + String(it->second.hand.size()) + " cards in hand.");
     }
   }
 
@@ -311,6 +314,14 @@ void safePlayerAdding(uint32_t newid, const String &name)
       newPlayer.name = oldPlayer.name;
       newPlayer.hand = oldPlayer.hand;
       newPlayer.focused = oldPlayer.focused;
+
+      // handle shuriken votes
+      if (shurikenVotes.count(it->first))
+      {
+        shurikenVotes.insert(newid);
+        shurikenVotes.erase(it->first);
+      }
+
       // delete the old player
       players.erase(it);
       logEvent("Reloaded player " + newPlayer.name + " from existing data");
@@ -319,6 +330,14 @@ void safePlayerAdding(uint32_t newid, const String &name)
     ++it;
   }
   broadcastGameState();
+
+  // serial print all players and their associated data
+  Serial.println("Current players:");
+  for (const auto &pair : players)
+  {
+    Serial.println("ID: " + String(pair.first) + ", Name: " + pair.second.name + ", Hand: " + jsonArray(pair.second.hand) + ", Focused: " + String(pair.second.focused ? "true" : "false") + " Shuriken Vote: " + String(shurikenVotes.count(pair.first)));
+  }
+
 }
 
 // Handle a PLAY command from a client
