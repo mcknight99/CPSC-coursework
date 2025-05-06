@@ -284,10 +284,41 @@ void revealLowestCards()
   Serial.println("Shuriken processed.");
 }
 
+// Reset shuriken votes
 void resetShurikenVotes()
 {
   Serial.println("Resetting shuriken votes...");
   shurikenVotes.clear();
+}
+
+// Replace a player with a new client
+// when a player disconnects, their cards are still existing under the name they used
+// so we need to implement something that allows us to move the old player data matching an old name
+// to the new player name and replacing their cards, id, etc
+// prerequisite: the new player name exists in the players map so we can replace it
+void safePlayerAdding(uint32_t newid, const String &name)
+{
+  Serial.println("Replacing player " + String(newid) + " with old player " + name);
+  // steps: find a player with the same name, if found, replace the current player's data with the old player's data, replace old player id with -1 and delete the old player
+  std::map<uint32_t, Player>::iterator it = players.begin();
+  while (it != players.end())
+  {
+    if (it->second.name == name)
+    {
+      // replace the current player's data with the old player's data
+      Player &oldPlayer = it->second;
+      Player &newPlayer = players[newid];
+      newPlayer.name = oldPlayer.name;
+      newPlayer.hand = oldPlayer.hand;
+      newPlayer.focused = oldPlayer.focused;
+      // delete the old player
+      players.erase(it);
+      logEvent("Reloaded player " + newPlayer.name + " from existing data");
+      break;
+    }
+    ++it;
+  }
+  broadcastGameState();
 }
 
 // Handle a PLAY command from a client
@@ -433,8 +464,17 @@ void setupWebSocket()
           players[id].name = nm;
           logEvent("Player " + nm + " joined");
           broadcastGameState();
+          Serial.println("Player " + String(id) + " set name to: " + nm);
+          
+          // if name matches an existing player, replace the old player with the new one
+
+          for (auto &pair : players) {
+            if (pair.second.name == nm && pair.first != id) {
+              safePlayerAdding(id, pair.second.name);
+              break;
+            }
+          }
         }
-        Serial.println("Player " + String(id) + " set name to: " + nm);
         // if name is "reset" to lowercase, reset the microcontroller
         if(nm.equalsIgnoreCase("reset")) {
           Serial.println("Resetting microcontroller...");
