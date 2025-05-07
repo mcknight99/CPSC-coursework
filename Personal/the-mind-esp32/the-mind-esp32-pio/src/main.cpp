@@ -278,8 +278,31 @@ void revealLowestCards()
   logEvent("Shuriken played");
   for (size_t i = 0; i < lowest.size(); ++i)
   {
+    
+    int totalRemainingCards = 0;
+    for (std::map<uint32_t, Player>::iterator jt = players.begin();
+         jt != players.end(); ++jt)
+    {
+      totalRemainingCards += jt->second.hand.size();
+    }
+    // get player id from name
+    std::map<uint32_t, Player>::iterator it = players.begin();
+    uint32_t playerId = 0;
+    while (it != players.end())
+    {
+      if (it->second.name == lowest[i].first)
+      {
+        playerId = it->first;
+        break;
+      }
+      ++it;
+    }
+    
+    int playerRemainingCards = players[playerId].hand.size();
     logEvent(lowest[i].first + " reveals " +
-             String(lowest[i].second));
+             String(lowest[i].second) + ". (" +
+             String(playerRemainingCards) + "H/" +
+              String(totalRemainingCards) + "T)");
   }
   
   shurikens--;
