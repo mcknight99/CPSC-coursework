@@ -1,0 +1,113 @@
+% !TEX root = Personal/hybrid-motor-simulation/equations.tex
+
+\documentclass[12pt]{article}
+\usepackage{amsmath}
+\usepackage{siunitx}
+\usepackage{geometry}
+\geometry{margin=1in}
+\setlength{\parskip}{1em}
+\setlength{\parindent}{0pt}
+
+\title{Equations Used in Hybrid Rocket Simulation}
+\author{}
+\date{}
+
+\begin{document}
+
+\maketitle
+
+\section*{Purpose}
+This document summarizes the key equations used in the hybrid rocket motor simulation, detailing their purpose, involved variables, and includes appropriate units.
+
+\section*{1. Oxidizer Mass Flow Rate}
+\textbf{Purpose:} To calculate the mass flow rate of oxidizer through the injector orifice.
+\begin{equation}
+\dot{m}_{\text{ox}} = C_d A_{\text{inj}} \sqrt{2 \Delta P \rho_{\text{ox}}}
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( \dot{m}_{\text{ox}} \): Oxidizer mass flow rate (\(\si{kg/s}\))
+    \item \( C_d \): Discharge coefficient (unitless)
+    \item \( A_{\text{inj}} \): Injector area (\(\si{m^2}\))
+    \item \( \Delta P \): Pressure drop across the injector (\(\si{Pa}\))
+    \item \( \rho_{\text{ox}} \): Oxidizer density (\(\si{kg/m^3}\))
+\end{itemize}
+
+\section*{2. Fuel Regression Rate}
+\textbf{Purpose:} To determine the rate at which fuel burns and increases port diameter.
+\begin{equation}
+\dot{r} = a \left( \frac{G_{\text{ox}}}{1\,\si{kg/(m^2 \cdot s)}} \right)^n
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( \dot{r} \): Regression rate (\(\si{m/s}\))
+    \item \( a \): Regression rate coefficient (\(\si{m/s}\))
+    \item \( n \): Regression rate exponent (unitless)
+    \item \( G_{\text{ox}} \): Oxidizer mass flux (\(\si{kg/(m^2 \cdot s)}\)), \( G_{\text{ox}} = \dot{m}_{\text{ox}} / A_{\text{port}} \)
+    \item \( A_{\text{port}} \): Fuel port cross-sectional area (\(\si{m^2}\))
+\end{itemize}
+
+\section*{3. Fuel Port Diameter Update}
+\textbf{Purpose:} To update the port diameter as fuel burns.
+\begin{equation}
+D_{\text{port,new}} = D_{\text{port,old}} + 2 \dot{r} \cdot \Delta t
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( D_{\text{port}} \): Fuel port diameter (\(\si{m}\))
+    \item \( \dot{r} \): Regression rate (\(\si{m/s}\))
+    \item \( \Delta t \): Time step (\(\si{s}\))
+\end{itemize}
+
+\section*{4. Fuel Burned Mass}
+\textbf{Purpose:} To calculate fuel mass burned over the time step.
+\begin{equation}
+m_{\text{fuel}} = \rho_{\text{fuel}} A_{\text{burn}} \dot{r} \cdot \Delta t
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( m_{\text{fuel}} \): Fuel mass burned (\(\si{kg}\))
+    \item \( \rho_{\text{fuel}} \): Fuel density (\(\si{kg/m^3}\))
+    \item \( A_{\text{burn}} \): Burning surface area (\(\si{m^2}\)), \( A_{\text{burn}} = \pi D_{\text{port}} L \)
+    \item \( L \): Port length (\(\si{m}\))
+\end{itemize}
+
+\section*{5. Oxidizer-to-Fuel Ratio (O/F)}
+\textbf{Purpose:} To compute the mass ratio between oxidizer and fuel.
+\begin{equation}
+\text{O/F} = \frac{\dot{m}_{\text{ox}}}{\dot{m}_{\text{fuel}}}
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( \dot{m}_{\text{ox}} \): Oxidizer mass flow rate (\(\si{kg/s}\))
+    \item \( \dot{m}_{\text{fuel}} \): Fuel mass flow rate (\(\si{kg/s}\)), \( \dot{m}_{\text{fuel}} = m_{\text{fuel}} / \Delta t \)
+\end{itemize}
+
+\section*{6. Chamber Pressure Estimate}
+\textbf{Purpose:} To estimate chamber pressure for thrust calculation.
+\begin{equation}
+P_c = \frac{\dot{m}_{\text{total}} R T_c}{V_c}
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( P_c \): Chamber pressure (\(\si{Pa}\))
+    \item \( \dot{m}_{\text{total}} \): Total mass flow rate (\(\si{kg/s}\))
+    \item \( R \): Specific gas constant (\(\si{J/(kg \cdot K)}\))
+    \item \( T_c \): Chamber temperature (\(\si{K}\))
+    \item \( V_c \): Chamber volume (\(\si{m^3}\))
+\end{itemize}
+
+\section*{7. Thrust Calculation}
+\textbf{Purpose:} To estimate thrust produced.
+\begin{equation}
+F = C_f P_c A_t
+\end{equation}
+\textbf{Variables:}
+\begin{itemize}
+    \item \( F \): Thrust (\(\si{N}\))
+    \item \( C_f \): Thrust coefficient (unitless)
+    \item \( P_c \): Chamber pressure (\(\si{Pa}\))
+    \item \( A_t \): Nozzle throat area (\(\si{m^2}\))
+\end{itemize}
+
+\end{document}
