@@ -1,0 +1,13 @@
+
+ABCDE
+FGHIJ
+KLMNO
+PQRST
+PLAYERS
+c y
+b g
+a r
+CLUES
+hint a a 2 yes
+hint a A 2 yes
+hint a A 2 true

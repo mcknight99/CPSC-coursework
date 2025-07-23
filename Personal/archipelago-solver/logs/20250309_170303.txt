@@ -1,0 +1,15 @@
+
+ABCDE
+FGHIJ
+KLMON
+PQRST
+UVWYX
+PLAYERS
+brian b
+joey b
+cc g
+sam p
+CLUES
+dig brian N
+dig cc E
+hint cc I 2 yes

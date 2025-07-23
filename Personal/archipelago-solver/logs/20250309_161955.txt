@@ -1,0 +1,12 @@
+
+AB
+$C
+PLAYERS
+j r
+CLUES
+dig j B
+dig j B
+dig r B
+dig j B
+dig j b
+h j C 1 y

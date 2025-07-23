@@ -1,0 +1,17 @@
+
+ABCDE
+FGHIJ
+KLMNO
+PQRST
+UV$$$
+PLAYERS
+joey yellow
+cc green
+sam red
+CLUES
+hint joey C 2 yes
+hint joey C 2 true
+hint joey C 2 1
+h cc I 1 f
+h green I 2 yes
+h cc Q 1 f
