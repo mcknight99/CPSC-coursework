@@ -2,3 +2,4 @@
 *.exe
 oauth.json
 .venv
+Personal/reverse-shadow-projection/stb_image.h
