@@ -33,13 +33,9 @@ void setup() {
   servo3.attach(servo3Pin);
 
   // Set initial positions
-  servo1.write(90);
-  servo2.write(90);
-  servo3.write(90);
+  servo1.write(180);
 
   Serial.begin(9600);
-
-  moveToPosition(0,0,0);
 
   delay(5000);
   
@@ -92,57 +88,67 @@ void loop() {
 
 
   // quick script to anti idle my laptop using one servo on my mouse
-  servo1.write(180);
-  delay(600000);
-  servo1.write(0);
-  delay(1000);
+  // servo1.write(180);
+  // delay(600000);
+  // servo1.write(0);
+  // delay(1000);
 
   
-  // Read serial input
-  if (Serial.available() > 0) {
-    char input = Serial.read();
-    switch (input) {
-      case 'w':
-        moveToPosition(0, 0, 10);
-        break;
-      case 's':
-        moveToPosition(0, 0, -10);
-        break;
-      case 'a':
-        moveToPosition(10, 0, 0);
-        break;
-      case 'd':
-        moveToPosition(-10, 0, 0);
-        break;
-      case 'q':
-        moveToPosition(0, 10, 0);
-        break;
-      case 'e':
-        moveToPosition(0, -10, 0);
-        break;
-      case 'i':
-        servo2.write(servo2.read() + 3);
-        break;
-      case 'k':
-        servo2.write(servo2.read() - 3);
-        break;
-      case 'j':
-        servo1.write(servo1.read() + 3);
-        break;
-      case 'l':
-        servo1.write(servo1.read() - 3);
-        break;
-      case 'u':
-        servo3.write(servo3.read() + 3);
-        break;
-      case 'o':
-        servo3.write(servo3.read() - 3);
-        break;
-      default:
-        break;
-    }
-  }
+  // // Read serial input
+  // if (Serial.available() > 0) {
+  //   char input = Serial.read();
+  //   switch (input) {
+  //     case 'w':
+  //       moveToPosition(0, 0, 10);
+  //       break;
+  //     case 's':
+  //       moveToPosition(0, 0, -10);
+  //       break;
+  //     case 'a':
+  //       moveToPosition(10, 0, 0);
+  //       break;
+  //     case 'd':
+  //       moveToPosition(-10, 0, 0);
+  //       break;
+  //     case 'q':
+  //       moveToPosition(0, 10, 0);
+  //       break;
+  //     case 'e':
+  //       moveToPosition(0, -10, 0);
+  //       break;
+  //     case 'i':
+  //       servo2.write(servo2.read() + 3);
+  //       break;
+  //     case 'k':
+  //       servo2.write(servo2.read() - 3);
+  //       break;
+  //     case 'j':
+  //       servo1.write(servo1.read() + 3);
+  //       break;
+  //     case 'l':
+  //       servo1.write(servo1.read() - 3);
+  //       break;
+  //     case 'u':
+  //       servo3.write(servo3.read() + 3);
+  //       break;
+  //     case 'o':
+  //       servo3.write(servo3.read() - 3);
+  //       break;
+  //     default:
+  //       break;
+  //   }
+  // }
 
+  servo1.write(20); // Click down
+  delay(3000); // Wait for 3 seconds
+  servo1.write(120); // Unclick to neutral position
+  int minutes = 4;
+  for(int i = 0; i < minutes; i++) {
+    Serial.println("Time until next click: " + String(minutes - i) + " minutes and 45 seconds");
+    delay(60000); // Wait for 60 seconds
+  }
+  Serial.println("Time until next click: 45 seconds");
+  delay(45000); // Wait for 45 seconds
 }
 
 
