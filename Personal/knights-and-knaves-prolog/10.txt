@@ -1,0 +1,19 @@
+Rafaela says "Bathsheba and I are different"
+
+Therine says "Either Shay or Jazmin is a knight, but not both"
+
+Karla says "Jazmin is a knave"
+
+Shay says "Jazmin and I are both knaves"
+
+Sephira says "Rafaela and I are different"
+
+Winni says "Sephira is a knight"
+
+Bathsheba says "Jazmin and I are the same"
+
+Luella says "Sephira, Shay, and I are all the same"
+
+Shawna says "Shay, Winni, and I are all the same"
+
+Jazmin says "Either Shawna or Sephira is a knight, but not both"

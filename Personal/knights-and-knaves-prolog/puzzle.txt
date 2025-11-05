@@ -1,0 +1,39 @@
+Angelique says "Gipsy, Effie, and I are all the same"
+
+Sharon says "Effie, Verena, and I are all knights"
+
+Blinni says "Verena is a knave"
+
+Alina says "Inez, Devi, and I are all knaves"
+
+Bernadene says "Devi and I are both knights"
+
+Jemimah says "Alina and I are different"
+
+Verena says "Jemimah and I are both knights"
+
+Evie says "Blinni, Mair, and I are all knights"
+
+Devi says "Lilly and I are both knights"
+
+Cassondra says "Angelique, Bernadene, and I are all knights"
+
+Gipsy says "Inez and I are both knights"
+
+Georgette says "Kirstyn and I are different"
+
+Grata says "Angelique, Effie, and I are all the same"
+
+Lilly says "Kirstyn is a knave"
+
+Effie says "Lilly and I are the same"
+
+Vanni says "Alina and I are both knights"
+
+Kirstyn says "Grata and I are different"
+
+Marlyn says "Georgette, Grata, and I are all knights"
+
+Mair says "Jemimah is a knight"
+
+Inez says "Angelique is a knight"

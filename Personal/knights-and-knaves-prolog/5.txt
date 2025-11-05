@@ -1,0 +1,9 @@
+Belicia says "Bonnee and I are different"
+
+Bonnee says "Jamima, Belicia, and I are all knights"
+
+Arabel says "Annemarie and I are different"
+
+Jamima says "Arabel and I are different"
+
+Annemarie says "Arabel is a knight"

@@ -1,0 +1,39 @@
+Aurie says "Jillian, Chere, and I are all knaves"
+
+Katee says "Robinette is a knight"
+
+Monica says "Either Diena or Ceil is a knight, but not both"
+
+Brianne says "Sophia and I are both knights"
+
+Kellia says "Dyanna, Xena, and I are all knaves"
+
+Dominica says "Diena and I are different"
+
+Lonnie says "Kellia and I are different"
+
+Gabriela says "Robinette is a knave"
+
+Xena says "Either Dominica or Lonnie is a knight, but not both"
+
+Jillian says "Diena and I are both knights"
+
+Marcie says "Xena and I are the same"
+
+Chere says "Either Robinette or Xena is a knight, but not both"
+
+Ceil says "Monica and I are both knights"
+
+Sophia says "Monica and I are different"
+
+Guglielma says "Either Kenna or Lonnie is a knight, but not both"
+
+Jacquette says "Either Lonnie or Marcie is a knight, but not both"
+
+Diena says "Ceil and I are both knights"
+
+Dyanna says "Guglielma, Jillian, and I are all the same"
+
+Robinette says "Marcie, Jacquette, and I are all the same"
+
+Kenna says "Guglielma, Katee, and I are all knaves"
