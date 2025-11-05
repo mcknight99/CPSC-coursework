@@ -1,0 +1,18 @@
+plantassign(4,R).
+plantassign(6,[azalea | T]). 
+uniquecheck([azalea, begonias, buttercup, bird_of_paradise]).
+uniquecheck([azalea, begonias, buttercup, azalea]).
+colorcheck([azalea, begonias, buttercup, bird_of_paradise]).
+colorcheck([azalea, begonias, buttercup, daffodils]).
+sizecheck([azalea, begonias, bird_of_paradise, carnation]).
+sizecheck([azalea, begonias, buttercup, bird_of_paradise]).
+wetcheck(4, [azalea, begonias, bird_of_paradise, buttercup]).
+wetcheck(4, [azalea, begonias, buttercup, bird_of_paradise]).
+writegarden([azalea, begonias, buttercup, bird_of_paradise]).
+writegarden([A, iris, lavender, lilies]).
+gardenplan(4, Row).
+gardenplan(6, L). 
+gardenplan(6, [A, B, C, D, azalea, F]). 
+gardenplan(3, R).
+gardenplan(4, [azalea, begonias, daffodils, chrysanthemum]).
+gardenplan(4, [azalea, begonias, buttercup, bird_of_paradise]).
