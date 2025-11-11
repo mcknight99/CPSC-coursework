@@ -9,6 +9,7 @@ vector<XVdata> XVSumData;
 in the puzzle mains as well
 
 A potential overhaul/change for the future?
+- I would also like to implement a constraint satisfaction problem approach with the logical solver instead of the trie & backtrack solver
 
 
 
