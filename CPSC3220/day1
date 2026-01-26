@@ -1,0 +1,81 @@
+y=0xFEED=1111111011101101
+x=0xBEEF=1011111011101111
+z=0000101111101110 
+ &1111000011111111
+z=0000 0000 1110 1110 = 2 + 4 + 8 + 32 + 64 + 128 = 238 = 00EE
+
+y = (*p & 000F) | (*x << 4)
+
+
+y++ = 1111111011101110 = FEEE
+
+p = &x = 0xBEEF
+ idk lmao
+
+
+local variables stored on the stack 
+
+
+
+----------------------------------
+
+MAX_VALS = 5
+OFFSET = 2
+NUM_TO_COPY = 3
+
+int* v1 = malloc max vals ints
+int* v2 = malloc max vals ints
+
+v1[i] = i << 1
+v1[0] = 0 << 1 = 0
+v1[1] = 1 << 1 = 2
+v1[2] = 2 << 1 = 4
+v1[3] = 3 << 1 = 6
+v1[4] = 4 << 1 = 8
+
+memcopy v1 + offset to v2 up to size of int times num to copy
+//^ pointer arithmetic: v1+2 = v1+(2 * sizeof(int))
+// otherwise *(v1+2) = v1[2]
+// pointer arithmetic = basically indexing array
+v2[0] = v1[2] = 4
+v2[1] = v1[3] = 6
+v2[2] = v1[4] = 8
+v2[3] = ?
+v2[4] = ?
+
+v2[0] = 4
+v2[1] = 6
+v2[2] = 8
+v2[3] = undefined or garbage or unknown or 0 (was 0)
+sizeofv1 = 20 (4 bytes per int * 5 ints) (how is this 8)
+
+
+-------------------------
+
+// who would ever write code like this in industry this is all not readable at a glance
+
+add(a,b){ // passed by value so doesnt affect original variables
+    a++;b--;r=a+b; return r--; // by doing r-- it just returns r because it decrements after returning
+}
+
+x = 14 y = 3 s = add(x,y++) = {14++, 3++-- -> 15+2=17} // calling y++ increments y after passing it to the function so it passes 3 but y becomes 4 after the call
+print x y s : 14 4 17
+
+---------------------------
+
+typedef int (*afun)(int)
+
+int x(int b) {return b - 1}
+int y(int b) {return b + 3}
+int z(int b) {return b * 2}
+
+int cmp(afun f1, int(*f2)(int), int a) { // function pointer as parameter
+    return f1(f2(a))
+}
+
+z(cmp(x,y,1)) = z(y(1)-1) = z(4-1) = z(3) = 6
+cmp(x,y,1) = x(y(1)) = x(4) = 3
+y(cmp(z,x,3)) = y(x(3)*2) = y(2*2) = y(4) = 7
+cmp(z,x,3) = z(x(3)) = z(2) = 4
+
+can you do cmp(z,cmp(x,y),1) ?
