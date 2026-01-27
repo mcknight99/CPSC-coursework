@@ -1,0 +1,21 @@
+Samuel Pupke
+leakcount: counts leaked memory using shim (better description wip)
+sctracer: counts syscalls using trace (better description wip)
+
+NOTES TO SELF
+* NO MAGIC NUMBERS
+* TEST THOROUGHLY
+* MY USUAL COMMENTS
+* READABLE CODE (USUALLY OK)
+* GOOD VARIABLE NAMES
+* GOOD INDENTATION
+* ALL COMPILED WITH -WALL 
+
+
+KNOWN PROBLEMS -- all known problems or program limitations
+nothing has been implemented yet
+
+DESIGN -- architecture of how my code works
+mostly comments
+
+REFERENCES -- functions or implementations learned outside of class

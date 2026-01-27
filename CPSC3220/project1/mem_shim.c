@@ -7,9 +7,7 @@ the code should keep track of allocations that occur and which ones get freed
 
 */
 
-// test change
-
-
+#include <stdlib.h>
 
 // memory leak detector hints for implementation
 void free(void *ptr);
@@ -18,7 +16,10 @@ void *calloc(size_t count, size_t size);
 void *realloc(void *ptr, size_t size);
 
 // how to call the original version of malloc
-#include <dlfcn.h>
-void *(*original_malloc)(size_t size);
-original_malloc = dlsym(RTLD_NEXT, "malloc");
-void *ptr = original_malloc(17); //why 17?
+// #include <dlfcn.h>
+// void *(*original_malloc)(size_t size);
+// original_malloc = dlsym(RTLD_NEXT, "malloc");
+// void *ptr = original_malloc(17); //why 17?
+
+
+// simply existing to compile so i can hide the real WIP code 
