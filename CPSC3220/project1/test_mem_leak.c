@@ -36,11 +36,7 @@ the code should keep track of allocations that occur and which ones get freed
 
 */
 
-
-#include <stdio.h>
 #include <stdlib.h>
-#include <string.h>
-#include <unistd.h>
 
 int main() {
     // Allocate memory without freeing to simulate a memory leak
