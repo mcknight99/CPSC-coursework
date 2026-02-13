@@ -1,21 +1,38 @@
 Samuel Pupke
-leakcount: counts leaked memory using shim (better description wip)
-sctracer: counts syscalls using trace (better description wip)
 
-NOTES TO SELF
-* NO MAGIC NUMBERS
-* TEST THOROUGHLY
-* MY USUAL COMMENTS
-* READABLE CODE (USUALLY OK)
-* GOOD VARIABLE NAMES
-* GOOD INDENTATION
-* ALL COMPILED WITH -WALL 
+PROJECT DESCRIPTION --
+
+leakcount is a program that just takes in a target program and arguments and passes it to a child to have it run the target program. However, it loads a shim before running in the child to track memory leaks.
+
+mem_shim is a shim that overrides malloc, calloc, realloc, and free. This shim tracks memory leaks by writing an implementation of each overridden function that calls the original function and then saves each called function's effects. Once the program finishes, it prints all memory leaks and how much memory was leaked
+
+sctracer is a program that acts similar to the strace command. sctracer is given a target program and args, then forks to let a child run the target program which runs it while allowing itself to be tracked for all syscalls. The parent then tracks all syscalls from the child and outputs the tracked syscalls to a file. 
+ 
+
+KNOWN PROBLEMS -- 
+(fixed) sctracer not tracking all syscalls.
+    (solution) child needs to wait for parent before running execvp
+    (debugging method) using strace, I set up a makefile command set up to compare the sctracer output and the strace output. A c++ program reads in both of these outputs and checks for differences in counts. This is how I saw the initial execvp not getting detected. Got help from Prof. Sorber for making this function properly
 
 
-KNOWN PROBLEMS -- all known problems or program limitations
-nothing has been implemented yet
+DESIGN -- 
+leakcount: 
+* Leakcount's child just uses LD_PRELOAD to load mem_shim.so, then run the target program with args
+* Leakcount's parent just allows the child to carry out the program and returns if the child succeeds or fails
 
-DESIGN -- architecture of how my code works
-mostly comments
+mem_shim: 
+* Uses a linked list of "allocation" structs to track memory allocations. Helper functions add_allocation and remove_allocation handle the linked list. 
+* The destructor counts and prints the linked list
+* The shim is implemented by overriding each function name and parameters so the shim matches as the "first" instance before the real libraries. 
+* Inside each shim function uses dlsym to call the real version of the function to call it, while the shim function uses the linked list helper to track leaks. Returns the real result to maintain expected functionality
 
-REFERENCES -- functions or implementations learned outside of class
+sctracer: 
+* When first run, sctracer parses the additional 3 arguments passed in. It parses the second as if it has several arguments in a string, so it can pass it to the child
+* System calls get stored as a map/array where the syscall num is the index and the stored value at the index is the count
+* Upon forking, the child allows itself to be traced by the parent, and waits to run execvp until the parent is ready
+* Upon forking, the parent waits for the child, then sets the settings to get the signal for a syscall entry/exit. Then until the child exits, track every time the child enters a stop. Once the child finishes, write the counts to the file name passed in at the start. 
+
+REFERENCES -- 
+* How the shim prints when closing: https://stackoverflow.com/questions/2053029/how-exactly-does-attribute-constructor-work
+* How the sctracer child waits for the parent before running execvp: https://github.com/sorber/cpscece3220-s26/blob/main/processes/ptrace_example.c -> line 30
+* How sctracer detects only syscalls and not any stop: https://www.man7.org/linux/man-pages/man2/ptrace.2.html -> PTRACE_O_TRACESYSGOOD section. My code shows 0b instead of 0x for more clarity for what's actually happening in the memory
