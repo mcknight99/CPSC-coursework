@@ -1,0 +1,28 @@
+Samuel Pupke
+leakcount: counts leaked memory using shim (better description wip)
+sctracer: counts syscalls using trace (better description wip)
+
+NOTES TO SELF
+* NO MAGIC NUMBERS
+* TEST THOROUGHLY
+* QUALITY COMMENTING, am usually ok with this
+* READABLE CODE, am usually ok with this
+* GOOD VARIABLE NAMES, am usually ok with this
+* GOOD INDENTATION (Ctrl Shift I on ubuntu as self reminder. usually using windows' alt shift f)
+* ALL COMPILED WITH -WALL (done)
+
+
+* BEFORE FINAL SUBMITTING:
+* * go back through all code and make sure the nodes above are thoroughly followed
+
+OFFICE HOUR QUESTIONS -- 
+* do magic numbers include things like return 0/1 and child/parent pids?
+
+KNOWN PROBLEMS -- all known problems or program limitations
+nothing has been implemented yet
+
+DESIGN -- architecture of how my code works
+mostly comments
+
+REFERENCES -- functions or implementations learned outside of class
+* How the shim prints when closing: https://stackoverflow.com/questions/2053029/how-exactly-does-attribute-constructor-work
