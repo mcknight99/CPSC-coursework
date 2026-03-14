@@ -1,0 +1,31 @@
+Samuel Pupke
+
+DESCRIPTION
+b.c is the source code that gets compiled into a library that provides threading, locks, and condition variables.
+The library uses context switching to switch between threads, and uses several queues to keep track of threads that 
+are ready, waiting for locks, waiting for condition variables, and finished threads that need to be cleaned up.
+Each thread has its own stack and execution context, wrapped by a function thread_stub that allows the library
+to wrap the user's function calls and control the threading flow more easily.
+A schedule helper function is used to swap contexts between threads, instead of rewriting swaps in multiple places.
+The schedule helper function also handles cleaning up finished threads.
+When a thread exits, it stores its return value and readies any thread that called threadJoin on it.
+
+DESIGN
+
+threads: each thread is a thread_t struct that contains thread id, context, stack, state, return value, pointers to joiners, all threads, and ready next threads
+schedule() is a helper that selects the next ready thread from the ready queue and uses swap context to save the current thread and switch to the next
+threadCreate allocates a thread struct and its stack and context. makecontext sets up the context for create, and the thread is placed in the ready queue
+threadExit marks the thread as finished, stores the return value, wakes joiner threads, and schedules the next thread
+threadJoin blocks the caller thread until the target is finished, retrives the return value, and cleans up the finished thread
+locks: lock has an owner thread, and the acquire function blocks the caller if the lock is already owned, and the release function wakes one waiting thread if there are any
+condition variables: each condition variable has a queue of waiting threads, and the wait function releases the lock and blocks the caller, while the signal function wakes one waiting thread if there are any
+
+
+KNOWN PROBLEMS
+(fixed) - many instances of problematic ordering of code. tests would not match order of expected outputs, even with correct logic and output. 
+(fixed) - volatile exit from schedule() helper. when there are no threads are ready then just return, don't do anything more. originally i had exit(0) here but that was too volatile and caused failures when high numbers of threads were being handled 
+
+
+REFERENCES
+For learning how to set contexts of new threads: https://www.ibm.com/docs/en/zos/3.1.0?topic=functions-makecontext-modify-user-context
+    I used this in threadCreate to prepare for makecontext. There's probably a better way to do it(?) but this solution works and is from a reliable source. 
