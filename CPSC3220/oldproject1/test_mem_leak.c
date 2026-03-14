@@ -37,6 +37,10 @@ the code should keep track of allocations that occur and which ones get freed
 */
 
 #include <stdlib.h>
+<<<<<<< HEAD:CPSC3220/oldproject1/test_mem_leak.c
+=======
+#include <stdio.h>
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/test_mem_leak.c
 
 int main(int argc, char *argv[])
 {
@@ -61,7 +65,12 @@ int main(int argc, char *argv[])
     // should not count as a leak
 
     // should be able to handle a LOT of allocations and a LOT of leaks
+<<<<<<< HEAD:CPSC3220/oldproject1/test_mem_leak.c
     for (size_t i = 0; i < 10000; i++)
+=======
+    int repeat = 10000; //10000
+    for (size_t i = 0; i < repeat; i++)
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/test_mem_leak.c
     {
         void *leak = malloc(16); // Leak 16 bytes each iteration
         leak = leak;             // To avoid unused variable warning
@@ -109,7 +118,12 @@ int main(int argc, char *argv[])
     free(calloc_no_leak);                 // properly free this one
 
     // to test a large number of allocations and leaks with calloc
+<<<<<<< HEAD:CPSC3220/oldproject1/test_mem_leak.c
     for (size_t i = 0; i < 5000; i++)
+=======
+    repeat = 5000; //5000
+    for (size_t i = 0; i < repeat; i++)
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/test_mem_leak.c
     {
         void *leak = calloc(4, 8); // Leak 32 bytes each iteration
         leak = leak;               // To avoid unused variable warning

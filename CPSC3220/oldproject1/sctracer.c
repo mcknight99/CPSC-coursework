@@ -1,3 +1,4 @@
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
 // QUESTION ABOUT OUTPUT TO FILE: should the last row have a newline? (leave a blank line at the end?)
 
 // sctracer will take a test program and its arguments as a single argument
@@ -24,11 +25,14 @@
 
 // he just emailed that we should use PTRACE_GET_SYSCALL_INFO instead of PEEKUSER to get syscall numbers to tell the difference between entry and exit easier
 
+=======
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <sys/wait.h>
 #include <sys/ptrace.h>
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
 // #include <sys/user.h>
 // #include <stdint.h>
 #include <stdbool.h>
@@ -59,17 +63,43 @@ int main(int argc, char *argv[])
         return EXIT_FAILURE;
     }
 
+=======
+#include <stdbool.h>
+#include <linux/ptrace.h>
+#include <string.h> //for memset
+#include <signal.h>
+
+#define MAX_SYSCALL_TYPES 1024 // arbitrary large number to cover all syscall numbers. my linux system caps at 372
+#define OUTPUT_FILE_POS 2
+#define TARGET_PROGRAM_POS 1
+#define PTRACE_SYSCALL_BIT 0b10000000 // bit flip magic number added to signal by PTRACE_O_TRACESYSGOOD to indicate syscall stop. using this as a sanity check that it is only stopping for syscalls and not other signals
+
+int main(int argc, char *argv[])
+{
+    // target_program_with_args is the string passed in as arg1 which contains the target program and its args.
+    // it will be parsed into exec_args which is an array of strings to be passed to execvp.
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
     char *target_program_with_args;
     char *output_file;
     char **exec_args;
 
     // always treat arg1 as if it has several args to be passed. it will be passed in as a string, so we need to separate it into the target program and its args
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
     // e.g. "./test_tracer 2 3" -> output_file = "./test_tracer", exec_args = {"./test_tracer", "2", "3", NULL}
     target_program_with_args = argv[1];
     output_file = argv[2];
     // parse target_program_with_args into exec_args array
     // first count number of args by counting spaces
     int arg_count = 1; // at least one arg //?? i assume this is a magic number lol
+=======
+    target_program_with_args = argv[TARGET_PROGRAM_POS];
+    output_file = argv[OUTPUT_FILE_POS];
+
+    // parse target_program_with_args into exec_args array
+
+    // first count number of args by counting spaces
+    int arg_count = TARGET_PROGRAM_POS;
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
     for (char *p = target_program_with_args; *p != '\0'; p++)
     {
         if (*p == ' ')
@@ -77,14 +107,25 @@ int main(int argc, char *argv[])
             arg_count++;
         }
     }
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
     // allocate exec_args array
     exec_args = malloc((arg_count + 1) * sizeof(char *)); // +1 for NULL terminator
+=======
+
+    // then allocate exec_args array
+    exec_args = malloc((arg_count + 1) * sizeof(char *)); // arg_count+1 for NULL terminator
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
     if (!exec_args)
     {
         perror("malloc");
         return EXIT_FAILURE;
     }
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
     // split target_program_with_args into exec_args
+=======
+
+    // finally split target_program_with_args into exec_args
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
     int index = 0;
     char *token = strtok(target_program_with_args, " ");
     while (token != NULL)
@@ -94,6 +135,7 @@ int main(int argc, char *argv[])
     }
     exec_args[index] = NULL; // NULL terminate the array
 
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
     // old processing
     // const char *output_file = argv[OUTPUT_FILE_ARG_POSITION];
     // char **exec_args = &argv[1];  //?? magic number? can i just keep #defining magic numbers and make it easy on myself?
@@ -113,6 +155,27 @@ int main(int argc, char *argv[])
         kill(getpid(), SIGSTOP); // comes from https://github.com/sorber/cpscece3220-s26/blob/main/processes/ptrace_example.c
         
         execvp(exec_args[0], exec_args);          //?? does that count as a magic number?
+=======
+    unsigned long syscall_counts[MAX_SYSCALL_TYPES];
+    memset(syscall_counts, 0, sizeof(syscall_counts)); // initialize all counts to 0 to avoid garbage values
+
+    pid_t pid = fork();
+
+    if (pid == 0)
+    {
+        // Child process
+
+        // allow the child to be tracked by the parent
+        ptrace(PTRACE_TRACEME, NULL);
+
+        // stop the child so the parent can trace the execvp before it runs
+        kill(getpid(), SIGSTOP); 
+
+        // pass the target program then the args as an array to execvp
+        execvp(exec_args[0], exec_args);
+
+        // since execvp overwrites the process after running, this should never reach here unless execvp fails
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
         perror("execvp");
         exit(EXIT_FAILURE);
     }
@@ -121,7 +184,11 @@ int main(int argc, char *argv[])
         // Parent process
         int status;
         // wait for child to stop on its first instruction so we can set options and sync up before it makes syscalls or we finish before them
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
         waitpid(pid, &status, 0); // wants to be 0 instead of null for -Wall??
+=======
+        waitpid(pid, &status, 0);
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
 
         // set options to get notified on syscall entry/exit
         ptrace(PTRACE_SETOPTIONS, pid, NULL, PTRACE_O_TRACESYSGOOD);
@@ -130,8 +197,14 @@ int main(int argc, char *argv[])
         {
             // Continue the child and stop at next syscall entry/exit
             ptrace(PTRACE_SYSCALL, pid, NULL, NULL);
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
             // wait for child to stop
             waitpid(pid, &status, 0); // wants to be 0 instead of null for -Wall //?? magic numbers?
+=======
+
+            // wait for child to stop
+            waitpid(pid, &status, 0);
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
             if (WIFEXITED(status) || WIFSIGNALED(status))
             {
                 // break if child has exited or was terminated by a signal
@@ -139,6 +212,7 @@ int main(int argc, char *argv[])
             }
 
             // check if there is a syscall stop
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
             if (WIFSTOPPED(status) && (WSTOPSIG(status) & 0b10000000)) //?? magic number most likely lol what to do about it
             // (0x80/0b10000000 is magic number added by PTRACE_O_TRACESYSGOOD) and flips the 7th bit to 1 to indicate syscall stop
             // https://www.man7.org/linux/man-pages/man2/ptrace.2.html -> PTRACE_O_TRACESYSGOOD section
@@ -156,6 +230,12 @@ int main(int argc, char *argv[])
                 // get syscall info
                 struct ptrace_syscall_info info;
                 // memset(&info, 0, sizeof(info)); // initialize to zero to avoid garbage values // well it has no effect with or without it in contrast to syscall_counts but i think that makes sense since it is being fully overwritten by ptrace right after?
+=======
+            if (WIFSTOPPED(status) && (WSTOPSIG(status) & PTRACE_SYSCALL_BIT))
+            {
+                struct ptrace_syscall_info info;
+                // get syscall info
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
                 ptrace(PTRACE_GET_SYSCALL_INFO, pid, sizeof(info), &info);
 
                 // only count on syscall entry
@@ -181,7 +261,12 @@ int main(int argc, char *argv[])
 
         for (int i = 0; i < MAX_SYSCALL_TYPES; i++)
         {
+<<<<<<< HEAD:CPSC3220/oldproject1/sctracer.c
             if (syscall_counts[i] > 0) // only report syscalls that were called
+=======
+            // only report syscalls that were called at least once
+            if (syscall_counts[i] > 0)
+>>>>>>> 2ea7bad290da5d273194e6c990e64b4e5508d870:CPSC3220/project1/sctracer.c
             {
                 fprintf(out, "%d\t%lu\n", i, syscall_counts[i]);
             }
