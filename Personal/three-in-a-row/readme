@@ -1,0 +1,6 @@
+Three in a row is a puzzle game that I decided to make a generator and solver for
+I broke it into three parts: 
+    the board generator (input dimensions and misc. variables such as a seed, and output a fully solved board)
+    the board solver (input a partial board and solve it from there, similar to my sudoku solver)
+    the board pruner (given a fully solved board, prune as many spaces as possible until there is still only one solution to the board)
+Play here: https://www.brainbashers.com/3inarow.asp
