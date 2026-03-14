@@ -87,6 +87,10 @@
         "stop_token": "cpp",
         "thread": "cpp",
         "cinttypes": "cpp",
-        "codecvt": "cpp"
+        "codecvt": "cpp",
+        "bitset": "cpp",
+        "condition_variable": "cpp",
+        "regex": "cpp",
+        "mutex": "cpp"
     }
 }
