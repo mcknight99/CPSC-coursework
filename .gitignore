@@ -4,3 +4,7 @@ oauth.json
 .venv
 Personal/reverse-shadow-projection/stb_image.h
 /Personal/hybrid-wireless-system/ground-control-side/logs
+Personal/hybrid-motor-simulation/output.txt
+Personal/hybrid-motor-simulation/pdfcsvtocsv.py
+Personal/hybrid-motor-simulation/plots.py
+Personal/song_elo/.cache
