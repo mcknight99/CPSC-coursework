@@ -9,12 +9,15 @@
 // the program will continue to run until the user decides to stop
 // the program will also write out the top 100 songs to a file called top_songs.csv when the user quits
 
+// define csv file name
+const std::string csv_file_name = "ccsongs.csv";
+
 int gen_rand_int(int min, int max); // forward declaration
 
 int main()
 {
     bool quit = false;
-    std::vector<Song> songs = readFile("songs.csv");
+    std::vector<Song> songs = readFile(csv_file_name);
     songs = removeDuplicates(songs); // double checking, because sometimes duplicates already exist in songs.csv after a raw import
     while (!quit)
     {
@@ -75,7 +78,7 @@ int main()
             }
         }
 
-        writeFile(songs, "songs.csv");
+        writeFile(songs, csv_file_name);
     }
     std::sort(songs.begin(), songs.end(), [](Song a, Song b)
               { return a.elo > b.elo; });
