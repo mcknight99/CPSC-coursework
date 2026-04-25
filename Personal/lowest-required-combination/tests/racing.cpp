@@ -9,10 +9,10 @@ using namespace std;
 int overallMax = 500000;
 int requiredIntsMaxSize = 1;
 int requiredIntsMinSize = 1;
-int supplementaryIntsMaxSize = 9;//flpmc can only take max 30 supplementaries because of int limit
-int supplementaryIntsMinSize = 6; 
-int maxInt = 3005;
-int minInt = 482;
+int supplementaryIntsMaxSize = 7; // flpmc can only take max 30 supplementaries because of int limit 2^n
+int supplementaryIntsMinSize = 4;
+int maxInt = 10000;
+int minInt = 500;
 int maxModulus = 25;
 int minModulus = 25;
 // Max modulus must be greater than max desired modulo
@@ -34,7 +34,6 @@ int gen_rand_int(int min, int max)
 
 int main()
 {
-    std::cout<<INT_MAX<<std::endl;
     int maxRuns = 1;
     int run = 0;
     int joeyWins = 0;
@@ -56,10 +55,17 @@ int main()
             int supplementaryIntsSize = gen_rand_int(supplementaryIntsMinSize, supplementaryIntsMaxSize);
             requiredInts.resize(requiredIntsSize);
             supplementaryInts.resize(supplementaryIntsSize);
-            for (int i = 0; i < requiredIntsSize; i++)
+            int requiredIntsSum = 0;
+            do
             {
-                requiredInts[i] = gen_rand_int(minInt, maxInt);
-            }
+                for (int i = 0; i < requiredIntsSize; i++)
+                {
+                    requiredInts[i] = gen_rand_int(minInt, maxInt);
+                    requiredIntsSum += requiredInts[i];
+                }
+            } while (requiredIntsSum % modulus == desiredModulo);
+            // make sure the required ints sum does not already satisfy the modulo condition
+
             for (int i = 0; i < supplementaryIntsSize; i++)
             {
                 supplementaryInts[i] = gen_rand_int(minInt, maxInt);
@@ -86,7 +92,7 @@ int main()
             }
 
             std::cout << "----------------\nconfirmed answer, racing now..." << std::endl;
-            std::cout << "\tRun: " << run+1 << "/" << maxRuns << std::endl;
+            std::cout << "\tRun: " << run + 1 << "/" << maxRuns << std::endl;
 
             // Measure the runtime of flpmc
             start = chrono::high_resolution_clock::now();
@@ -122,7 +128,7 @@ int main()
         std::cout << "Supplementary Ints: ";
         for (int i : supplementaryInts)
         {
-            std::cout << i << " ";
+            std::cout << i << ",";
         }
         std::cout << std::endl;
         std::cout << "Desired Modulo: " << desiredModulo << std::endl;
