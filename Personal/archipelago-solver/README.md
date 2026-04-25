@@ -172,3 +172,19 @@ while still maintaining valid information
 > p a
 > p b
 > e
+
+
+--------------------------------------
+Desired changes after a real game:
+auto answer to hints for others and record what people know about me?
+maybe switch player and island syntax bc island is first player location player is determined?
+a roll back feature where you can step back in time and see the plays to re walk through information
+comment command: anything after the comment gets saved as a separate comment
+
+// joey 1 in M
+// joey 1 in R
+
+//remove jd L?
+// JD OFQ
+// ava HSV
+// joey MRQ
