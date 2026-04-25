@@ -1,8 +1,6 @@
 #include <Arduino.h>
 
 // Function prototypes
-void on();
-void off();
 void dot();
 void dash();
 void symbol_space_delay();
@@ -10,13 +8,13 @@ void letter_space_delay();
 void word_space_delay();
 
 // basic beacon blinking on and off using gpio 1
-#define BEACON_PIN 2
-#define LED_PIN 10
+#define BEACON_PIN 10
 #define dot_duration 100
 #define dash_duration 300
 #define symbol_space 150
 #define letter_space 300
 #define word_space 400
+#define toggle_rate 1600 //Hz
 
 #define HIGHVAL 255
 #define LOWVAL 1
@@ -25,7 +23,15 @@ void setup()
 {
   Serial.begin(115200);
   pinMode(BEACON_PIN, OUTPUT);
-  pinMode(LED_PIN, OUTPUT);
+
+  // flash 3 times
+  for (int i = 0; i < 3; i++)
+  {
+    digitalWrite(BEACON_PIN, HIGHVAL);
+    delay(200);
+    digitalWrite(BEACON_PIN, LOWVAL);
+    delay(200);
+  }
 }
 
 void loop()
@@ -49,22 +55,6 @@ void loop()
   word_space_delay();
 }
 
-void on()
-{
-  // digitalWrite(BEACON_PIN, HIGHVAL);
-  // digitalWrite(LED_PIN, HIGHVAL);
-  analogWrite(LED_PIN, HIGHVAL);
-  analogWrite(BEACON_PIN, HIGHVAL);
-}
-
-void off()
-{
-  // digitalWrite(BEACON_PIN, LOWVAL);
-  // digitalWrite(LED_PIN, LOWVAL);
-  analogWrite(LED_PIN, LOWVAL);
-  analogWrite(BEACON_PIN, LOWVAL);
-}
-
 void symbol_space_delay()
 {
   delay(symbol_space);
@@ -82,19 +72,38 @@ void word_space_delay()
 
 void dot()
 {
-  on();
+
   Serial.println("Dot");
-  delay(dot_duration);
-  off();
-  symbol_space_delay();
+
+  // pulse on and off at toggle rate for duration of a dot
+  for (int i = 0; i < dot_duration * toggle_rate / 1000; i++)
+  {
+    digitalWrite(BEACON_PIN, HIGHVAL);
+    delay(1000 / toggle_rate / 2);
+    digitalWrite(BEACON_PIN, LOWVAL);
+    delay(1000 / toggle_rate / 2);
+  }
+
+  digitalWrite(BEACON_PIN, LOWVAL);
+  delay(symbol_space);
+  
+
 }
 
 void dash()
 {
-  on();
   Serial.println("Dash");
-  delay(dash_duration);
-  off();
-  symbol_space_delay();
+
+  // pulse on and off at toggle rate for duration of a dash
+  for (int i = 0; i < dash_duration * toggle_rate / 1000; i++)
+  {
+    digitalWrite(BEACON_PIN, HIGHVAL);
+    delay(1000 / toggle_rate / 2);
+    digitalWrite(BEACON_PIN, LOWVAL);
+    delay(1000 / toggle_rate / 2);
+  }
+
+  digitalWrite(BEACON_PIN, LOWVAL);
+  delay(symbol_space);
 }
 
