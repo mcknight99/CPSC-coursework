@@ -1,0 +1,2 @@
+The Crow's Foot diagram should have - entities, attributes, PKs, FKs, connectivities, cardinalities,  relationship strengths (strong or weak), and subtype category constraints (overlapping/disjoint). 
+Also, the diagram should represent tables in 3NF.

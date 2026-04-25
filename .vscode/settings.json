@@ -92,5 +92,16 @@
         "condition_variable": "cpp",
         "regex": "cpp",
         "mutex": "cpp"
-    }
+    },
+    "java.project.referencedLibraries": [
+        "lib/**/*.jar",
+        "CPSC4620/project2/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0/mysql-connector-j-9.6.0.jar"
+    ],
+    "java.debug.settings.onBuildFailureProceed": true,
+    "java.project.sourcePaths": [
+        "CPSC4620/project2/project2java/src/cpsc4620",
+        "CPSC4620/project2/DBTester/DBTesterV4/src/cpsctest/src",
+        "CPSC4620/project2/DBTester/DBTesterV4/src",
+        "CPSC4620/project2/cpsc4620"
+    ]
 }

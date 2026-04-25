@@ -1,0 +1,39 @@
+1. list the contents of the root directory: full names (file name + extension) and whether they are a file or subdirectory
+11 (no extension) - file (0x20 means file; 0x10 means directory)
+14.TXT - file
+20 - directory
+3.TVX - (directory??)
+25 - directory
+27 - directory
+0xAA BB CC DD EE FF GG HH = file name; next-> 0xII JJ KK = extension; next-> 0xLL MM = bits
+root directory is located at 19*512
+
+
+
+2. the 525th byte (start counting bytes at 1) in the 1st file in the root directory
+logical cluster (little endian) tells you where the file is located. if you check the FAT it tells you where the next logical cluster is 
+add 31 to map from the cluster number to sector number 
+the file 14.txt first logical cluster is 05 00 (little endian) -> 0005
+each cluster is 512, so we want 525-512 = 13th in the next logical cluster
+FAT tells us FF0 FFF FFF 004 FFF 006 for the first 6, 006 is the next 
+(31+6)*512 is the start and then count up 12 bytes (because we start at 1 and 4A00 is 1)
+4A0C = 38
+the answer is 38
+
+
+3. the number of files (don't include subdirectories) in subdirectory "/27"
+first logical cluster is 002F, check FAT if there's another logical cluster. there's not
+go to (0x2F+0d31)*0d512 = 9c00
+there are 3 entries, 1 file and 2 directories
+
+
+4. the first logical cluster of a deleted file (any file)
+deleted files start with E5
+find the first E5, take the address, divide by 512, subtract by 31 
+answer: 26
+
+
+
+5. the size of the file "/20/24.TXT"
+9800 there's a 24.txt (ctrl f "24      txt")
+check the last 4 bytes: 65 18 00 00 (little endian) -> 00 00 18 65 

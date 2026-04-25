@@ -1,0 +1,45 @@
+package cpsc4620;
+
+import java.io.IOException;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
+public class DBConnector {
+
+    // enter your user name here
+    protected static String user = "dbtester";
+    // enter your password here
+    protected static String password = "passwordCPSC4620";
+    // enter your database name here
+    private static String database_name = "pizzadb";
+    // Do not change the port. 3306 is the default MySQL port
+    private static String url = "jdbc:mysql://localhost:3306";
+    // private static String url = "jdbc:mysql://cpsc4620-rlvs2.cobd8enwsupz.us-east-1.rds.amazonaws.com/pizzadb";
+    private static Connection conn;
+
+    /**
+     * 0op'/: '
+     *
+     * This function will handle the connection to the database
+     *
+     * @return true if the connection was successfully made
+     * @throws SQLException
+     * @throws IOException
+     */
+    public static Connection make_connection() throws SQLException, IOException {
+        try {
+            Class.forName("com.mysql.cj.jdbc.Driver");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Could not load the driver");
+
+            System.out.println("Message     : " + e.getMessage());
+
+            return null;
+        }
+
+        // System.out.println("Connecting to URL: '" + url + "/" + database_name + "' as user: '" + user + "' with password: '" + password + "'");
+        conn = DriverManager.getConnection(url + "/" + database_name, user, password);
+        return conn;
+    }
+}
