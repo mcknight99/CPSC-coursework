@@ -35,6 +35,8 @@ const std::string SUBSTRING_COLOR = "\033[1;33m";  // yellow text
 const std::string NEW_CHAR_COLOR = "\033[1;36m";   // teal text
 const std::string BACKGROUND_COLOR = "\u001B[40m"; // black highlight background
 
+std::vector<std::string> usedWords; // Vector to store used words
+
 // Function to read words from a file and store them in a set
 bool readWordsFromFile(const std::string &filename, std::unordered_set<std::string> &wordSet)
 {
@@ -124,7 +126,11 @@ std::string findWord(const std::string &input, const std::unordered_set<std::str
     std::string bestWord;
 
     for (const std::string &word : wordSet)
-    {
+    { // we aren't allowed to reuse a word from a game, so we can at least keep track of our own words and make sure we don't reuse them
+        if (std::find(usedWords.begin(), usedWords.end(), word) != usedWords.end())
+        {
+            continue;
+        }
         if (word.find(input) != std::string::npos) // also find at least one of the unused letters to avoid calculating a score of 0. pick at random to avoid bias
         {
             int currScore = calculateScore(word, usedLetters);
@@ -158,6 +164,7 @@ int main()
         std::string input;
         std::cin >> input;
         std::string word = findWord(input, wordSet, usedLetters);
+        usedWords.push_back(word); // Add word to used words list
 
         // for showing used letters: tempUsedLetters xor with new usedLetters after findWord(). The first instance in the new word is a newly used letter.
         std::unordered_map<char, bool> tempUsedLetters = usedLetters;
@@ -208,10 +215,17 @@ int main()
 
         if (allLettersUsed)
         {
-            std::cout << "All letters used. Do you want to start again? (y/n): ";
-            // std::cin >> choice;
-            choice = 'y';        // For testing purposes
-            usedLetters.clear(); // Clear used letters map
+            bool autoRepeat = true;
+            if(autoRepeat)
+            {
+                usedLetters.clear(); // Clear used letters map
+            }
+            else
+            {
+                std::cout << "All letters used. Do you want to start again? (y/n): ";
+                std::cin >> choice;
+                usedLetters.clear(); // Clear used letters map
+            }
         }
         else
         {
