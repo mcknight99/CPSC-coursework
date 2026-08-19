@@ -1,0 +1,78 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+
+    margin: 0;
+
+    padding: 20px;
+
+    background: #111;
+
+    color: #eee;
+
+    font-family:
+        Arial,
+        sans-serif;
+}
+
+
+main {
+
+    max-width: 900px;
+
+    margin: auto;
+}
+
+
+button {
+
+    display: block;
+
+    width: 100%;
+
+    padding: 18px;
+
+    margin: 10px 0;
+
+    font-size: 1.2rem;
+
+    cursor: pointer;
+}
+
+
+.menu {
+
+    text-align: center;
+
+    max-width: 500px;
+
+    margin: 15vh auto;
+}
+
+
+.player-card {
+
+    border: 2px solid #444;
+
+    padding: 15px;
+
+    margin: 10px 0;
+
+    border-radius: 8px;
+}
+
+
+.current-turn {
+
+    border-color: yellow;
+
+}
+
+
+.dead {
+
+    opacity: 0.4;
+
+}

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1"
+    >
+
+    <title>Player</title>
+
+    <link rel="stylesheet" href="/style.css">
+
+</head>
+
+<body>
+
+    <main>
+
+        <h1>PLAYER</h1>
+
+        <section>
+
+            <label>
+                Player number
+                <select id="playerSelect">
+                    <option value="0">Player 1</option>
+                    <option value="1">Player 2</option>
+                    <option value="2">Player 3</option>
+                    <option value="3">Player 4</option>
+                    <option value="4">Player 5</option>
+                    <option value="5">Player 6</option>
+                    <option value="6">Player 7</option>
+                    <option value="7">Player 8</option>
+                </select>
+            </label>
+
+            <button onclick="joinPlayer()">
+                JOIN
+            </button>
+
+        </section>
+
+
+        <section id="playerPanel" hidden>
+
+            <h2 id="playerName"></h2>
+
+            <p>
+                Health:
+                <span id="health"></span>
+            </p>
+
+            <p id="turnStatus"></p>
+
+            <h2>Items</h2>
+
+            <div id="items"></div>
+
+            <h2>Secret Information</h2>
+
+            <div id="secret"></div>
+
+        </section>
+
+    </main>
+
+    <script src="/app.js"></script>
+
+</body>
+
+</html>

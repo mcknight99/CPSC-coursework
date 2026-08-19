@@ -1,0 +1,6 @@
+to connect to the COM of the esp32:
+    https://www.terasic.com.tw/wiki/The_CP2102N_(USB_to_UART)_Driver_Installation_Instructions
+
+
+run this command in the platformio project directory (has /data) with upload COM open
+    pio run -t uploadfs
