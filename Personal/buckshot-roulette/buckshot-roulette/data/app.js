@@ -47,14 +47,29 @@ function connectSocket() {
 
 function joinPlayer() {
 
-    const select =
-        document.getElementById("playerSelect");
+    if(!socket) {
+        connectSocket();   
+    }
 
-    myPlayerId =
-        Number(select.value);
+    if(!socket) {
+        console.log("ERROR connecting to socket when joining player");
+    }
+
+    const select = document.querySelector(
+        'input[name="playerSelect"]:checked'
+    );
+
+    
+
+    if(select) {
+        myPlayerId = Number(select.value);
+    } else {
+        console.log("No radio button selected");
+    }
+
 
     const name =
-        `Player ${myPlayerId + 1}`;
+        `Player ${myPlayerId}`;
 
     socket.send(
         `PLAYER:${myPlayerId}:${name}`
@@ -63,6 +78,9 @@ function joinPlayer() {
     document.getElementById(
         "playerPanel"
     ).hidden = false;
+
+    document.getElementById("playerSelect").hidden = true;
+    document.getElementById("joinButton").hidden = true;
 }
 
 

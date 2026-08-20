@@ -454,15 +454,15 @@ void setup() {
         WiFi.softAPIP()
     );
 
-    game.addPlayer(
-        0,
-        "Player 1"
-    );
+    // game.addPlayer(
+    //     0,
+    //     "Player 1"
+    // );
 
-    game.addPlayer(
-        1,
-        "Player 2"
-    );
+    // game.addPlayer(
+    //     1,
+    //     "Player 2"
+    // );
 
     // example shell configuration
     //

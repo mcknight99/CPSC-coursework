@@ -25,20 +25,41 @@
         <section>
 
             <label>
-                Player number
-                <select id="playerSelect">
-                    <option value="0">Player 1</option>
-                    <option value="1">Player 2</option>
-                    <option value="2">Player 3</option>
-                    <option value="3">Player 4</option>
-                    <option value="4">Player 5</option>
-                    <option value="5">Player 6</option>
-                    <option value="6">Player 7</option>
-                    <option value="7">Player 8</option>
+                <h3>Player number</h3>
+                     <br>
+                <!-- <select id="playerSelect"> -->
+                    <!-- change this so that on page load we collect all available players
+                     and that when there is a player that joins under a value then it gets removed-->
+                     <!--maybe instead, use 8 radio buttons so just hide each button when taken and hide all buttons when joined-->
+                    
+                     <input type="radio" id="player1" name="playerSelect" value="1">
+                     <label for="player1">Player 1</label>
+                     <br>
+                     <input type="radio" id="player2" name="playerSelect" value="2">
+                     <label for="player2">Player 2</label>
+                     <br>
+                     <input type="radio" id="player3" name="playerSelect" value="3">
+                     <label for="player3">Player 3</label>
+                     <br>
+                     <input type="radio" id="player4" name="playerSelect" value="4">
+                     <label for="player4">Player 4</label>
+                     <br>
+                     <input type="radio" id="player5" name="playerSelect" value="5">
+                     <label for="player5">Player 5</label>
+                     <br>
+                     <input type="radio" id="player6" name="playerSelect" value="6">
+                     <label for="player6">Player 6</label>
+                     <br>
+                     <input type="radio" id="player7" name="playerSelect" value="7">
+                     <label for="player7">Player 7</label>
+                     <br>
+                    <input type="radio" id="player8" name="playerSelect" value="8">
+                    <label for="player8">Player 8</label>
+                     <br>
                 </select>
             </label>
 
-            <button onclick="joinPlayer()">
+            <button onclick="joinPlayer()" id="joinButton">
                 JOIN
             </button>
 

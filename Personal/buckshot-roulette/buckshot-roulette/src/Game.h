@@ -42,7 +42,7 @@ struct Player {
 
 class Game{
     public:
-    static constexpr uint8_t MAX_PLAYERS = 4;
+    static constexpr uint8_t MAX_PLAYERS = 8;
 
     Game();
 
