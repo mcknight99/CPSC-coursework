@@ -1,0 +1,55 @@
+https://hashcat.net/wiki/doku.php?id=hashcat
+
+- recover plaintext from hash
+- 9fde43b502745f5832dd908b040b35d0
+md5
+- 9f0c989dd3e4c7a6ef5512d6347a9af24b95ee886e9874edbebf2055166c5ed6
+sha256
+- ed81de1d5860c891f157ed20de6ff1558ae153f0 (hint: 2 character salt) --hex-salt
+could be sha1 but could be something else
+
+- md5? sha1? sha256? dictionary attack
+
+hashcat --help
+
+dictionary attack is straight is default is 0
+
+rockyou.txt is a modified common dictionary
+
+hashcat hashfile one.txt
+hashcat -a 3 hashfile one.txt
+hashcat hashfile one.txt --outfile out.txt
+hashcat hashfile one.txt --outfile out.txt --outfile-format 2
+
+hashcat -a 0 -m 0 one.txt
+
+hashcat -a 0 -m 0 hash.txt dict.txt
+
+hashcat -a 0 -m 0 one.txt rockyou.txt
+9fde43b502745f5832dd908b040b35d0:cyberboatchallenge2024
+
+hashcat -a 0 -m 1400 two.txt rockyou.txt
+9f0c989dd3e4c7a6ef5512d6347a9af24b95ee886e9874edbebf2055166c5ed6:eminem
+
+hashcat -a 7 -m 100 three.txt rockyou.txt
+
+https://hashcat.net/wiki/doku.php?id=hybrid_attack
+
+-a 6 dict ?d?d?d?d
+creates a mask of a temporary dictionary 
+(wrong) hashcat -a 7 rockyou.txt ?d?d -m 100 three.txt rockyou.txt
+
+hashcat -m 100 -a 7 three.txt \?a\?a rockyou.txt --show
+
+
+
+
+
+literally have to close all programs on my computer to just let it run
+
+name-that-hash -f hash1.txt
+    can tell you the hash type (md5, sha1)
+
+salt: wild card characters (prepend etc)
+attack mode 7 
+
