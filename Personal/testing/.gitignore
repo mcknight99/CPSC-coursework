@@ -3,3 +3,8 @@ wing-bot/node_modules
 wing-bot/wingbot.db
 wing-bot/wingbot.db-shm
 wing-bot/wingbot.db-wal
+curve.csv
+mold.csv
+r1.csv
+r2.csv
+tip.csv
