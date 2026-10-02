@@ -1,0 +1,44 @@
+[Unit]
+# Human-readable description shown by systemctl.
+Description=Slack Wing Night Bot
+
+# Don't start the bot until the network is available.
+After=network-online.target
+Wants=network-online.target
+
+
+[Service]
+
+# Run the bot as the normal Linux user rather than root.
+# replace with your username below ($ whoami)
+User=pi
+
+# The directory containing bot.js, package.json, .env, and
+# wingbot.db.
+# replace pi with your username and set the correct path to the directory
+WorkingDirectory=/home/pi/wing-bot
+
+# Start Node directly.
+#
+# IMPORTANT:
+# Replace /usr/bin/node with the path returned by:
+#
+#     which node
+#
+# replace pi with your username and set the correct path to bot.js
+ExecStart=/usr/bin/node /home/pi/wing-bot/bot.js
+
+# If Node exits for ANY reason, systemd should start it again.
+Restart=always
+
+# Wait five seconds before trying again.
+RestartSec=5
+
+# Production environment.
+Environment=NODE_ENV=production
+
+
+[Install]
+
+# Start this service automatically during normal boot.
+WantedBy=multi-user.target
