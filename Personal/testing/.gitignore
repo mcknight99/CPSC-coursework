@@ -1,0 +1,5 @@
+wing-bot/.env
+wing-bot/node_modules
+wing-bot/wingbot.db
+wing-bot/wingbot.db-shm
+wing-bot/wingbot.db-wal
